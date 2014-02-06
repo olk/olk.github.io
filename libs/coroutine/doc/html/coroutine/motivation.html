@@ -372,7 +372,7 @@
       In the past the code using asio's <span class="emphasis"><em>asynchronous operations</em></span>
       was scattered by callbacks. <span class="bold"><strong>Boost.Asio</strong></span> provides
       with its new <span class="emphasis"><em>asynchronous result</em></span> feature a new way to
-      simplify the code and make it easier to read (<sup>[<a name="coroutine.motivation.f0" href="#ftn.coroutine.motivation.f0" class="footnote">4</a>]</sup>). <span class="emphasis"><em>boost::asio::yield_context</em></span> uses internally
+      simplify the code and make it easier to read <sup>[<a name="coroutine.motivation.f0" href="#ftn.coroutine.motivation.f0" class="footnote">4</a>]</sup>. <span class="emphasis"><em>boost::asio::yield_context</em></span> uses internally
       <span class="bold"><strong>Boost.Coroutine</strong></span>:
     </p>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">echo</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">tcp</span><span class="special">::</span><span class="identifier">socket</span><span class="special">&amp;</span> <span class="identifier">socket</span><span class="special">,</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">yield_context</span> <span class="identifier">yield</span><span class="special">){</span>

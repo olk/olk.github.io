@@ -69,8 +69,8 @@
         <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
         with another <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
         as first argument. If <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
-        is invoked without __call<span class="emphasis"><em>coroutine</em></span> as argument the execution
-        control is transfered to the start of the <span class="emphasis"><em>symmetric_coroutine&lt;&gt;</em></span>
+        is invoked without <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
+        as argument the execution control is transfered to the start of the <span class="emphasis"><em>symmetric_coroutine&lt;&gt;</em></span>
         sequence, e.g. invocation of <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span>.
         The class has only one template parameter defining the transferred parameter
         type. Data transferred to the coroutine are accessed through <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::get()</em></span>.
@@ -279,14 +279,11 @@
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">&lt;&lt;</span><span class="string">"coro is complete: "</span><span class="special">&lt;&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">boolalpha</span><span class="special">&lt;&lt;!</span><span class="identifier">coro</span><span class="special">&lt;&lt;</span><span class="string">"\n"</span><span class="special">;</span>
 <span class="special">}</span>
 
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">&lt;&lt;</span><span class="string">"Done"</span><span class="special">&lt;&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-
 <span class="identifier">output</span><span class="special">:</span>
     <span class="identifier">X</span><span class="special">()</span>
     <span class="identifier">fn</span><span class="special">()</span>
     <span class="identifier">coro</span> <span class="identifier">is</span> <span class="identifier">complete</span><span class="special">:</span> <span class="keyword">false</span>
     <span class="special">~</span><span class="identifier">X</span><span class="special">()</span>
-    <span class="identifier">Done</span>
 </pre>
 <h5>
 <a name="coroutine.coroutine.symmetric.h6"></a>

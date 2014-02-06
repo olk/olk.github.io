@@ -77,11 +77,8 @@
 <span class="keyword">for</span><span class="special">(</span><span class="keyword">auto</span> <span class="identifier">i</span><span class="special">:</span><span class="identifier">source</span><span class="special">)</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span>  <span class="string">" "</span><span class="special">;</span>
 
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"\nDone"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-
 <span class="identifier">output</span><span class="special">:</span>
 <span class="number">1</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">5</span> <span class="number">8</span> <span class="number">13</span> <span class="number">21</span> <span class="number">34</span> <span class="number">55</span>
-<span class="identifier">Done</span>
 </pre>
 <p>
         In this example a <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type</em></span>
@@ -125,7 +122,8 @@
       </p>
 <p>
         <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type</em></span> provides output
-        iterators (__push_coro__iterator) and <span class="emphasis"><em>boost::begin()</em></span>/<span class="emphasis"><em>boost::end()</em></span>
+        iterators (<span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type::iterator</em></span>)
+        and <span class="emphasis"><em>boost::begin()</em></span>/<span class="emphasis"><em>boost::end()</em></span>
         are overloaded. The increment-operation switches the context and transfers
         data.
       </p>
@@ -400,8 +398,6 @@
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">&lt;&lt;</span><span class="string">"sink is complete: "</span><span class="special">&lt;&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">boolalpha</span><span class="special">&lt;&lt;!</span><span class="identifier">sink</span><span class="special">&lt;&lt;</span><span class="string">"\n"</span><span class="special">;</span>
 <span class="special">}</span>
 
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">&lt;&lt;</span><span class="string">"Done"</span><span class="special">&lt;&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-
 <span class="identifier">output</span><span class="special">:</span>
     <span class="identifier">X</span><span class="special">()</span>
     <span class="identifier">fn</span><span class="special">():</span> <span class="number">0</span>
@@ -412,7 +408,6 @@
     <span class="identifier">fn</span><span class="special">():</span> <span class="number">5</span>
     <span class="identifier">sink</span> <span class="identifier">is</span> <span class="identifier">complete</span><span class="special">:</span> <span class="keyword">false</span>
     <span class="special">~</span><span class="identifier">X</span><span class="special">()</span>
-    <span class="identifier">Done</span>
 </pre>
 <h5>
 <a name="coroutine.coroutine.asymmetric.h8"></a>
@@ -438,11 +433,8 @@
 <span class="keyword">for</span> <span class="special">(</span><span class="keyword">auto</span> <span class="identifier">i</span><span class="special">:</span><span class="identifier">source</span><span class="special">)</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span>  <span class="string">" "</span><span class="special">;</span>
 
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"\nDone"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-
 <span class="identifier">output</span><span class="special">:</span>
     <span class="number">2</span> <span class="number">4</span> <span class="number">8</span> <span class="number">16</span> <span class="number">32</span> <span class="number">64</span> <span class="number">128</span> <span class="number">256</span>
-    <span class="identifier">Done</span>
 </pre>
 <p>
         Output-iterators can be created from <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type</em></span>.
@@ -465,9 +457,11 @@
       </h5>
 <p>
         <span class="emphasis"><em>coroutine-function</em></span> is exited with a simple return statement
-        jumping back to the calling routine. The <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type</em></span><span class="emphasis"><em>__push_coro__
-        becomes complete, e.g. __pull_coro_bool__</em></span> <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type::operator
-        bool</em></span> will return 'false'.
+        jumping back to the calling routine. The <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type</em></span>,
+        <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type</em></span> becomes complete,
+        e.g. <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type::operator bool</em></span>,
+        <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type::operator bool</em></span>
+        will return 'false'.
       </p>
 <div class="important"><table border="0" summary="Important">
 <tr>
@@ -476,7 +470,8 @@
 </tr>
 <tr><td align="left" valign="top"><p>
           After returning from <span class="emphasis"><em>coroutine-function</em></span> the <span class="emphasis"><em>coroutine</em></span>
-          is complete (can not resumed with <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type::operator()</em></span>/<span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type::operator()</em></span>).
+          is complete (can not resumed with <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type::operator()</em></span>,
+          <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type::operator()</em></span>).
         </p></td></tr>
 </table></div>
 </div>
