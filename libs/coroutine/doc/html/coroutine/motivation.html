@@ -27,9 +27,9 @@
 <a name="coroutine.motivation"></a><a class="link" href="motivation.html" title="Motivation">Motivation</a>
 </h2></div></div></div>
 <p>
-      In order to support a broad range of execution control behaviour <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type</em></span>
-      and <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type</em></span> can be used
-      to <span class="emphasis"><em>escape-and-reenter</em></span> loops, to <span class="emphasis"><em>escape-and-reenter</em></span>
+      In order to support a broad range of execution control behaviour the coroutine
+      types of <span class="emphasis"><em>symmetric_coroutine&lt;&gt;</em></span> and <span class="emphasis"><em>symmetric_coroutine&lt;&gt;</em></span>
+      can be used to <span class="emphasis"><em>escape-and-reenter</em></span> loops, to <span class="emphasis"><em>escape-and-reenter</em></span>
       recursive computations and for <span class="emphasis"><em>cooperative</em></span> multitasking
       helping to solve problems in a much simpler and more elegant way than with
       only a single flow of control.
@@ -59,10 +59,10 @@
       which recursively traverses the tree and passes each node's data value to its
       <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type</em></span>. <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type</em></span>
       suspends the recursive computation and transfers the data value to the main
-      execution context. <span class="emphasis"><em>boost::coroutines::asymmetric_coroutine&lt;&gt;::pull_type::iterator</em></span>,
+      execution context. <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type::iterator</em></span>,
       created from <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type</em></span>,
       steps over those data values and delivers them to <span class="emphasis"><em>std::equal()</em></span>
-      for comparison. Each increment of <span class="emphasis"><em>boost::coroutines::asymmetric_coroutine&lt;&gt;::pull_type::iterator</em></span>
+      for comparison. Each increment of <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type::iterator</em></span>
       resumes <span class="emphasis"><em>traverse()</em></span>. Upon return from <span class="emphasis"><em>iterator::operator++()</em></span>,
       either a new data value is available, or tree traversal is finished (iterator
       is invalidated).
@@ -238,7 +238,7 @@
       coroutines</a>
     </h4>
 <p>
-      The following example demonstrates how coroutines could be chained.
+      This code shows how coroutines could be chained.
     </p>
 <pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">asymmetric_coroutine</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">coro_t</span><span class="special">;</span>
 
@@ -372,8 +372,8 @@
       In the past the code using asio's <span class="emphasis"><em>asynchronous operations</em></span>
       was scattered by callbacks. <span class="bold"><strong>Boost.Asio</strong></span> provides
       with its new <span class="emphasis"><em>asynchronous result</em></span> feature a new way to
-      simplify the code and make it easier to read. <span class="emphasis"><em>boost::asio::yield_context</em></span>
-      uses internally <span class="bold"><strong>Boost.Coroutine</strong></span>:
+      simplify the code and make it easier to read (<sup>[<a name="coroutine.motivation.f0" href="#ftn.coroutine.motivation.f0" class="footnote">4</a>]</sup>). <span class="emphasis"><em>boost::asio::yield_context</em></span> uses internally
+      <span class="bold"><strong>Boost.Coroutine</strong></span>:
     </p>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">echo</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">tcp</span><span class="special">::</span><span class="identifier">socket</span><span class="special">&amp;</span> <span class="identifier">socket</span><span class="special">,</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">yield_context</span> <span class="identifier">yield</span><span class="special">){</span>
     <span class="keyword">char</span> <span class="identifier">data</span><span class="special">[</span><span class="number">128</span><span class="special">];</span>
@@ -385,6 +385,13 @@
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">async_write</span><span class="special">(</span><span class="identifier">socket</span><span class="special">,</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">(</span><span class="identifier">data</span><span class="special">,</span><span class="identifier">n</span><span class="special">),</span><span class="identifier">yield</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
+<div class="footnotes">
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a name="ftn.coroutine.motivation.f0" href="#coroutine.motivation.f0" class="para">4</a>] </sup>
+        Christopher Kohlhoff, <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3747.pdf" target="_top">N3747
+        - A Synchronous Operations</a>
+      </p></div>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

@@ -40,14 +40,13 @@
 </dl></dd>
 </dl></div>
 <p>
-      <span class="bold"><strong>Boost.Coroutine</strong></span> provides two classes - implementations
-      of asymmetric and symmetric coroutines.
+      <span class="bold"><strong>Boost.Coroutine</strong></span> provides two implementations
+      - asymmetric and symmetric coroutines.
     </p>
 <p>
-      'Coroutine mechanisms that support concurrent programming usually provide symmetric
-      coroutines to represent independent units of execution. On the other hand,
-      coroutine mechanisms intended for implementing constructs that produce sequences
-      of values typically provide asymmetric coroutines.' <sup>[<a name="coroutine.coroutine.f0" href="#ftn.coroutine.coroutine.f0" class="footnote">4</a>]</sup>.
+      Symmetric coroutines occure usually in the context of concurrent programming
+      in order to represent independent units of execution. Implementations that
+      produce sequences of values typically use asymmetric coroutines. <sup>[<a name="coroutine.coroutine.f0" href="#ftn.coroutine.coroutine.f0" class="footnote">5</a>]</sup>.
     </p>
 <h4>
 <a name="coroutine.coroutine.h0"></a>
@@ -100,7 +99,7 @@
       segmented stacks (growing on demand).
     </p>
 <p>
-      It is not always possible to estimated the required stack size - in most cases
+      It is not always possible to estimate the required stack size - in most cases
       too much memory is allocated (waste of virtual address-space).
     </p>
 <p>
@@ -109,9 +108,7 @@
       stack (macro SIGSTKSZ on POSIX).
     </p>
 <p>
-      At this time of writing only GCC (4.7)\cite{gccsplit} is known to support segmented
-      stacks. With version 1.54 <span class="bold"><strong>Boost.Coroutine</strong></span>
-      provides support for segmented stacks.
+      At this time of writing only GCC (4.7) <sup>[<a name="coroutine.coroutine.f1" href="#ftn.coroutine.coroutine.f1" class="footnote">6</a>]</sup> is known to support segmented stacks. With version 1.54 <span class="bold"><strong>Boost.Coroutine</strong></span> provides support for segmented stacks.
     </p>
 <p>
       The destructor releases the associated stack. The implementer is free to deallocate
@@ -144,8 +141,9 @@
       for performance reasons.
     </p>
 <p>
-      A context switch is done via <span class="emphasis"><em>boost::coroutines::asymmetric_coroutine&lt;&gt;::push_type::operator()</em></span>
-      and <span class="emphasis"><em>boost::coroutines::asymmetric_coroutine&lt;&gt;::pull_type::operator()</em></span>.
+      A context switch is done via <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span>,
+      <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type::operator()</em></span> and
+      <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type::operator()</em></span>.
     </p>
 <div class="warning"><table border="0" summary="Warning">
 <tr>
@@ -153,17 +151,22 @@
 <th align="left">Warning</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-        Calling <span class="emphasis"><em>boost::coroutines::symmetric_coroutine&lt;&gt;::operator()</em></span><span class="emphasis"><em><span class="emphasis"><em>boost::coroutines::asymmetric_coroutine&lt;&gt;::push_type::operator()</em></span></em></span><span class="emphasis"><em>boost::coroutines::asymmetric_coroutine&lt;&gt;::pull_type::operator()</em></span>
+        Calling <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span>, <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type::operator()</em></span>
+        and <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type::operator()</em></span>
         from inside the <span class="underline">same</span> coroutine results
         in undefined behaviour.
       </p></td></tr>
 </table></div>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.coroutine.coroutine.f0" href="#coroutine.coroutine.f0" class="para">4</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.coroutine.coroutine.f0" href="#coroutine.coroutine.f0" class="para">5</a>] </sup>
         Moura, Ana Lucia De and Ierusalimschy, Roberto. "Revisiting coroutines".
         ACM Trans. Program. Lang. Syst., Volume 31 Issue 2, February 2009, Article
         No. 6
+      </p></div>
+<div class="footnote"><p><sup>[<a name="ftn.coroutine.coroutine.f1" href="#coroutine.coroutine.f1" class="para">6</a>] </sup>
+        <a href="http://gcc.gnu.org/wiki/SplitStacks" target="_top">Ian Lance Taylor, Split
+        Stacks in GCC</a>
       </p></div>
 </div>
 </div>

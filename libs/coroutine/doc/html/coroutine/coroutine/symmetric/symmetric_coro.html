@@ -33,7 +33,7 @@
 <span class="keyword">class</span> <span class="identifier">symmetric_coroutine</span><span class="special">&lt;&gt;::</span><span class="identifier">call_type</span>
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
-    <span class="identifier">call_type</span><span class="special">();</span>
+    <span class="identifier">call_type</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
 
     <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Fn</span> <span class="special">&gt;</span>
     <span class="identifier">call_type</span><span class="special">(</span> <span class="identifier">Fn</span> <span class="identifier">fn</span><span class="special">,</span> <span class="identifier">attributes</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr</span> <span class="special">=</span> <span class="identifier">attributes</span><span class="special">()</span> <span class="special">);</span>
@@ -46,19 +46,19 @@
 
     <span class="identifier">call_type</span> <span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span> <span class="identifier">call_type</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)=</span><span class="keyword">delete</span><span class="special">;</span>
 
-    <span class="identifier">call_type</span><span class="special">(</span> <span class="identifier">call_type</span> <span class="special">&amp;&amp;</span> <span class="identifier">other</span><span class="special">);</span>
+    <span class="special">~</span><span class="identifier">call_type</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
 
-    <span class="identifier">call_type</span> <span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span> <span class="identifier">call_type</span> <span class="special">&amp;&amp;</span> <span class="identifier">other</span><span class="special">);</span>
+    <span class="identifier">call_type</span><span class="special">(</span> <span class="identifier">call_type</span> <span class="special">&amp;&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 
-    <span class="special">~</span><span class="identifier">call_type</span><span class="special">();</span>
+    <span class="identifier">call_type</span> <span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span> <span class="identifier">call_type</span> <span class="special">&amp;&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 
     <span class="keyword">operator</span> <span class="identifier">unspecified</span><span class="special">-</span><span class="keyword">bool</span><span class="special">-</span><span class="identifier">type</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
 
-    <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">!()</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">!()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span><span class="special">;</span>
 
-    <span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span> <span class="identifier">call_type</span> <span class="special">&amp;</span> <span class="identifier">other</span><span class="special">);</span>
+    <span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span> <span class="identifier">call_type</span> <span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 
-    <span class="identifier">call_type</span> <span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">()(</span> <span class="identifier">Arg</span><span class="special">&amp;&amp;</span> <span class="identifier">arg</span><span class="special">);</span>
+    <span class="identifier">call_type</span> <span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">()(</span> <span class="identifier">Arg</span><span class="special">&amp;&amp;</span> <span class="identifier">arg</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 <span class="special">};</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Arg</span> <span class="special">&gt;</span>
@@ -221,6 +221,24 @@
 </div>
 <h6>
 <a name="coroutine.coroutine.symmetric.symmetric_coro.h7"></a>
+          <span><a name="coroutine.coroutine.symmetric.symmetric_coro._code__phrase_role__keyword__void__phrase___phrase_role__identifier__swap__phrase__phrase_role__special_____phrase___phrase_role__identifier__call_type__phrase___phrase_role__special___amp___phrase___phrase_role__identifier__other__phrase__phrase_role__special_____phrase___code_"></a></span><a class="link" href="symmetric_coro.html#coroutine.coroutine.symmetric.symmetric_coro._code__phrase_role__keyword__void__phrase___phrase_role__identifier__swap__phrase__phrase_role__special_____phrase___phrase_role__identifier__call_type__phrase___phrase_role__special___amp___phrase___phrase_role__identifier__other__phrase__phrase_role__special_____phrase___code_"><code class="computeroutput"><span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span> <span class="identifier">call_type</span>
+          <span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span></code></a>
+        </h6>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">Effects:</span></dt>
+<dd><p>
+                Swaps the internal data from <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code> with the values of <code class="computeroutput"><span class="identifier">other</span></code>.
+              </p></dd>
+<dt><span class="term">Throws:</span></dt>
+<dd><p>
+                Nothing.
+              </p></dd>
+</dl>
+</div>
+<h6>
+<a name="coroutine.coroutine.symmetric.symmetric_coro.h8"></a>
           <span><a name="coroutine.coroutine.symmetric.symmetric_coro._code__phrase_role__identifier__call_type__phrase__phrase_role__special___lt__gt___phrase___phrase_role__special___amp___phrase___phrase_role__keyword__operator__phrase__phrase_role__special_______phrase__phrase_role__identifier__arg__phrase__phrase_role__special___amp__amp___phrase___phrase_role__identifier__arg__phrase__phrase_role__special_____phrase___code_"></a></span><a class="link" href="symmetric_coro.html#coroutine.coroutine.symmetric.symmetric_coro._code__phrase_role__identifier__call_type__phrase__phrase_role__special___lt__gt___phrase___phrase_role__special___amp___phrase___phrase_role__keyword__operator__phrase__phrase_role__special_______phrase__phrase_role__identifier__arg__phrase__phrase_role__special___amp__amp___phrase___phrase_role__identifier__arg__phrase__phrase_role__special_____phrase___code_"><code class="computeroutput"><span class="identifier">call_type</span><span class="special">&lt;&gt;</span>
           <span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span><span class="special">&amp;&amp;</span> <span class="identifier">arg</span><span class="special">)</span></code></a>
         </h6>
@@ -241,24 +259,6 @@
                 Execution control is transferred to <span class="emphasis"><em>coroutine-function</em></span>
                 and the argument <code class="computeroutput"><span class="identifier">arg</span></code>
                 is passed to the coroutine-function.
-              </p></dd>
-<dt><span class="term">Throws:</span></dt>
-<dd><p>
-                Exceptions thrown inside <span class="emphasis"><em>coroutine-function</em></span>.
-              </p></dd>
-</dl>
-</div>
-<h6>
-<a name="coroutine.coroutine.symmetric.symmetric_coro.h8"></a>
-          <span><a name="coroutine.coroutine.symmetric.symmetric_coro._code__phrase_role__keyword__void__phrase___phrase_role__identifier__swap__phrase__phrase_role__special_____phrase___phrase_role__identifier__call_type__phrase___phrase_role__special___amp___phrase___phrase_role__identifier__other__phrase__phrase_role__special_____phrase___code_"></a></span><a class="link" href="symmetric_coro.html#coroutine.coroutine.symmetric.symmetric_coro._code__phrase_role__keyword__void__phrase___phrase_role__identifier__swap__phrase__phrase_role__special_____phrase___phrase_role__identifier__call_type__phrase___phrase_role__special___amp___phrase___phrase_role__identifier__other__phrase__phrase_role__special_____phrase___code_"><code class="computeroutput"><span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span> <span class="identifier">call_type</span>
-          <span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span></code></a>
-        </h6>
-<div class="variablelist">
-<p class="title"><b></b></p>
-<dl>
-<dt><span class="term">Effects:</span></dt>
-<dd><p>
-                Swaps the internal data from <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code> with the values of <code class="computeroutput"><span class="identifier">other</span></code>.
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>

@@ -27,12 +27,10 @@
 <a name="coroutine.stack.standard_stack_allocator"></a><a class="link" href="standard_stack_allocator.html" title="Class standard_stack_allocator">Class <span class="emphasis"><em>standard_stack_allocator</em></span></a>
 </h3></div></div></div>
 <p>
-        <span class="bold"><strong>Boost.Coroutine</strong></span> provides the class <span class="emphasis"><em>boost::coroutines::standard_stack_allocator</em></span>
+        <span class="bold"><strong>Boost.Coroutine</strong></span> provides the class <span class="emphasis"><em>standard_stack_allocator</em></span>
         which models the <span class="emphasis"><em>stack-allocator concept</em></span>. In contrast
-        to <span class="emphasis"><em>boost::coroutines::protected_stack_allocator</em></span> it does
-        not append a guard page at the end of each stack. The memory is simply managed
-        by <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">malloc</span><span class="special">()</span></code>
-        and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">free</span><span class="special">()</span></code>.
+        to <span class="emphasis"><em>protected_stack_allocator</em></span> it does not append a guard
+        page at the end of each stack. The memory is simply managed by <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">malloc</span><span class="special">()</span></code> and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">free</span><span class="special">()</span></code>.
       </p>
 <pre class="programlisting"><span class="keyword">class</span> <span class="identifier">standard_stack_allocator</span>
 <span class="special">{</span>

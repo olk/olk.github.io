@@ -36,8 +36,8 @@
       optimization = speed' (stack-unwinding disabled).
     </p>
 <div class="table">
-<a name="coroutine.performance.perfomance_of_coroutine"></a><p class="title"><b>Table&#160;1.1.&#160;Perfomance of coroutine</b></p>
-<div class="table-contents"><table class="table" summary="Perfomance of coroutine">
+<a name="coroutine.performance.perfomance_of_asymmetric_coroutines"></a><p class="title"><b>Table&#160;1.1.&#160;Perfomance of asymmetric coroutines</b></p>
+<div class="table-contents"><table class="table" summary="Perfomance of asymmetric coroutines">
 <colgroup>
 <col>
 <col>
@@ -63,12 +63,12 @@
             </th>
 <th>
               <p>
-                construction (standard stack-allocator)
+                construction (preallocated stack-allocator)
               </p>
             </th>
 <th>
               <p>
-                construction (preallocated stack-allocator)
+                construction (standard stack-allocator)
               </p>
             </th>
 </tr></thead>
@@ -76,66 +76,153 @@
 <tr>
 <td>
               <p>
-                i386 <sup>[<a name="coroutine.performance.f0" href="#ftn.coroutine.performance.f0" class="footnote">a</a>]</sup>
+                i386 (AMD Athlon 64 DualCore 4400+, Linux 32bit)
               </p>
             </td>
 <td>
               <p>
-                55 ns / 105 cycles
+                53 ns / 54 cycles
               </p>
             </td>
 <td>
               <p>
-                ns / cycles
+                195 ms / 216006 cycles
               </p>
             </td>
 <td>
               <p>
-                ns / cycles
+                9 ms / 9691 cycles
               </p>
             </td>
 <td>
               <p>
-                ns / cycles
+                629 ns / 603 cycles
               </p>
             </td>
 </tr>
 <tr>
 <td>
               <p>
-                x86_64 <sup>[<a name="coroutine.performance.f1" href="#ftn.coroutine.performance.f1" class="footnote">b</a>]</sup>
+                x86_64 (Intel Core2 Q6700, Linux 64bit)
               </p>
             </td>
 <td>
               <p>
-                49 ns / 132 cycles
+                12 ns / 39 cycles
               </p>
             </td>
 <td>
               <p>
-                38029 ns / 111898 cycles
+                37 ms / 101999 cycles
               </p>
             </td>
 <td>
               <p>
-                480 ns / 1208 cycles
+                3 ms / 9719 cycles
               </p>
             </td>
 <td>
               <p>
-                3528 ns / 13007 cycles
+                248 ns / 632 cycles
               </p>
             </td>
 </tr>
 </tbody>
-<tbody class="footnotes"><tr><td colspan="5">
-<div class="footnote"><p><sup>[<a name="ftn.coroutine.performance.f0" href="#coroutine.performance.f0" class="para">a</a>] </sup>
-                  AMD Athlon 64 DualCore 4400+
-                </p></div>
-<div class="footnote"><p><sup>[<a name="ftn.coroutine.performance.f1" href="#coroutine.performance.f1" class="para">b</a>] </sup>
-                  Intel Core2 Q6700
-                </p></div>
-</td></tr></tbody>
+</table></div>
+</div>
+<br class="table-break"><div class="table">
+<a name="coroutine.performance.perfomance_of_symmetric_coroutines"></a><p class="title"><b>Table&#160;1.2.&#160;Perfomance of symmetric coroutines</b></p>
+<div class="table-contents"><table class="table" summary="Perfomance of symmetric coroutines">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+              <p>
+                Platform
+              </p>
+            </th>
+<th>
+              <p>
+                switch
+              </p>
+            </th>
+<th>
+              <p>
+                construction (protected stack-allocator)
+              </p>
+            </th>
+<th>
+              <p>
+                construction (preallocated stack-allocator)
+              </p>
+            </th>
+<th>
+              <p>
+                construction (standard stack-allocator)
+              </p>
+            </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+              <p>
+                i386 (AMD Athlon 64 DualCore 4400+, Linux 32bit)
+              </p>
+            </td>
+<td>
+              <p>
+                50 ns / 52 cycles
+              </p>
+            </td>
+<td>
+              <p>
+                221 ms / 214170 cycles
+              </p>
+            </td>
+<td>
+              <p>
+                245 ns / 245 cycles
+              </p>
+            </td>
+<td>
+              <p>
+                481 ns / 501 cycles
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                x86_64 (Intel Core2 Q6700, Linux 64bit)
+              </p>
+            </td>
+<td>
+              <p>
+                10 ns / 33 cycles
+              </p>
+            </td>
+<td>
+              <p>
+                35 ms / 90504 cycles
+              </p>
+            </td>
+<td>
+              <p>
+                95 ns / 241 cycles
+              </p>
+            </td>
+<td>
+              <p>
+                199 ns / 508 cycles
+              </p>
+            </td>
+</tr>
+</tbody>
 </table></div>
 </div>
 <br class="table-break">

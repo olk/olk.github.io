@@ -33,9 +33,9 @@
 </dl></div>
 <p>
         In contrast to asymmetric coroutines, were the relationship between caller
-        and callee ist fixed, are symmetric coroutines able to transfer execution
+        and callee ist fixed, symmetric coroutines are able to transfer execution
         control to any other (symmetric) coroutine. E.g. a symmetric coroutine is
-        not required to return to its caller.
+        not required to return to its direct caller.
       </p>
 <h5>
 <a name="coroutine.coroutine.symmetric.h0"></a>
@@ -50,7 +50,7 @@
         to a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span> as argument.
         Instantiating a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
         does not pass the control of execution to <span class="emphasis"><em>coroutine-function</em></span>
-        - instead the first call of <span class="emphasis"><em>boost::coroutines::symmetric_coroutine&lt;&gt;::operator()</em></span>
+        - instead the first call of <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span>
         synthesizes a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span>
         passed it as reference to <span class="emphasis"><em>coroutine-function</em></span>.
       </p>
@@ -64,13 +64,95 @@
         <span><a name="coroutine.coroutine.symmetric._emphasis_symmetric_coroutine_lt__gt___yield_type__emphasis_"></a></span><a class="link" href="symmetric.html#coroutine.coroutine.symmetric._emphasis_symmetric_coroutine_lt__gt___yield_type__emphasis_"><span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span></a>
       </h5>
 <p>
-        <span class="emphasis"><em>boost::coroutines::symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
-        ist used to transfers data and execution control to another context - which
-        might be a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span> or
-        called with no argument back to the excecution context were the chain of
-        symmetric coroutines has been started (invocation of <span class="emphasis"><em>boost::coroutines::symmetric_coroutine&lt;&gt;::operator()</em></span>).
+        <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
+        ist used to transfers data and execution control to another context by calling
+        <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
+        with another <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
+        as first argument. If <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
+        is invoked without __call<span class="emphasis"><em>coroutine</em></span> as argument the execution
+        control is transfered to the start of the <span class="emphasis"><em>symmetric_coroutine&lt;&gt;</em></span>
+        sequence, e.g. invocation of <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span>.
         The class has only one template parameter defining the transferred parameter
-        type. Data transferred to the coroutine are accessed through <span class="emphasis"><em>boost::coroutines::symmetric_coroutine&lt;&gt;::yield_type::get()</em></span>.
+        type. Data transferred to the coroutine are accessed through <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::get()</em></span>.
+      </p>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../../doc/src/images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span> can only be
+          created by the framework.
+        </p></td></tr>
+</table></div>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">merge</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;&amp;</span> <span class="identifier">a</span><span class="special">,</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;&amp;</span> <span class="identifier">b</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">c</span><span class="special">;</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">idx_a</span><span class="special">=</span><span class="number">0</span><span class="special">,</span><span class="identifier">idx_b</span><span class="special">=</span><span class="number">0</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">symmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;::</span><span class="identifier">call_type</span><span class="special">*</span> <span class="identifier">other_a</span><span class="special">=</span><span class="number">0</span><span class="special">,*</span> <span class="identifier">other_b</span><span class="special">=</span><span class="number">0</span><span class="special">;</span>
+
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">symmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;::</span><span class="identifier">call_type</span> <span class="identifier">coro_a</span><span class="special">(</span>
+        <span class="special">[&amp;](</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">symmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;::</span><span class="identifier">yield_type</span><span class="special">&amp;</span> <span class="identifier">yield</span><span class="special">)</span> <span class="special">{</span>
+            <span class="keyword">while</span><span class="special">(</span><span class="identifier">idx_a</span><span class="special">&lt;</span><span class="identifier">a</span><span class="special">.</span><span class="identifier">size</span><span class="special">())</span>
+            <span class="special">{</span>
+                <span class="keyword">if</span><span class="special">(</span><span class="identifier">b</span><span class="special">[</span><span class="identifier">idx_b</span><span class="special">]&lt;</span><span class="identifier">a</span><span class="special">[</span><span class="identifier">idx_a</span><span class="special">])</span>    <span class="comment">// test if element in array b is less than in array a</span>
+                    <span class="identifier">yield</span><span class="special">(*</span><span class="identifier">other_b</span><span class="special">);</span>     <span class="comment">// yield to coroutine coro_b</span>
+                <span class="identifier">c</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">a</span><span class="special">[</span><span class="identifier">idx_a</span><span class="special">++]);</span> <span class="comment">// add element to final array</span>
+            <span class="special">}</span>
+            <span class="comment">// add remaining elements of array b</span>
+            <span class="keyword">while</span><span class="special">(</span><span class="identifier">c</span><span class="special">.</span><span class="identifier">size</span><span class="special">()&lt;</span><span class="identifier">a</span><span class="special">.</span><span class="identifier">size</span><span class="special">()+</span><span class="identifier">b</span><span class="special">.</span><span class="identifier">size</span><span class="special">())</span>
+                <span class="identifier">c</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">b</span><span class="special">[</span><span class="identifier">idx_b</span><span class="special">]);</span>
+        <span class="special">});</span>
+
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">symmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;::</span><span class="identifier">call_type</span> <span class="identifier">coro_b</span><span class="special">(</span>
+        <span class="special">[&amp;](</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">symmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;::</span><span class="identifier">yield_type</span><span class="special">&amp;</span> <span class="identifier">yield</span><span class="special">)</span> <span class="special">{</span>
+            <span class="keyword">while</span><span class="special">(</span><span class="identifier">idx_b</span><span class="special">&lt;</span><span class="identifier">b</span><span class="special">.</span><span class="identifier">size</span><span class="special">())</span>
+            <span class="special">{</span>
+                <span class="keyword">if</span> <span class="special">(</span><span class="identifier">a</span><span class="special">[</span><span class="identifier">idx_a</span><span class="special">]&lt;</span><span class="identifier">b</span><span class="special">[</span><span class="identifier">idx_b</span><span class="special">])</span>   <span class="comment">// test if element in array a is less than in array b</span>
+                    <span class="identifier">yield</span><span class="special">(*</span><span class="identifier">other_a</span><span class="special">);</span>     <span class="comment">// yield to coroutine coro_a</span>
+                <span class="identifier">c</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">b</span><span class="special">[</span><span class="identifier">idx_b</span><span class="special">++]);</span> <span class="comment">// add element to final array</span>
+            <span class="special">}</span>
+            <span class="comment">// add remaining elements of array a</span>
+            <span class="keyword">while</span><span class="special">(</span><span class="identifier">c</span><span class="special">.</span><span class="identifier">size</span><span class="special">()&lt;(</span><span class="identifier">a</span><span class="special">.</span><span class="identifier">size</span><span class="special">()+</span><span class="identifier">b</span><span class="special">.</span><span class="identifier">size</span><span class="special">()))</span>
+                <span class="identifier">c</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">a</span><span class="special">[</span><span class="identifier">idx_a</span><span class="special">]);</span>
+        <span class="special">});</span>
+
+
+    <span class="identifier">other_a</span> <span class="special">=</span> <span class="special">&amp;</span> <span class="identifier">coro_a</span><span class="special">;</span>
+    <span class="identifier">other_b</span> <span class="special">=</span> <span class="special">&amp;</span> <span class="identifier">coro_b</span><span class="special">;</span>
+
+    <span class="identifier">coro_a</span><span class="special">();</span> <span class="comment">// enter coroutine-fn of coro_a</span>
+
+    <span class="keyword">return</span> <span class="identifier">c</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="keyword">int</span> <span class="special">&gt;</span> <span class="identifier">a</span> <span class="special">=</span> <span class="special">{</span><span class="number">1</span><span class="special">,</span><span class="number">5</span><span class="special">,</span><span class="number">6</span><span class="special">,</span><span class="number">10</span><span class="special">};</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="keyword">int</span> <span class="special">&gt;</span> <span class="identifier">b</span> <span class="special">=</span> <span class="special">{</span><span class="number">2</span><span class="special">,</span><span class="number">4</span><span class="special">,</span><span class="number">7</span><span class="special">,</span><span class="number">8</span><span class="special">,</span><span class="number">9</span><span class="special">,</span><span class="number">13</span><span class="special">};</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="keyword">int</span> <span class="special">&gt;</span> <span class="identifier">c</span> <span class="special">=</span> <span class="identifier">merge</span><span class="special">(</span><span class="identifier">a</span><span class="special">,</span><span class="identifier">b</span><span class="special">);</span>
+<span class="identifier">print</span><span class="special">(</span><span class="identifier">a</span><span class="special">);</span>
+<span class="identifier">print</span><span class="special">(</span><span class="identifier">b</span><span class="special">);</span>
+<span class="identifier">print</span><span class="special">(</span><span class="identifier">c</span><span class="special">);</span>
+
+<span class="identifier">output</span><span class="special">:</span>
+    <span class="identifier">a</span> <span class="special">:</span> <span class="number">1</span> <span class="number">5</span> <span class="number">6</span> <span class="number">10</span>
+    <span class="identifier">b</span> <span class="special">:</span> <span class="number">2</span> <span class="number">4</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span> <span class="number">13</span>
+    <span class="identifier">c</span> <span class="special">:</span> <span class="number">1</span> <span class="number">2</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span> <span class="number">10</span> <span class="number">13</span>
+</pre>
+<p>
+        In this example two <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
+        are created in the main execution context accepting a lambda function (==
+        <span class="emphasis"><em>coroutine-function</em></span>) which merges elements of two sorted
+        arrays into a third array. <code class="computeroutput"><span class="identifier">coro_a</span><span class="special">()</span></code> enters the <span class="emphasis"><em>coroutine-function</em></span>
+        of <code class="computeroutput"><span class="identifier">coro_a</span></code> cycling through
+        teh array and tests if the actuall element in the other array is less than
+        the element in the local one. If so, toe coroutine yields to the other coroutine
+        <code class="computeroutput"><span class="identifier">coro_b</span></code> using <code class="computeroutput"><span class="identifier">yield</span><span class="special">(*</span><span class="identifier">other_b</span><span class="special">)</span></code>.
+        If the current element of the local array is less than the element of the
+        other array, it is put to the third array. Because the coroutine jumps back
+        to <code class="computeroutput"><span class="identifier">coro_a</span><span class="special">()</span></code>
+        (returning from this method) after leaving the <span class="emphasis"><em>coroutine-function</em></span>,
+        the elements of the other array will appended at the end of the third array
+        if all element of the local array are processed.
       </p>
 <h5>
 <a name="coroutine.coroutine.symmetric.h2"></a>
@@ -79,11 +161,10 @@
 <p>
         The <span class="emphasis"><em>coroutine-function</em></span> returns <span class="emphasis"><em>void</em></span>
         and takes <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span>, providing
-        coroutine functionality inside the coroutine-fn, as argument, so that using
-        this instance passed as argument to <span class="emphasis"><em>coroutine-function</em></span>
-        is the only way to transfer data and execution control. <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
+        coroutine functionality inside the coroutine-fn, as argument. Using this
+        instance is the only way to transfer data and execution control. <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
         does not enter the <span class="emphasis"><em>coroutine-function</em></span> at <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
-        construction but entered by the first invocation of <span class="emphasis"><em>boost::coroutines::symmetric_coroutine&lt;&gt;::operator()</em></span>.
+        construction but entered by the first invocation of <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span>.
       </p>
 <h5>
 <a name="coroutine.coroutine.symmetric.h3"></a>
@@ -96,9 +177,9 @@
         associated with the <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
         instance in the main-context. The synthesized <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span>
         is passed as argument to <span class="emphasis"><em>coroutine-function</em></span>. The main-context
-        must call <span class="emphasis"><em>boost::coroutines::symmetric_coroutine&lt;&gt;::operator()</em></span>
-        in order to transfer each data value into the <span class="emphasis"><em>coroutine-function</em></span>.
-        Access to the transferred data value is given by <span class="emphasis"><em>boost::coroutines::symmetric_coroutine&lt;&gt;::yield_type::get()</em></span>.
+        must call <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span> in
+        order to transfer each data value into the <span class="emphasis"><em>coroutine-function</em></span>.
+        Access to the transferred data value is given by <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::get()</em></span>.
       </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">symmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;::</span><span class="identifier">call_type</span> <span class="identifier">coro</span><span class="special">(</span> <span class="comment">// constructor does NOT enter coroutine-function</span>
     <span class="special">[&amp;](</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">symmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;::</span><span class="identifier">yield_type</span><span class="special">&amp;</span> <span class="identifier">yield</span><span class="special">){</span>
@@ -128,7 +209,7 @@
 <th align="left">Important</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-          Code executed by coroutine must not prevent the propagation of the <span class="emphasis"><em>boost::coroutines::detail::forced_unwind</em></span>
+          Code executed by coroutine must not prevent the propagation of the <span class="emphasis"><em>detail::forced_unwind</em></span>
           exception. Absorbing that exception will cause stack unwinding to fail.
           Thus, any code that catches all exceptions must re-throw the pending exception.
         </p></td></tr>
@@ -214,12 +295,12 @@
       </h5>
 <p>
         <span class="emphasis"><em>coroutine-function</em></span> is exited with a simple return statement
-        jumping back to the calling <span class="emphasis"><em>boost::coroutines::symmetric_coroutine&lt;&gt;::operator()</em></span>
+        jumping back to the calling <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span>
         at the start of symmetric coroutine chain. E.g. symmetric coroutines do not
         have a strong, fixed relationship to the caller as asymmetric coroutines.
         The <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span> becomes complete,
-        e.g. <span class="emphasis"><em>boost::coroutines::symmetric_coroutine&lt;&gt;::operator bool</em></span>
-        will return 'false'.
+        e.g. <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator bool</em></span> will
+        return 'false'.
       </p>
 <div class="important"><table border="0" summary="Important">
 <tr>
@@ -228,7 +309,7 @@
 </tr>
 <tr><td align="left" valign="top"><p>
           After returning from <span class="emphasis"><em>coroutine-function</em></span> the <span class="emphasis"><em>coroutine</em></span>
-          is complete (can not resumed with <span class="emphasis"><em>boost::coroutines::symmetric_coroutine&lt;&gt;::operator()</em></span>).
+          is complete (can not resumed with <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span>).
         </p></td></tr>
 </table></div>
 </div>

@@ -27,7 +27,7 @@
 <a name="coroutine.stack.protected_stack_allocator"></a><a class="link" href="protected_stack_allocator.html" title="Class protected_stack_allocator">Class <span class="emphasis"><em>protected_stack_allocator</em></span></a>
 </h3></div></div></div>
 <p>
-        <span class="bold"><strong>Boost.Coroutine</strong></span> provides the class <span class="emphasis"><em>boost::coroutines::protected_stack_allocator</em></span>
+        <span class="bold"><strong>Boost.Coroutine</strong></span> provides the class <span class="emphasis"><em>protected_stack_allocator</em></span>
         which models the <span class="emphasis"><em>stack-allocator concept</em></span>. It appends
         a guard page at the end of each stack to protect against exceeding the stack.
         If the guard page is accessed (read or write operation) a segmentation fault/access
@@ -39,8 +39,7 @@
 <th align="left">Important</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-          Using <span class="emphasis"><em>boost::coroutines::protected_stack_allocator</em></span>
-          is expensive.
+          Using <span class="emphasis"><em>protected_stack_allocator</em></span> is expensive.
         </p></td></tr>
 </table></div>
 <div class="note"><table border="0" summary="Note">
