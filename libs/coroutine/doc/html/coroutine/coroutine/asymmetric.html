@@ -83,7 +83,7 @@
 <p>
         In this example a <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type</em></span>
         is created in the main execution context taking a lambda function (== <span class="emphasis"><em>coroutine-function</em></span>)
-        which calculates Fibonacci numbers in a simple <span class="emphasis"><em>for</em></span>-loop).
+        which calculates Fibonacci numbers in a simple <span class="emphasis"><em>for</em></span>-loop.
         The <span class="emphasis"><em>coroutine-function</em></span> is executed in a newly created
         execution context which is managed by the instance of <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type</em></span>.
         A <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type</em></span> is automatically
@@ -326,12 +326,13 @@
 <tr><td align="left" valign="top"><p>
           Code executed by coroutine must not prevent the propagation of the <span class="emphasis"><em>detail::forced_unwind</em></span>
           exception. Absorbing that exception will cause stack unwinding to fail.
-          Thus, any code that catches all exceptions must re-throw the pending exception.
+          Thus, any code that catches all exceptions must re-throw any pending <span class="emphasis"><em>detail::forced_unwind</em></span>
+          exception.
         </p></td></tr>
 </table></div>
 <pre class="programlisting"><span class="keyword">try</span> <span class="special">{</span>
     <span class="comment">// code that might throw</span>
-<span class="special">}</span> <span class="keyword">catch</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">forced_unwind</span><span class="special">&amp;)</span> <span class="special">{</span>
+<span class="special">}</span> <span class="keyword">catch</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">forced_unwind</span><span class="special">&amp;)</span> <span class="special">{</span>
     <span class="keyword">throw</span><span class="special">;</span>
 <span class="special">}</span> <span class="keyword">catch</span><span class="special">(...)</span> <span class="special">{</span>
     <span class="comment">// possibly not re-throw pending exception</span>
@@ -437,6 +438,28 @@
     <span class="number">2</span> <span class="number">4</span> <span class="number">8</span> <span class="number">16</span> <span class="number">32</span> <span class="number">64</span> <span class="number">128</span> <span class="number">256</span>
 </pre>
 <p>
+        <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type::iterator::operator++()</em></span>
+        corresponds to <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type::operator()</em></span>;
+        <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type::iterator::operator*()</em></span>
+        roughly corresponds to <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type::get()</em></span>.
+        An iterator originally obtained from <span class="emphasis"><em>boost::begin()</em></span>
+        of an <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type</em></span> compares
+        equal to an iterator obtained from <span class="emphasis"><em>boost::end()</em></span> of that
+        same <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type</em></span> instance
+        when its <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type::operator bool</em></span>
+        would return <span class="emphasis"><em>false</em></span>.
+      </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          If T is a move-only type, then <span class="emphasis"><em>asymmetric_coroutine&lt;T&gt;::pull_type::iterator</em></span>
+          may only be dereferenced once before it is incremented again.
+        </p></td></tr>
+</table></div>
+<p>
         Output-iterators can be created from <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type</em></span>.
       </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">asymmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;::</span><span class="identifier">push_type</span> <span class="identifier">sink</span><span class="special">(</span>
@@ -450,6 +473,16 @@
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">{</span><span class="number">1</span><span class="special">,</span><span class="number">1</span><span class="special">,</span><span class="number">2</span><span class="special">,</span><span class="number">3</span><span class="special">,</span><span class="number">5</span><span class="special">,</span><span class="number">8</span><span class="special">,</span><span class="number">13</span><span class="special">,</span><span class="number">21</span><span class="special">,</span><span class="number">34</span><span class="special">,</span><span class="number">55</span><span class="special">};</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">copy</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">begin</span><span class="special">(</span><span class="identifier">v</span><span class="special">),</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">end</span><span class="special">(</span><span class="identifier">v</span><span class="special">),</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">begin</span><span class="special">(</span><span class="identifier">sink</span><span class="special">));</span>
 </pre>
+<p>
+        <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type::iterator::operator*()</em></span>
+        roughly corresponds to <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type::operator()</em></span>.
+        An iterator originally obtained from <span class="emphasis"><em>boost::begin()</em></span>
+        of an <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type</em></span> compares
+        equal to an iterator obtained from <span class="emphasis"><em>boost::end()</em></span> of that
+        same <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type</em></span> instance
+        when its <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type::operator bool</em></span>
+        would return <span class="emphasis"><em>false</em></span>.
+      </p>
 <h5>
 <a name="coroutine.coroutine.asymmetric.h9"></a>
         <span><a name="coroutine.coroutine.asymmetric.exit_a__emphasis_coroutine_function__emphasis_"></a></span><a class="link" href="asymmetric.html#coroutine.coroutine.asymmetric.exit_a__emphasis_coroutine_function__emphasis_">Exit

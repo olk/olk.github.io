@@ -30,14 +30,14 @@
         <span class="bold"><strong>Boost.Coroutine</strong></span> provides the class <span class="emphasis"><em>stack_context</em></span>
         which will contain the stack pointer and the size of the stack. In case of
         a <span class="emphasis"><em>segemented-stack</em></span> <span class="emphasis"><em>stack_context</em></span>
-        contains some extra controll structures.
+        contains some extra control structures.
       </p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">stack_context</span>
 <span class="special">{</span>
     <span class="keyword">void</span>    <span class="special">*</span>   <span class="identifier">sp</span><span class="special">;</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size</span><span class="special">;</span>
 
-    <span class="comment">// might contain addition controll structures</span>
+    <span class="comment">// might contain addition control structures</span>
     <span class="comment">// for instance for segmented stacks</span>
 <span class="special">}</span>
 </pre>

@@ -51,26 +51,26 @@
       <span class="inlinemediaobject"><img src="../../../../../libs/coroutine/doc/images/foo_bar.png" align="middle" alt="foo_bar"></span>
     </p>
 <p>
-      If coroutines would be called such as routines, the stack would grow with every
-      call and will never be degraded. A jump into the middle of a coroutine would
-      not be possible, because the return address would have been on top of stack
+      If coroutines were called exactly like routines, the stack would grow with
+      every call and would never be popped. A jump into the middle of a coroutine
+      would not be possible, because the return address would be on top of stack
       entries.
     </p>
 <p>
       The solution is that each coroutine has its own stack and control-block (<span class="emphasis"><em>boost::contexts::fcontext_t</em></span>
       from <span class="bold"><strong>Boost.Context</strong></span>). Before the coroutine
       gets suspended, the non-volatile registers (including stack and instruction/program
-      pointer) of the currently active coroutine are stored in coroutine's control-block.
+      pointer) of the currently active coroutine are stored in the coroutine's control-block.
       The registers of the newly activated coroutine must be restored from its associated
-      control-block before it can continue with their work.
+      control-block before it can continue with its work.
     </p>
 <p>
       The context switch requires no system privileges and provides cooperative multitasking
-      on the level of language. Coroutines provide quasi parallelism. When a program
-      is supposed to do several things at the same time, coroutines help to do this
-      much simpler and more elegant than with only a single flow of control. Advantages
-      can be seen particularly clearly with the use of a recursive function, such
-      as traversal of binary trees (see example 'same fringe').
+      convenient to C++. Coroutines provide quasi parallelism. When a program is
+      supposed to do several things at the same time, coroutines help to do this
+      much more simply and elegantly than with only a single flow of control. The
+      advantages can be seen particularly clearly with the use of a recursive function,
+      such as traversal of binary trees (see example 'same fringe').
     </p>
 <h4>
 <a name="coroutine.intro.h2"></a>
@@ -84,7 +84,7 @@
           values of local data persist between successive calls (context switches)
         </li>
 <li class="listitem">
-          execution is suspended as control leaves coroutine and resumed at certain
+          execution is suspended as control leaves coroutine and is resumed at certain
           time later
         </li>
 <li class="listitem">
@@ -111,13 +111,14 @@
       mechanism</a>
     </h4>
 <p>
-      Two categories of coroutines exist: symmetric and asymmetric coroutines. A
-      symmetric coroutine transfers the execution control only via one operation.
-      The target coroutine must be explicitly specified in the transfer operation.
-      Asymmetric coroutines provide two transfer operations: the <span class="emphasis"><em>suspend</em></span>-operation
-      returns to the invoker by preserving the execution context and the <span class="emphasis"><em>resume</em></span>-operation
-      restores the execution context, e.g. re-enters the coroutine at the same point
-      as it was suspended before.
+      Two categories of coroutines exist: symmetric and asymmetric coroutines.
+    </p>
+<p>
+      An asymmetric coroutine knows its invoker, using a special operation to implicitly
+      yield control specifically to its invoker. By contrast, all symmetric coroutines
+      are equivalent; one symmetric coroutine may pass control to any other symmetric
+      coroutine. Because of this, a symmetric coroutine <span class="emphasis"><em>must</em></span>
+      specify the coroutine to which it intends to yield control.
     </p>
 <p>
       <span class="inlinemediaobject"><img src="../../../../../libs/coroutine/doc/images/foo_bar_seq.png" align="middle" alt="foo_bar_seq"></span>
@@ -131,12 +132,12 @@
       <span><a name="coroutine.intro.stackfulness"></a></span><a class="link" href="intro.html#coroutine.intro.stackfulness">stackfulness</a>
     </h4>
 <p>
-      In contrast to a stackless coroutine a stackful coroutine allows to suspend
-      from nested stackframes. The execution resumes at exact the same point in the
-      code as it was suspended before. With a stackless coroutine, only the top-level
-      routine may be suspended. Any routine called by that top-level routine may
-      not ityield suspend. This prohibits providing suspend/resume operations in
-      routines within a general-purpose library.
+      In contrast to a stackless coroutine a stackful coroutine can be suspended
+      from within a nested stackframe. Execution resumes at exact the same point
+      in the code where it was suspended before. With a stackless coroutine, only
+      the top-level routine may be suspended. Any routine called by that top-level
+      routine may not itself suspend. This prohibits providing suspend/resume operations
+      in routines within a general-purpose library.
     </p>
 <h4>
 <a name="coroutine.intro.h5"></a>
@@ -150,7 +151,7 @@
       accessed or directly manipulated.
     </p>
 <p>
-      Without stackfulness and first-class semantics some useful execution control
+      Without stackfulness and first-class semantics, some useful execution control
       flows cannot be supported (for instance cooperative multitasking or checkpointing).
     </p>
 <div class="footnotes">

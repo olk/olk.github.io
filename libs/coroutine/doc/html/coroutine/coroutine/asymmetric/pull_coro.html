@@ -50,11 +50,7 @@
 
     <span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span> <span class="identifier">pull_type</span> <span class="special">&amp;</span> <span class="identifier">other</span><span class="special">);</span>
 
-    <span class="keyword">bool</span> <span class="identifier">empty</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
-
     <span class="identifier">pull_type</span> <span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">()();</span>
-
-    <span class="keyword">bool</span> <span class="identifier">has_result</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
 
     <span class="identifier">R</span> <span class="identifier">get</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">};</span>
@@ -97,15 +93,15 @@
 <dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
-                <code class="computeroutput"><span class="identifier">size</span></code> &gt; minimum_stacksize(),
-                <code class="computeroutput"><span class="identifier">size</span></code> &lt; maximum_stacksize()
-                when ! is_stack_unbound().
+                <code class="computeroutput"><span class="identifier">size</span></code> &gt;= minimum_stacksize(),
+                <code class="computeroutput"><span class="identifier">size</span></code> &lt;= maximum_stacksize()
+                when ! is_stack_unbounded().
               </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-                Creates a coroutine which will execute <code class="computeroutput"><span class="identifier">fn</span></code>.
-                Argument <code class="computeroutput"><span class="identifier">attr</span></code> determines
-                stack clean-up and preserving floating-point registers.
+                Creates a coroutine which will execute <code class="computeroutput"><span class="identifier">fn</span></code>,
+                and enters it. Argument <code class="computeroutput"><span class="identifier">attr</span></code>
+                determines stack clean-up and preserving floating-point registers.
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -126,9 +122,9 @@
 <dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
-                <code class="computeroutput"><span class="identifier">size</span></code> &gt; minimum_stacksize(),
-                <code class="computeroutput"><span class="identifier">size</span></code> &lt; maximum_stacksize()
-                when ! is_stack_unbound().
+                <code class="computeroutput"><span class="identifier">size</span></code> &gt;= minimum_stacksize(),
+                <code class="computeroutput"><span class="identifier">size</span></code> &lt;= maximum_stacksize()
+                when ! is_stack_unbounded().
               </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -227,25 +223,6 @@
 </div>
 <h6>
 <a name="coroutine.coroutine.asymmetric.pull_coro.h7"></a>
-          <span><a name="coroutine.coroutine.asymmetric.pull_coro._code__phrase_role__keyword__bool__phrase___phrase_role__identifier__empty__phrase__phrase_role__special______phrase___code_"></a></span><a class="link" href="pull_coro.html#coroutine.coroutine.asymmetric.pull_coro._code__phrase_role__keyword__bool__phrase___phrase_role__identifier__empty__phrase__phrase_role__special______phrase___code_"><code class="computeroutput"><span class="keyword">bool</span> <span class="identifier">empty</span><span class="special">()</span></code></a>
-        </h6>
-<div class="variablelist">
-<p class="title"><b></b></p>
-<dl>
-<dt><span class="term">Returns:</span></dt>
-<dd><p>
-                If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
-                refers to <span class="emphasis"><em>not-a-coroutine</em></span>, the function returns
-                true. Otherwise false.
-              </p></dd>
-<dt><span class="term">Throws:</span></dt>
-<dd><p>
-                Nothing.
-              </p></dd>
-</dl>
-</div>
-<h6>
-<a name="coroutine.coroutine.asymmetric.pull_coro.h8"></a>
           <span><a name="coroutine.coroutine.asymmetric.pull_coro._code__phrase_role__identifier__pull_type__phrase__phrase_role__special___lt__gt___phrase___phrase_role__special___amp___phrase___phrase_role__keyword__operator__phrase__phrase_role__special________phrase___code_"></a></span><a class="link" href="pull_coro.html#coroutine.coroutine.asymmetric.pull_coro._code__phrase_role__identifier__pull_type__phrase__phrase_role__special___lt__gt___phrase___phrase_role__special___amp___phrase___phrase_role__keyword__operator__phrase__phrase_role__special________phrase___code_"><code class="computeroutput"><span class="identifier">pull_type</span><span class="special">&lt;&gt;</span>
           <span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">()()</span></code></a>
         </h6>
@@ -269,30 +246,7 @@
 </dl>
 </div>
 <h6>
-<a name="coroutine.coroutine.asymmetric.pull_coro.h9"></a>
-          <span><a name="coroutine.coroutine.asymmetric.pull_coro._code__phrase_role__keyword__bool__phrase___phrase_role__identifier__has_result__phrase__phrase_role__special______phrase___code_"></a></span><a class="link" href="pull_coro.html#coroutine.coroutine.asymmetric.pull_coro._code__phrase_role__keyword__bool__phrase___phrase_role__identifier__has_result__phrase__phrase_role__special______phrase___code_"><code class="computeroutput"><span class="keyword">bool</span> <span class="identifier">has_result</span><span class="special">()</span></code></a>
-        </h6>
-<div class="variablelist">
-<p class="title"><b></b></p>
-<dl>
-<dt><span class="term">Preconditions:</span></dt>
-<dd><p>
-                <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
-                is not a <span class="emphasis"><em>not-a-coroutine</em></span>.
-              </p></dd>
-<dt><span class="term">Returns:</span></dt>
-<dd><p>
-                If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
-                has a, the function returns true. Otherwise false.
-              </p></dd>
-<dt><span class="term">Throws:</span></dt>
-<dd><p>
-                Nothing.
-              </p></dd>
-</dl>
-</div>
-<h6>
-<a name="coroutine.coroutine.asymmetric.pull_coro.h10"></a>
+<a name="coroutine.coroutine.asymmetric.pull_coro.h8"></a>
           <span><a name="coroutine.coroutine.asymmetric.pull_coro._code__phrase_role__identifier__r__phrase___phrase_role__identifier__get__phrase__phrase_role__special________phrase___code_"></a></span><a class="link" href="pull_coro.html#coroutine.coroutine.asymmetric.pull_coro._code__phrase_role__identifier__r__phrase___phrase_role__identifier__get__phrase__phrase_role__special________phrase___code_"><code class="computeroutput"><span class="identifier">R</span> <span class="identifier">get</span><span class="special">()()</span></code></a>
         </h6>
 <pre class="programlisting"><span class="identifier">R</span>    <span class="identifier">asymmetric_coroutine</span><span class="special">&lt;</span><span class="identifier">R</span><span class="special">&gt;::</span><span class="identifier">pull_type</span><span class="special">::</span><span class="identifier">get</span><span class="special">();</span>
@@ -315,10 +269,16 @@
 <dd><p>
                 Nothing.
               </p></dd>
+<dt><span class="term">Note:</span></dt>
+<dd><p>
+                If <code class="computeroutput"><span class="identifier">R</span></code> is a move-only
+                type, you may only call <code class="computeroutput"><span class="identifier">get</span><span class="special">()</span></code> once before each <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::pull_type::operator()</em></span>
+                call.
+              </p></dd>
 </dl>
 </div>
 <h6>
-<a name="coroutine.coroutine.asymmetric.pull_coro.h11"></a>
+<a name="coroutine.coroutine.asymmetric.pull_coro.h9"></a>
           <span><a name="coroutine.coroutine.asymmetric.pull_coro._code__phrase_role__keyword__void__phrase___phrase_role__identifier__swap__phrase__phrase_role__special_____phrase___phrase_role__identifier__pull_type__phrase___phrase_role__special___amp___phrase___phrase_role__identifier__other__phrase__phrase_role__special_____phrase___code_"></a></span><a class="link" href="pull_coro.html#coroutine.coroutine.asymmetric.pull_coro._code__phrase_role__keyword__void__phrase___phrase_role__identifier__swap__phrase__phrase_role__special_____phrase___phrase_role__identifier__pull_type__phrase___phrase_role__special___amp___phrase___phrase_role__identifier__other__phrase__phrase_role__special_____phrase___code_"><code class="computeroutput"><span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span> <span class="identifier">pull_type</span>
           <span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span></code></a>
         </h6>
@@ -336,7 +296,7 @@
 </dl>
 </div>
 <h6>
-<a name="coroutine.coroutine.asymmetric.pull_coro.h12"></a>
+<a name="coroutine.coroutine.asymmetric.pull_coro.h10"></a>
           <span><a name="coroutine.coroutine.asymmetric.pull_coro.non_member_function__code__phrase_role__identifier__swap__phrase__phrase_role__special______phrase___code_"></a></span><a class="link" href="pull_coro.html#coroutine.coroutine.asymmetric.pull_coro.non_member_function__code__phrase_role__identifier__swap__phrase__phrase_role__special______phrase___code_">Non-member
           function <code class="computeroutput"><span class="identifier">swap</span><span class="special">()</span></code></a>
         </h6>
@@ -353,7 +313,7 @@
 </dl>
 </div>
 <h6>
-<a name="coroutine.coroutine.asymmetric.pull_coro.h13"></a>
+<a name="coroutine.coroutine.asymmetric.pull_coro.h11"></a>
           <span><a name="coroutine.coroutine.asymmetric.pull_coro.non_member_function__code__phrase_role__identifier__begin__phrase__phrase_role__special_____phrase___phrase_role__identifier__pull_type__phrase__phrase_role__special___lt___phrase___phrase_role__identifier__r__phrase___phrase_role__special___gt___phrase___phrase_role__special___amp____phrase___code_"></a></span><a class="link" href="pull_coro.html#coroutine.coroutine.asymmetric.pull_coro.non_member_function__code__phrase_role__identifier__begin__phrase__phrase_role__special_____phrase___phrase_role__identifier__pull_type__phrase__phrase_role__special___lt___phrase___phrase_role__identifier__r__phrase___phrase_role__special___gt___phrase___phrase_role__special___amp____phrase___code_">Non-member
           function <code class="computeroutput"><span class="identifier">begin</span><span class="special">(</span>
           <span class="identifier">pull_type</span><span class="special">&lt;</span>
@@ -373,7 +333,7 @@
 </dl>
 </div>
 <h6>
-<a name="coroutine.coroutine.asymmetric.pull_coro.h14"></a>
+<a name="coroutine.coroutine.asymmetric.pull_coro.h12"></a>
           <span><a name="coroutine.coroutine.asymmetric.pull_coro.non_member_function__code__phrase_role__identifier__end__phrase__phrase_role__special_____phrase___phrase_role__identifier__pull_type__phrase__phrase_role__special___lt___phrase___phrase_role__identifier__r__phrase___phrase_role__special___gt___phrase___phrase_role__special___amp____phrase___code_"></a></span><a class="link" href="pull_coro.html#coroutine.coroutine.asymmetric.pull_coro.non_member_function__code__phrase_role__identifier__end__phrase__phrase_role__special_____phrase___phrase_role__identifier__pull_type__phrase__phrase_role__special___lt___phrase___phrase_role__identifier__r__phrase___phrase_role__special___gt___phrase___phrase_role__special___amp____phrase___code_">Non-member
           function <code class="computeroutput"><span class="identifier">end</span><span class="special">(</span>
           <span class="identifier">pull_type</span><span class="special">&lt;</span>

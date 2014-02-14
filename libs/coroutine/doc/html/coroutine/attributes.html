@@ -28,9 +28,21 @@
 </h2></div></div></div>
 <p>
       Class <code class="computeroutput"><span class="identifier">attributes</span></code> is used to
-      transfers parameters required to setup a coroutines's context.
+      transfers parameters required to setup a coroutine's context.
     </p>
-<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">attributes</span>
+<pre class="programlisting"><span class="keyword">enum</span> <span class="identifier">flag_unwind_t</span>
+<span class="special">{</span>
+    <span class="identifier">stack_unwind</span><span class="special">,</span>
+    <span class="identifier">no_stack_unwind</span>
+<span class="special">};</span>
+
+<span class="keyword">enum</span> <span class="identifier">flag_fpu_t</span>
+<span class="special">{</span>
+    <span class="identifier">fpu_preserved</span><span class="special">,</span>
+    <span class="identifier">fpu_not_preserved</span>
+<span class="special">};</span>
+
+<span class="keyword">struct</span> <span class="identifier">attributes</span>
 <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span>     <span class="identifier">size</span><span class="special">;</span>
     <span class="identifier">flag_unwind_t</span>   <span class="identifier">do_unwind</span><span class="special">;</span>
@@ -49,6 +61,8 @@
     <span class="keyword">explicit</span> <span class="identifier">attributes</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size_</span><span class="special">,</span> <span class="identifier">flag_fpu_t</span> <span class="identifier">preserve_fpu_</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 
     <span class="keyword">explicit</span> <span class="identifier">attributes</span><span class="special">(</span> <span class="identifier">flag_unwind_t</span> <span class="identifier">do_unwind_</span><span class="special">,</span> <span class="identifier">flag_fpu_t</span> <span class="identifier">preserve_fpu_</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+
+    <span class="keyword">explicit</span> <span class="identifier">attributes</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size_</span><span class="special">,</span> <span class="identifier">flag_unwind_t</span> <span class="identifier">do_unwind_</span><span class="special">,</span> <span class="identifier">flag_fpu_t</span> <span class="identifier">preserve_fpu_</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
 <h4>
@@ -60,7 +74,7 @@
 <dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-            Default constructor using <code class="computeroutput"><span class="identifier">ctx</span><span class="special">::</span><span class="identifier">default_stacksize</span><span class="special">()</span></code>, does unwind the stack after coroutine/generator
+            Default constructor using <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">context</span><span class="special">::</span><span class="identifier">default_stacksize</span><span class="special">()</span></code>, does unwind the stack after coroutine/generator
             is complete and preserves FPU registers.
           </p></dd>
 <dt><span class="term">Throws:</span></dt>
@@ -80,9 +94,8 @@
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
             Argument <code class="computeroutput"><span class="identifier">size</span></code> defines
-            stack size of the inner <code class="computeroutput"><span class="identifier">context</span></code>.
-            Stack unwinding after termination and preserving FPU registers is set
-            by default.
+            stack size of the new coroutine. Stack unwinding after termination and
+            preserving FPU registers is set by default.
           </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -101,8 +114,7 @@
 <dd><p>
             Argument <code class="computeroutput"><span class="identifier">do_unwind</span></code> determines
             if stack will be unwound after termination or not. The default stacksize
-            is used for the inner <code class="computeroutput"><span class="identifier">context</span></code>
-            and FPU registers are preserved.
+            is used for the new coroutine and FPU registers are preserved.
           </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -120,9 +132,9 @@
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
             Argument <code class="computeroutput"><span class="identifier">preserve_fpu</span></code>
-            determines if FPU register have to be preserved if a <code class="computeroutput"><span class="identifier">context</span></code>
-            switches. THe default stacksize is used for the inner <code class="computeroutput"><span class="identifier">context</span></code>
-            and the stack will be unwound after termination.
+            determines if FPU register have to be preserved across context switches.
+            The default stacksize is used for the new coroutine and its stack will
+            be unwound after termination.
           </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -141,8 +153,7 @@
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
             Arguments <code class="computeroutput"><span class="identifier">size</span></code> and <code class="computeroutput"><span class="identifier">do_unwind</span></code> are given by the user. FPU
-            registers preserved during each <code class="computeroutput"><span class="identifier">context</span></code>
-            switch.
+            registers are preserved across each context switch.
           </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -180,7 +191,7 @@
 <dd><p>
             Arguments <code class="computeroutput"><span class="identifier">do_unwind</span></code> and
             <code class="computeroutput"><span class="identifier">preserve_fpu</span></code> are given
-            by the user. The stack gets a default value of <code class="computeroutput"><span class="identifier">ctx</span><span class="special">::</span><span class="identifier">default_stacksize</span><span class="special">()</span></code>.
+            by the user. The stack gets a default value of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">context</span><span class="special">::</span><span class="identifier">default_stacksize</span><span class="special">()</span></code>.
           </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>

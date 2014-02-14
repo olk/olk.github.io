@@ -131,7 +131,9 @@
 </tr>
 <tr><td align="left" valign="top"><p>
         Calling <code class="computeroutput"><span class="identifier">deallocate</span><span class="special">()</span></code>
-        with a pointer not returned by <code class="computeroutput"><span class="identifier">allocate</span><span class="special">()</span></code> results in undefined behaviour.
+        with a <code class="computeroutput"><span class="identifier">stack_context</span></code> not
+        set by <code class="computeroutput"><span class="identifier">allocate</span><span class="special">()</span></code>
+        results in undefined behaviour.
       </p></td></tr>
 </table></div>
 <div class="note"><table border="0" summary="Note">
@@ -149,8 +151,8 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-        Depending on the architecture <code class="computeroutput"><span class="identifier">allocate</span><span class="special">()</span></code> returns an address from the top of the
-        stack (growing downwards) or the bottom of the stack (growing upwards).
+        Depending on the architecture <code class="computeroutput"><span class="identifier">allocate</span><span class="special">()</span></code> stores an address from the top of the stack
+        (growing downwards) or the bottom of the stack (growing upwards).
       </p></td></tr>
 </table></div>
 <p>

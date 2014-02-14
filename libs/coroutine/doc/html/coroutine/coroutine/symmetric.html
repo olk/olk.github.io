@@ -32,8 +32,8 @@
 <dt><span class="section"><a href="symmetric/yield_coro.html">Class <code class="computeroutput"><span class="identifier">symmetric_coroutine</span><span class="special">&lt;&gt;::</span><span class="identifier">yield_type</span></code></a></span></dt>
 </dl></div>
 <p>
-        In contrast to asymmetric coroutines, were the relationship between caller
-        and callee ist fixed, symmetric coroutines are able to transfer execution
+        In contrast to asymmetric coroutines, where the relationship between caller
+        and callee is fixed, symmetric coroutines are able to transfer execution
         control to any other (symmetric) coroutine. E.g. a symmetric coroutine is
         not required to return to its direct caller.
       </p>
@@ -50,14 +50,14 @@
         to a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span> as argument.
         Instantiating a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
         does not pass the control of execution to <span class="emphasis"><em>coroutine-function</em></span>
-        - instead the first call of <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span>
+        - instead the first call of <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator()</em></span>
         synthesizes a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span>
         passed it as reference to <span class="emphasis"><em>coroutine-function</em></span>.
       </p>
 <p>
-        The interface does not contain a <span class="emphasis"><em>get()</em></span>-function: you
-        can not retrieve values from another execution context with this kind of
-        coroutine.
+        The <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span> interface
+        does not contain a <span class="emphasis"><em>get()</em></span>-function: you can not retrieve
+        values from another execution context with this kind of coroutine object.
       </p>
 <h5>
 <a name="coroutine.coroutine.symmetric.h1"></a>
@@ -65,13 +65,15 @@
       </h5>
 <p>
         <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
-        ist used to transfers data and execution control to another context by calling
+        is used to transfers data and execution control to another context by calling
         <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
         with another <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
-        as first argument. If <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
-        is invoked without <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
-        as argument the execution control is transfered to the start of the <span class="emphasis"><em>symmetric_coroutine&lt;&gt;</em></span>
-        sequence, e.g. invocation of <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span>.
+        as first argument. Alternatively, you may transfer control back to the code
+        that called <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator()</em></span>
+        by calling <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
+        without a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span> argument.
+      </p>
+<p>
         The class has only one template parameter defining the transferred parameter
         type. Data transferred to the coroutine are accessed through <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::get()</em></span>.
       </p>
@@ -100,8 +102,8 @@
                 <span class="identifier">c</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">a</span><span class="special">[</span><span class="identifier">idx_a</span><span class="special">++]);</span> <span class="comment">// add element to final array</span>
             <span class="special">}</span>
             <span class="comment">// add remaining elements of array b</span>
-            <span class="keyword">while</span><span class="special">(</span><span class="identifier">c</span><span class="special">.</span><span class="identifier">size</span><span class="special">()&lt;</span><span class="identifier">a</span><span class="special">.</span><span class="identifier">size</span><span class="special">()+</span><span class="identifier">b</span><span class="special">.</span><span class="identifier">size</span><span class="special">())</span>
-                <span class="identifier">c</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">b</span><span class="special">[</span><span class="identifier">idx_b</span><span class="special">]);</span>
+            <span class="keyword">while</span> <span class="special">(</span> <span class="identifier">idx_b</span> <span class="special">&lt;</span> <span class="identifier">b</span><span class="special">.</span><span class="identifier">size</span><span class="special">())</span>
+                <span class="identifier">c</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span> <span class="identifier">b</span><span class="special">[</span><span class="identifier">idx_b</span><span class="special">++]);</span>
         <span class="special">});</span>
 
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">symmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;::</span><span class="identifier">call_type</span> <span class="identifier">coro_b</span><span class="special">(</span>
@@ -113,8 +115,8 @@
                 <span class="identifier">c</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">b</span><span class="special">[</span><span class="identifier">idx_b</span><span class="special">++]);</span> <span class="comment">// add element to final array</span>
             <span class="special">}</span>
             <span class="comment">// add remaining elements of array a</span>
-            <span class="keyword">while</span><span class="special">(</span><span class="identifier">c</span><span class="special">.</span><span class="identifier">size</span><span class="special">()&lt;(</span><span class="identifier">a</span><span class="special">.</span><span class="identifier">size</span><span class="special">()+</span><span class="identifier">b</span><span class="special">.</span><span class="identifier">size</span><span class="special">()))</span>
-                <span class="identifier">c</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">a</span><span class="special">[</span><span class="identifier">idx_a</span><span class="special">]);</span>
+            <span class="keyword">while</span> <span class="special">(</span> <span class="identifier">idx_a</span> <span class="special">&lt;</span> <span class="identifier">a</span><span class="special">.</span><span class="identifier">size</span><span class="special">())</span>
+                <span class="identifier">c</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span> <span class="identifier">a</span><span class="special">[</span><span class="identifier">idx_a</span><span class="special">++]);</span>
         <span class="special">});</span>
 
 
@@ -164,7 +166,20 @@
         coroutine functionality inside the coroutine-fn, as argument. Using this
         instance is the only way to transfer data and execution control. <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
         does not enter the <span class="emphasis"><em>coroutine-function</em></span> at <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
-        construction but entered by the first invocation of <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span>.
+        construction but entered by the first invocation of <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator()</em></span>.
+      </p>
+<p>
+        Unless <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="keyword">void</span></code>, the <span class="emphasis"><em>coroutine-function</em></span>
+        of a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span> can assume
+        that (a) upon initial entry and (b) after every <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
+        call, its <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::get()</em></span>
+        has a new value available.
+      </p>
+<p>
+        However, if <code class="computeroutput"><span class="identifier">T</span></code> is a move-only
+        type, <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::get()</em></span>
+        may only be called once before the next <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
+        call.
       </p>
 <h5>
 <a name="coroutine.coroutine.symmetric.h3"></a>
@@ -177,8 +192,8 @@
         associated with the <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
         instance in the main-context. The synthesized <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span>
         is passed as argument to <span class="emphasis"><em>coroutine-function</em></span>. The main-context
-        must call <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span> in
-        order to transfer each data value into the <span class="emphasis"><em>coroutine-function</em></span>.
+        must call <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator()</em></span>
+        in order to transfer each data value into the <span class="emphasis"><em>coroutine-function</em></span>.
         Access to the transferred data value is given by <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::get()</em></span>.
       </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">symmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;::</span><span class="identifier">call_type</span> <span class="identifier">coro</span><span class="special">(</span> <span class="comment">// constructor does NOT enter coroutine-function</span>
@@ -211,12 +226,13 @@
 <tr><td align="left" valign="top"><p>
           Code executed by coroutine must not prevent the propagation of the <span class="emphasis"><em>detail::forced_unwind</em></span>
           exception. Absorbing that exception will cause stack unwinding to fail.
-          Thus, any code that catches all exceptions must re-throw the pending exception.
+          Thus, any code that catches all exceptions must re-throw any pending <span class="emphasis"><em>detail::forced_unwind</em></span>
+          exception.
         </p></td></tr>
 </table></div>
 <pre class="programlisting"><span class="keyword">try</span> <span class="special">{</span>
     <span class="comment">// code that might throw</span>
-<span class="special">}</span> <span class="keyword">catch</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">forced_unwind</span><span class="special">&amp;)</span> <span class="special">{</span>
+<span class="special">}</span> <span class="keyword">catch</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">forced_unwind</span><span class="special">&amp;)</span> <span class="special">{</span>
     <span class="keyword">throw</span><span class="special">;</span>
 <span class="special">}</span> <span class="keyword">catch</span><span class="special">(...)</span> <span class="special">{</span>
     <span class="comment">// possibly not re-throw pending exception</span>
@@ -230,8 +246,9 @@
 <p>
         Sometimes it is necessary to unwind the stack of an unfinished coroutine
         to destroy local stack variables so they can release allocated resources
-        (RAII pattern). The third argument of the coroutine constructor, <code class="computeroutput"><span class="identifier">do_unwind</span></code>, indicates whether the destructor
-        should unwind the stack (stack is unwound by default).
+        (RAII pattern). The <code class="computeroutput"><span class="identifier">attributes</span></code>
+        argument of the coroutine constructor indicates whether the destructor should
+        unwind the stack (stack is unwound by default).
       </p>
 <p>
         Stack unwinding assumes the following preconditions:
@@ -292,12 +309,12 @@
       </h5>
 <p>
         <span class="emphasis"><em>coroutine-function</em></span> is exited with a simple return statement
-        jumping back to the calling <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span>
+        jumping back to the calling <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator()</em></span>
         at the start of symmetric coroutine chain. E.g. symmetric coroutines do not
         have a strong, fixed relationship to the caller as asymmetric coroutines.
         The <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span> becomes complete,
-        e.g. <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator bool</em></span> will
-        return 'false'.
+        e.g. <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator bool</em></span>
+        will return 'false'.
       </p>
 <div class="important"><table border="0" summary="Important">
 <tr>
@@ -306,7 +323,7 @@
 </tr>
 <tr><td align="left" valign="top"><p>
           After returning from <span class="emphasis"><em>coroutine-function</em></span> the <span class="emphasis"><em>coroutine</em></span>
-          is complete (can not resumed with <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::operator()</em></span>).
+          is complete (can not resumed with <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator()</em></span>).
         </p></td></tr>
 </table></div>
 </div>
