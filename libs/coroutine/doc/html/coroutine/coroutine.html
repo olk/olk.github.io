@@ -74,7 +74,7 @@
       coroutine copies terminates (unwinds its stack), the RAII class destructors
       will release their managed resources. When the second copy terminates, the
       same destructors will try to doubly-release the same resources, leading to
-      undefined behavior.
+      undefined behaviour.
     </p>
 <h4>
 <a name="coroutine.coroutine.h2"></a>
@@ -121,7 +121,7 @@
     </h4>
 <p>
       A coroutine saves and restores registers according to the underlying ABI on
-      each context switch.
+      each context switch (using <span class="bold"><strong>Boost.Context</strong></span>).
     </p>
 <p>
       Some applications do not use floating-point registers and can disable preserving

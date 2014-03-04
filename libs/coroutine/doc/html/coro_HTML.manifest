@@ -1,4 +1,5 @@
 index.html
+coroutine/overview.html
 coroutine/intro.html
 coroutine/motivation.html
 coroutine/coroutine.html
@@ -12,7 +13,8 @@ coroutine/attributes.html
 coroutine/stack.html
 coroutine/stack/protected_stack_allocator.html
 coroutine/stack/standard_stack_allocator.html
+coroutine/stack/segmented_stack_allocator.html
 coroutine/stack/stack_context.html
-coroutine/stack/segmented_stack.html
 coroutine/performance.html
+coroutine/architectues.html
 coroutine/acknowledgements.html
