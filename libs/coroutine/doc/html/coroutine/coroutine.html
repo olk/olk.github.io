@@ -158,6 +158,15 @@
         in undefined behaviour.
       </p></td></tr>
 </table></div>
+<p>
+      As an example, the code below will result in undefined behaviour:
+    </p>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">symmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;::</span><span class="identifier">call_type</span> <span class="identifier">coro</span><span class="special">(</span>
+    <span class="special">[&amp;](</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutines</span><span class="special">::</span><span class="identifier">symmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;::</span><span class="identifier">yield_type</span><span class="special">&amp;</span> <span class="identifier">yield</span><span class="special">){</span>
+        <span class="identifier">yield</span><span class="special">(</span><span class="identifier">coro</span><span class="special">);</span> <span class="comment">// yield to same symmetric_coroutine</span>
+<span class="special">});</span>
+<span class="identifier">coro</span><span class="special">();</span>
+</pre>
 <div class="footnotes">
 <br><hr width="100" align="left">
 <div class="footnote"><p><sup>[<a name="ftn.coroutine.coroutine.f0" href="#coroutine.coroutine.f0" class="para">5</a>] </sup>

@@ -184,7 +184,8 @@
 <dd><p>
                 If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
                 refers to <span class="emphasis"><em>not-a-coroutine</em></span> or the coroutine-function
-                has returned (completed), the function returns false. Otherwise true.
+                has returned (completed), the function returns <code class="computeroutput"><span class="keyword">false</span></code>.
+                Otherwise <code class="computeroutput"><span class="keyword">true</span></code>.
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -203,7 +204,8 @@
 <dd><p>
                 If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
                 refers to <span class="emphasis"><em>not-a-coroutine</em></span> or the coroutine-function
-                has returned (completed), the function returns true. Otherwise false.
+                has returned (completed), the function returns <code class="computeroutput"><span class="keyword">true</span></code>.
+                Otherwise <code class="computeroutput"><span class="keyword">false</span></code>.
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -213,8 +215,8 @@
 </div>
 <h6>
 <a name="coroutine.coroutine.asymmetric.push_coro.h7"></a>
-          <span><a name="coroutine.coroutine.asymmetric.push_coro._code__phrase_role__identifier__push_type__phrase__phrase_role__special___lt__gt___phrase___phrase_role__special___amp___phrase___phrase_role__keyword__operator__phrase__phrase_role__special_______phrase__phrase_role__identifier__arg__phrase___phrase_role__identifier__arg__phrase__phrase_role__special_____phrase___code_"></a></span><a class="link" href="push_coro.html#coroutine.coroutine.asymmetric.push_coro._code__phrase_role__identifier__push_type__phrase__phrase_role__special___lt__gt___phrase___phrase_role__special___amp___phrase___phrase_role__keyword__operator__phrase__phrase_role__special_______phrase__phrase_role__identifier__arg__phrase___phrase_role__identifier__arg__phrase__phrase_role__special_____phrase___code_"><code class="computeroutput"><span class="identifier">push_type</span><span class="special">&lt;&gt;</span>
-          <span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span> <span class="identifier">arg</span><span class="special">)</span></code></a>
+          <span><a name="coroutine.coroutine.asymmetric.push_coro._code__phrase_role__identifier__push_type__phrase___phrase_role__special___amp___phrase___phrase_role__keyword__operator__phrase__phrase_role__special_______phrase__phrase_role__identifier__arg__phrase___phrase_role__identifier__arg__phrase__phrase_role__special_____phrase___code_"></a></span><a class="link" href="push_coro.html#coroutine.coroutine.asymmetric.push_coro._code__phrase_role__identifier__push_type__phrase___phrase_role__special___amp___phrase___phrase_role__keyword__operator__phrase__phrase_role__special_______phrase__phrase_role__identifier__arg__phrase___phrase_role__identifier__arg__phrase__phrase_role__special_____phrase___code_"><code class="computeroutput"><span class="identifier">push_type</span> <span class="special">&amp;</span>
+          <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span> <span class="identifier">arg</span><span class="special">)</span></code></a>
         </h6>
 <pre class="programlisting"><span class="identifier">push_type</span><span class="special">&amp;</span> <span class="identifier">asymmetric_coroutine</span><span class="special">&lt;</span><span class="identifier">Arg</span><span class="special">&gt;::</span><span class="identifier">push_type</span><span class="special">::</span><span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span><span class="special">);</span>
 <span class="identifier">push_type</span><span class="special">&amp;</span> <span class="identifier">asymmetric_coroutine</span><span class="special">&lt;</span><span class="identifier">Arg</span><span class="special">&amp;&gt;::</span><span class="identifier">push_type</span><span class="special">::</span><span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span><span class="special">&amp;);</span>
@@ -225,7 +227,8 @@
 <dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
-                operator unspecified-bool-type() returns true for <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
+                operator unspecified-bool-type() returns <code class="computeroutput"><span class="keyword">true</span></code>
+                for <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
               </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -311,6 +314,16 @@
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 Returns a end range-iterator (output-iterator).
+              </p></dd>
+<dt><span class="term">Note:</span></dt>
+<dd><p>
+                When first obtained from <code class="computeroutput"><span class="identifier">begin</span><span class="special">(</span> <span class="identifier">push_type</span><span class="special">&lt;</span> <span class="identifier">R</span>
+                <span class="special">&gt;</span> <span class="special">&amp;)</span></code>,
+                or after some number of increment operations, an iterator will compare
+                equal to the iterator returned by <code class="computeroutput"><span class="identifier">end</span><span class="special">(</span> <span class="identifier">push_type</span><span class="special">&lt;</span> <span class="identifier">R</span>
+                <span class="special">&gt;</span> <span class="special">&amp;)</span></code>
+                when the corresponding <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type::operator
+                bool</em></span> would return <code class="computeroutput"><span class="keyword">false</span></code>.
               </p></dd>
 </dl>
 </div>

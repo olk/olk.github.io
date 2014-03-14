@@ -193,7 +193,8 @@
 <dd><p>
                 If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
                 refers to <span class="emphasis"><em>not-a-coroutine</em></span> or the coroutine-function
-                has returned (completed), the function returns false. Otherwise true.
+                has returned (completed), the function returns <code class="computeroutput"><span class="keyword">false</span></code>.
+                Otherwise <code class="computeroutput"><span class="keyword">true</span></code>.
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -212,7 +213,8 @@
 <dd><p>
                 If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
                 refers to <span class="emphasis"><em>not-a-coroutine</em></span> or the coroutine-function
-                has returned (completed), the function returns true. Otherwise false.
+                has returned (completed), the function returns <code class="computeroutput"><span class="keyword">true</span></code>.
+                Otherwise <code class="computeroutput"><span class="keyword">false</span></code>.
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -240,8 +242,8 @@
 </div>
 <h6>
 <a name="coroutine.coroutine.symmetric.symmetric_coro.h8"></a>
-          <span><a name="coroutine.coroutine.symmetric.symmetric_coro._code__phrase_role__identifier__call_type__phrase__phrase_role__special___lt__gt___phrase___phrase_role__special___amp___phrase___phrase_role__keyword__operator__phrase__phrase_role__special_______phrase__phrase_role__identifier__arg__phrase___phrase_role__identifier__arg__phrase__phrase_role__special_____phrase___code_"></a></span><a class="link" href="symmetric_coro.html#coroutine.coroutine.symmetric.symmetric_coro._code__phrase_role__identifier__call_type__phrase__phrase_role__special___lt__gt___phrase___phrase_role__special___amp___phrase___phrase_role__keyword__operator__phrase__phrase_role__special_______phrase__phrase_role__identifier__arg__phrase___phrase_role__identifier__arg__phrase__phrase_role__special_____phrase___code_"><code class="computeroutput"><span class="identifier">call_type</span><span class="special">&lt;&gt;</span>
-          <span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span> <span class="identifier">arg</span><span class="special">)</span></code></a>
+          <span><a name="coroutine.coroutine.symmetric.symmetric_coro._code__phrase_role__identifier__call_type__phrase___phrase_role__special___amp___phrase___phrase_role__keyword__operator__phrase__phrase_role__special_______phrase__phrase_role__identifier__arg__phrase___phrase_role__identifier__arg__phrase__phrase_role__special_____phrase___code_"></a></span><a class="link" href="symmetric_coro.html#coroutine.coroutine.symmetric.symmetric_coro._code__phrase_role__identifier__call_type__phrase___phrase_role__special___amp___phrase___phrase_role__keyword__operator__phrase__phrase_role__special_______phrase__phrase_role__identifier__arg__phrase___phrase_role__identifier__arg__phrase__phrase_role__special_____phrase___code_"><code class="computeroutput"><span class="identifier">call_type</span> <span class="special">&amp;</span>
+          <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span> <span class="identifier">arg</span><span class="special">)</span></code></a>
         </h6>
 <pre class="programlisting"><span class="identifier">symmetric_coroutine</span><span class="special">::</span><span class="identifier">call_type</span><span class="special">&amp;</span> <span class="identifier">coroutine</span><span class="special">&lt;</span><span class="identifier">Arg</span><span class="special">&gt;::</span><span class="identifier">call_type</span><span class="special">::</span><span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span><span class="special">);</span>
 <span class="identifier">symmetric_coroutine</span><span class="special">::</span><span class="identifier">call_type</span><span class="special">&amp;</span> <span class="identifier">coroutine</span><span class="special">&lt;</span><span class="identifier">Arg</span><span class="special">&amp;&gt;::</span><span class="identifier">call_type</span><span class="special">::</span><span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span><span class="special">&amp;);</span>
@@ -252,7 +254,8 @@
 <dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
-                operator unspecified-bool-type() returns true for <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
+                operator unspecified-bool-type() returns <code class="computeroutput"><span class="keyword">true</span></code>
+                for <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
               </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>

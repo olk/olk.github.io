@@ -44,7 +44,7 @@
 <p>
         <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span> starts a symmetric
         coroutine and transfers parameter to its <span class="emphasis"><em>coroutine-function</em></span>.
-        The first template parameter defining the transferred parameter type. The
+        The first template parameter defines the transferred parameter type. The
         constructor of <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
         takes a function (<span class="emphasis"><em>coroutine-function</em></span>) accepting a reference
         to a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span> as argument.
@@ -52,7 +52,7 @@
         does not pass the control of execution to <span class="emphasis"><em>coroutine-function</em></span>
         - instead the first call of <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator()</em></span>
         synthesizes a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span>
-        passed it as reference to <span class="emphasis"><em>coroutine-function</em></span>.
+        and passes it as reference to <span class="emphasis"><em>coroutine-function</em></span>.
       </p>
 <p>
         The <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span> interface
@@ -65,7 +65,7 @@
       </h5>
 <p>
         <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
-        is used to transfers data and execution control to another context by calling
+        is used to transfer data and execution control to another context by calling
         <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
         with another <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
         as first argument. Alternatively, you may transfer control back to the code
@@ -146,8 +146,8 @@
         <span class="emphasis"><em>coroutine-function</em></span>) which merges elements of two sorted
         arrays into a third array. <code class="computeroutput"><span class="identifier">coro_a</span><span class="special">()</span></code> enters the <span class="emphasis"><em>coroutine-function</em></span>
         of <code class="computeroutput"><span class="identifier">coro_a</span></code> cycling through
-        the array and tests if the actual element in the other array is less than
-        the element in the local one. If so, toe coroutine yields to the other coroutine
+        the array and testing if the actual element in the other array is less than
+        the element in the local one. If so, the coroutine yields to the other coroutine
         <code class="computeroutput"><span class="identifier">coro_b</span></code> using <code class="computeroutput"><span class="identifier">yield</span><span class="special">(*</span><span class="identifier">other_b</span><span class="special">)</span></code>.
         If the current element of the local array is less than the element of the
         other array, it is put to the third array. Because the coroutine jumps back
@@ -163,21 +163,21 @@
 <p>
         The <span class="emphasis"><em>coroutine-function</em></span> returns <span class="emphasis"><em>void</em></span>
         and takes <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span>, providing
-        coroutine functionality inside the coroutine-fn, as argument. Using this
-        instance is the only way to transfer data and execution control. <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
-        does not enter the <span class="emphasis"><em>coroutine-function</em></span> at <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
-        construction but entered by the first invocation of <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator()</em></span>.
+        coroutine functionality inside the <span class="emphasis"><em>coroutine-function</em></span>,
+        as argument. Using this instance is the only way to transfer data and execution
+        control. <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span> does
+        not enter the <span class="emphasis"><em>coroutine-function</em></span> at <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
+        construction but at the first invocation of <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator()</em></span>.
       </p>
 <p>
-        Unless <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="keyword">void</span></code>, the <span class="emphasis"><em>coroutine-function</em></span>
-        of a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span> can assume
-        that (a) upon initial entry and (b) after every <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
+        Unless the first template parameter is <code class="computeroutput"><span class="keyword">void</span></code>,
+        the <span class="emphasis"><em>coroutine-function</em></span> of a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
+        can assume that (a) upon initial entry and (b) after every <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
         call, its <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::get()</em></span>
         has a new value available.
       </p>
 <p>
-        However, if <code class="computeroutput"><span class="identifier">T</span></code> is a move-only
-        type, <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::get()</em></span>
+        However, if the first template parameter is a move-only type, <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::get()</em></span>
         may only be called once before the next <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type::operator()</em></span>
         call.
       </p>
@@ -190,7 +190,7 @@
         In order to transfer data to a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
         from the main-context the framework synthesizes a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span>
         associated with the <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>
-        instance in the main-context. The synthesized <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span>
+        instance. The synthesized <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::yield_type</em></span>
         is passed as argument to <span class="emphasis"><em>coroutine-function</em></span>. The main-context
         must call <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator()</em></span>
         in order to transfer each data value into the <span class="emphasis"><em>coroutine-function</em></span>.
@@ -215,7 +215,7 @@
         <span><a name="coroutine.coroutine.symmetric.exceptions"></a></span><a class="link" href="symmetric.html#coroutine.coroutine.symmetric.exceptions">exceptions</a>
       </h5>
 <p>
-        An exception thrown and not catched inside a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>'s
+        An uncaught exception inside a <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span>'s
         <span class="emphasis"><em>coroutine-function</em></span> will call <span class="emphasis"><em>std::terminate()</em></span>.
       </p>
 <div class="important"><table border="0" summary="Important">
@@ -308,13 +308,13 @@
         a <span class="emphasis"><em>coroutine-function</em></span></a>
       </h5>
 <p>
-        <span class="emphasis"><em>coroutine-function</em></span> is exited with a simple return statement
-        jumping back to the calling <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator()</em></span>
-        at the start of symmetric coroutine chain. E.g. symmetric coroutines do not
-        have a strong, fixed relationship to the caller as asymmetric coroutines.
+        <span class="emphasis"><em>coroutine-function</em></span> is exited with a simple return statement.
+        This jumps back to the calling <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator()</em></span>
+        at the start of symmetric coroutine chain. That is, symmetric coroutines
+        do not have a strong, fixed relationship to the caller as do asymmetric coroutines.
         The <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type</em></span> becomes complete,
         e.g. <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator bool</em></span>
-        will return 'false'.
+        will return <code class="computeroutput"><span class="keyword">false</span></code>.
       </p>
 <div class="important"><table border="0" summary="Important">
 <tr>
@@ -323,7 +323,7 @@
 </tr>
 <tr><td align="left" valign="top"><p>
           After returning from <span class="emphasis"><em>coroutine-function</em></span> the <span class="emphasis"><em>coroutine</em></span>
-          is complete (can not resumed with <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator()</em></span>).
+          is complete (can not be resumed with <span class="emphasis"><em>symmetric_coroutine&lt;&gt;::call_type::operator()</em></span>).
         </p></td></tr>
 </table></div>
 </div>
