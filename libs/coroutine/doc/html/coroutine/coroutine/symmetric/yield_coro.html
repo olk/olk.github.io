@@ -57,7 +57,7 @@
     <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">X</span> <span class="special">&gt;</span>
     <span class="identifier">yield_type</span> <span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">()(</span> <span class="identifier">symmetric_coroutine</span><span class="special">&lt;</span> <span class="identifier">X</span> <span class="special">&gt;::</span><span class="identifier">call_type</span> <span class="special">&amp;</span> <span class="identifier">other</span><span class="special">);</span>
 
-    <span class="identifier">R</span> <span class="identifier">get</span><span class="special">()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span><span class="special">;</span>
+    <span class="identifier">R</span> <span class="identifier">get</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
 <h6>
@@ -154,7 +154,7 @@
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
-                <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutine_error</span></code>
+                <code class="computeroutput"><span class="identifier">invalid_result</span></code>
               </p></dd>
 </dl>
 </div>

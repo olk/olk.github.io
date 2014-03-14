@@ -251,9 +251,9 @@
 <a name="coroutine.coroutine.asymmetric.pull_coro.h8"></a>
           <span><a name="coroutine.coroutine.asymmetric.pull_coro._code__phrase_role__identifier__r__phrase___phrase_role__identifier__get__phrase__phrase_role__special______phrase___code_"></a></span><a class="link" href="pull_coro.html#coroutine.coroutine.asymmetric.pull_coro._code__phrase_role__identifier__r__phrase___phrase_role__identifier__get__phrase__phrase_role__special______phrase___code_"><code class="computeroutput"><span class="identifier">R</span> <span class="identifier">get</span><span class="special">()</span></code></a>
         </h6>
-<pre class="programlisting"><span class="identifier">R</span>    <span class="identifier">asymmetric_coroutine</span><span class="special">&lt;</span><span class="identifier">R</span><span class="special">&gt;::</span><span class="identifier">pull_type</span><span class="special">::</span><span class="identifier">get</span><span class="special">();</span>
-<span class="identifier">R</span><span class="special">&amp;</span>   <span class="identifier">asymmetric_coroutine</span><span class="special">&lt;</span><span class="identifier">R</span><span class="special">&amp;&gt;::</span><span class="identifier">pull_type</span><span class="special">::</span><span class="identifier">get</span><span class="special">();</span>
-<span class="keyword">void</span> <span class="identifier">asymmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;::</span><span class="identifier">pull_type</span><span class="special">::</span><span class="identifier">get</span><span class="special">()=</span><span class="keyword">delete</span><span class="special">;</span>
+<pre class="programlisting"><span class="identifier">R</span>    <span class="identifier">asymmetric_coroutine</span><span class="special">&lt;</span><span class="identifier">R</span><span class="special">,</span><span class="identifier">StackAllocator</span><span class="special">&gt;::</span><span class="identifier">pull_type</span><span class="special">::</span><span class="identifier">get</span><span class="special">();</span>
+<span class="identifier">R</span><span class="special">&amp;</span>   <span class="identifier">asymmetric_coroutine</span><span class="special">&lt;</span><span class="identifier">R</span><span class="special">&amp;,</span><span class="identifier">StackAllocator</span><span class="special">&gt;::</span><span class="identifier">pull_type</span><span class="special">::</span><span class="identifier">get</span><span class="special">();</span>
+<span class="keyword">void</span> <span class="identifier">asymmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">,</span><span class="identifier">StackAllocator</span><span class="special">&gt;::</span><span class="identifier">pull_type</span><span class="special">::</span><span class="identifier">get</span><span class="special">()=</span><span class="keyword">delete</span><span class="special">;</span>
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
@@ -269,7 +269,7 @@
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
-                <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">coroutine_error</span></code>
+                <code class="computeroutput"><span class="identifier">invalid_result</span></code>
               </p></dd>
 <dt><span class="term">Note:</span></dt>
 <dd><p>
