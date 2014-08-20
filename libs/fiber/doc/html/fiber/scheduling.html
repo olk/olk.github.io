@@ -42,19 +42,19 @@
 <span class="special">}</span>
 </pre>
 <p>
-      A fiber-scheduler must implement interface <a class="link" href="scheduling.html#class_algorithm"> <code class="computeroutput">algorithm</code></a>. <span class="bold"><strong>Boost.Fiber</strong></span> provides two schedulers: <a class="link" href="scheduling.html#class_round_robin"> <code class="computeroutput">round_robin</code></a> and
-      <a class="link" href="../"> <code class="computeroutput">round_robin_ws</code></a>.
+      A fiber-scheduler must implement interface <a class="link" href="../"> <code class="computeroutput">algorithm</code></a>. <span class="bold"><strong>Boost.Fiber</strong></span> provides scheduler <a class="link" href="scheduling.html#class_round_robin"> <code class="computeroutput">round_robin</code></a>.
     </p>
 <p>
-      You are explicitly permitted to code your own <a class="link" href="scheduling.html#class_algorithm"> <code class="computeroutput">algorithm</code></a> subclass,
+      You are explicitly permitted to code your own <a class="link" href="../"> <code class="computeroutput">algorithm</code></a> subclass,
       and to pass it to <a class="link" href="fiber_mgmt/fiber.html#set_scheduling_algorithm"> <code class="computeroutput">set_scheduling_algorithm()</code></a>.
     </p>
 <p>
       </p>
 <h5>
-<a name="class_algorithm_bridgehead"></a>
-  <span><a name="class_algorithm"></a></span>
-  <a class="link" href="scheduling.html#class_algorithm">Class <code class="computeroutput">algorithm</code></a>
+<a name="class_sched_algorithm_bridgehead"></a>
+  <span><a name="class_sched_algorithm"></a></span>
+  <a class="link" href="scheduling.html#class_sched_algorithm">Class
+      <code class="computeroutput">sched_algorithm</code></a>
 </h5>
 <p>
     </p>
@@ -148,7 +148,7 @@
 <p>
     </p>
 <p>
-      This class implements <a class="link" href="scheduling.html#class_algorithm"> <code class="computeroutput">algorithm</code></a> and schedules fibers in round-robin
+      This class implements <a class="link" href="../"> <code class="computeroutput">algorithm</code></a> and schedules fibers in round-robin
       fashion.
     </p>
 <p>

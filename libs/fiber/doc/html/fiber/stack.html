@@ -142,6 +142,150 @@ which is required to model a <a class="link" href="stack.html#stack_allocator_co
 <p>
       </p>
 <h5>
+<a name="class_stack_traits_bridgehead"></a>
+  <span><a name="class_stack_traits"></a></span>
+  <a class="link" href="stack.html#class_stack_traits">Class <code class="computeroutput">stack_traits</code></a>
+</h5>
+<p>
+    </p>
+<p>
+      <span class="emphasis"><em>stack_traits</em></span> models a __stack_traits__ providing a way
+      to access certain properites defined by the enironment. Stack allocators use
+      __stack_traits__ to allocate stacks.
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">coroutine</span><span class="special">/</span><span class="identifier">stack_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">struct</span> <span class="identifier">stack_traits</span>
+<span class="special">{</span>
+    <span class="keyword">static</span> <span class="keyword">bool</span> <span class="identifier">is_unbounded</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
+
+    <span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">page_size</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
+
+    <span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">default_size</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
+
+    <span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">minimum_size</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
+
+    <span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">maximum_size</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<h5>
+<a name="stack_traits_is_stack_unbound_bridgehead"></a>
+  <span><a name="stack_traits_is_stack_unbound"></a></span>
+  <a class="link" href="stack.html#stack_traits_is_stack_unbound">Static
+      member function <code class="computeroutput">is_stack_unbound</code>()</a>
+</h5>
+<p>
+    </p>
+<pre class="programlisting"><span class="keyword">static</span> <span class="keyword">bool</span> <span class="identifier">is_stack_unbound</span><span class="special">();</span>
+</pre>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">Returns:</span></dt>
+<dd><p>
+            Returns <code class="computeroutput"><span class="keyword">true</span></code> if the environment
+            defines no limit for the size of a stack.
+          </p></dd>
+</dl>
+</div>
+<p>
+      </p>
+<h5>
+<a name="stack_traits_page_size_bridgehead"></a>
+  <span><a name="stack_traits_page_size"></a></span>
+  <a class="link" href="stack.html#stack_traits_page_size">Static
+      member function <code class="computeroutput">page_size</code>()</a>
+</h5>
+<p>
+    </p>
+<pre class="programlisting"><span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">page_size</span><span class="special">();</span>
+</pre>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">Returns:</span></dt>
+<dd><p>
+            Returns the page size in bytes.
+          </p></dd>
+</dl>
+</div>
+<p>
+      </p>
+<h5>
+<a name="stack_traits_maximum_stacksize_bridgehead"></a>
+  <span><a name="stack_traits_maximum_stacksize"></a></span>
+  <a class="link" href="stack.html#stack_traits_maximum_stacksize">Static
+      member function <code class="computeroutput">maximum_stacksize</code>()</a>
+</h5>
+<p>
+    </p>
+<pre class="programlisting"><span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">maximum_stacksize</span><span class="special">();</span>
+</pre>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">Preconditions:</span></dt>
+<dd><p>
+            <code class="computeroutput"><span class="identifier">is_stack_unbound</span><span class="special">()</span></code>
+            returns <code class="computeroutput"><span class="keyword">false</span></code>.
+          </p></dd>
+<dt><span class="term">Returns:</span></dt>
+<dd><p>
+            Returns the maximum size in bytes of stack defined by the environment.
+          </p></dd>
+</dl>
+</div>
+<p>
+      </p>
+<h5>
+<a name="stack_traits_default_stacksize_bridgehead"></a>
+  <span><a name="stack_traits_default_stacksize"></a></span>
+  <a class="link" href="stack.html#stack_traits_default_stacksize">Static
+      member function <code class="computeroutput">default_stacksize</code>()</a>
+</h5>
+<p>
+    </p>
+<pre class="programlisting"><span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">default_stacksize</span><span class="special">();</span>
+</pre>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">Returns:</span></dt>
+<dd><p>
+            Returns a default stack size, which may be platform specific. If <code class="computeroutput"><span class="identifier">is_stack_unbound</span><span class="special">()</span></code>
+            returns <code class="computeroutput"><span class="keyword">true</span></code> then the present
+            implementation returns the maximum of <code class="computeroutput"><span class="number">64</span>
+            <span class="identifier">kB</span></code> and <code class="computeroutput"><span class="identifier">minimum_stacksize</span><span class="special">()</span></code>.
+          </p></dd>
+</dl>
+</div>
+<p>
+      </p>
+<h5>
+<a name="stack_traits_minimum_stacksize_bridgehead"></a>
+  <span><a name="stack_traits_minimum_stacksize"></a></span>
+  <a class="link" href="stack.html#stack_traits_minimum_stacksize">Static
+      member function <code class="computeroutput">minimum_stacksize</code>()</a>
+</h5>
+<p>
+    </p>
+<pre class="programlisting"><span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">minimum_stacksize</span><span class="special">();</span>
+</pre>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">Returns:</span></dt>
+<dd><p>
+            Returns the minimum size in bytes of stack required by the environment:
+            Win32 4kB, Win64 8kB, defined by rlimit on POSIX.
+          </p></dd>
+</dl>
+</div>
+<p>
+      </p>
+<h5>
 <a name="class_stack_allocator_bridgehead"></a>
   <span><a name="class_stack_allocator"></a></span>
   <a class="link" href="stack.html#class_stack_allocator">Class
@@ -172,113 +316,11 @@ which is required to model a <a class="link" href="stack.html#stack_allocator_co
 
 <span class="keyword">class</span> <span class="identifier">stack_allocator</span>
 <span class="special">{</span>
-    <span class="keyword">static</span> <span class="keyword">bool</span> <span class="identifier">is_stack_unbound</span><span class="special">();</span>
-
-    <span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">maximum_stacksize</span><span class="special">();</span>
-
-    <span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">default_stacksize</span><span class="special">();</span>
-
-    <span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">minimum_stacksize</span><span class="special">();</span>
-
     <span class="keyword">void</span> <span class="identifier">allocate</span><span class="special">(</span> <span class="identifier">stack_context</span> <span class="special">&amp;,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size</span><span class="special">);</span>
 
     <span class="keyword">void</span> <span class="identifier">deallocate</span><span class="special">(</span> <span class="identifier">stack_context</span> <span class="special">&amp;);</span>
 <span class="special">}</span>
 </pre>
-<p>
-      </p>
-<h5>
-<a name="stack_allocator_is_stack_unbound_bridgehead"></a>
-  <span><a name="stack_allocator_is_stack_unbound"></a></span>
-  <a class="link" href="stack.html#stack_allocator_is_stack_unbound">Static
-      member function <code class="computeroutput">is_stack_unbound</code>()</a>
-</h5>
-<p>
-    </p>
-<pre class="programlisting"><span class="keyword">static</span> <span class="keyword">bool</span> <span class="identifier">is_stack_unbound</span><span class="special">();</span>
-</pre>
-<div class="variablelist">
-<p class="title"><b></b></p>
-<dl>
-<dt><span class="term">Returns:</span></dt>
-<dd><p>
-            Returns <code class="computeroutput"><span class="keyword">true</span></code> if the environment
-            defines no limit for the size of a stack.
-          </p></dd>
-</dl>
-</div>
-<p>
-      </p>
-<h5>
-<a name="stack_allocator_maximum_stacksize_bridgehead"></a>
-  <span><a name="stack_allocator_maximum_stacksize"></a></span>
-  <a class="link" href="stack.html#stack_allocator_maximum_stacksize">Static
-      member function <code class="computeroutput">maximum_stacksize</code>()</a>
-</h5>
-<p>
-    </p>
-<pre class="programlisting"><span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">maximum_stacksize</span><span class="special">();</span>
-</pre>
-<div class="variablelist">
-<p class="title"><b></b></p>
-<dl>
-<dt><span class="term">Preconditions:</span></dt>
-<dd><p>
-            <code class="computeroutput"><span class="identifier">is_stack_unbound</span><span class="special">()</span></code>
-            returns <code class="computeroutput"><span class="keyword">false</span></code>.
-          </p></dd>
-<dt><span class="term">Returns:</span></dt>
-<dd><p>
-            Returns the maximum size in bytes of stack defined by the environment.
-          </p></dd>
-</dl>
-</div>
-<p>
-      </p>
-<h5>
-<a name="stack_allocator_default_stacksize_bridgehead"></a>
-  <span><a name="stack_allocator_default_stacksize"></a></span>
-  <a class="link" href="stack.html#stack_allocator_default_stacksize">Static
-      member function <code class="computeroutput">default_stacksize</code>()</a>
-</h5>
-<p>
-    </p>
-<pre class="programlisting"><span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">default_stacksize</span><span class="special">();</span>
-</pre>
-<div class="variablelist">
-<p class="title"><b></b></p>
-<dl>
-<dt><span class="term">Returns:</span></dt>
-<dd><p>
-            Returns a default stack size, which may be platform specific. If <code class="computeroutput"><span class="identifier">is_stack_unbound</span><span class="special">()</span></code>
-            returns <code class="computeroutput"><span class="keyword">true</span></code> then the present
-            implementation returns the maximum of <code class="computeroutput"><span class="number">64</span>
-            <span class="identifier">kB</span></code> and <code class="computeroutput"><span class="identifier">minimum_stacksize</span><span class="special">()</span></code>.
-          </p></dd>
-</dl>
-</div>
-<p>
-      </p>
-<h5>
-<a name="stack_allocator_minimum_stacksize_bridgehead"></a>
-  <span><a name="stack_allocator_minimum_stacksize"></a></span>
-  <a class="link" href="stack.html#stack_allocator_minimum_stacksize">Static
-      member function <code class="computeroutput">minimum_stacksize</code>()</a>
-</h5>
-<p>
-    </p>
-<pre class="programlisting"><span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">minimum_stacksize</span><span class="special">();</span>
-</pre>
-<div class="variablelist">
-<p class="title"><b></b></p>
-<dl>
-<dt><span class="term">Returns:</span></dt>
-<dd><p>
-            Returns the minimum size in bytes of stack required by the environment:
-            Win32 4kB, Win64 8kB, defined by rlimit on POSIX.
-          </p></dd>
-</dl>
-</div>
 <p>
       </p>
 <h5>
