@@ -42,7 +42,7 @@
 <span class="special">{</span>
     <span class="identifier">ready</span><span class="special">,</span>
     <span class="identifier">timeout</span><span class="special">,</span>
-    <span class="identifier">deferred</span>
+    <span class="identifier">deferred</span>  <span class="comment">// not supported yet</span>
 <span class="special">};</span>
 </pre>
 <h6>
@@ -89,10 +89,10 @@
               </p></dd>
 </dl>
 </div>
-<div class="note"><table border="0" summary="Note">
+<div class="warning"><table border="0" summary="Warning">
 <tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
 </tr>
 <tr><td align="left" valign="top"><p>
             Launch policy <code class="computeroutput"><span class="identifier">deferred</span></code>,
@@ -898,6 +898,53 @@
               </p></dd>
 </dl>
 </div>
+<p>
+          </p>
+<h5>
+<a name="fibers_async_bridgehead"></a>
+  <span><a name="fibers_async"></a></span>
+  <a class="link" href="future.html#fibers_async">Non-member function <code class="computeroutput">fibers::async()</code></a>
+</h5>
+<p>
+        </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fiber</span><span class="special">/</span><span class="identifier">future</span><span class="special">/</span><span class="identifier">async</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Fn</span> <span class="special">&gt;</span>
+<span class="identifier">future</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">result_of</span><span class="special">&lt;</span> <span class="identifier">Fn</span> <span class="special">&gt;::</span><span class="identifier">type</span> <span class="special">&gt;</span> <span class="identifier">async</span><span class="special">(</span> <span class="identifier">Fn</span> <span class="special">&amp;&amp;</span> <span class="identifier">fn</span><span class="special">);</span>
+</pre>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">Effects:</span></dt>
+<dd><p>
+                Executes <code class="computeroutput"><span class="identifier">fn</span></code> in a
+                fiber and returns an associated future.
+              </p></dd>
+<dt><span class="term">Result:</span></dt>
+<dd><p>
+                <code class="computeroutput"><span class="identifier">future</span><span class="special">&lt;</span>
+                <span class="keyword">typename</span> <span class="identifier">result_of</span><span class="special">&lt;</span> <span class="identifier">Fn</span>
+                <span class="special">&gt;::</span><span class="identifier">type</span>
+                <span class="special">&gt;</span></code> representing the shared
+                state associated with the asynchronous execution of <code class="computeroutput"><span class="identifier">fn</span></code>.
+              </p></dd>
+<dt><span class="term">Throws:</span></dt>
+<dd><p>
+                __fiber_error__ if an error occurs.
+              </p></dd>
+</dl>
+</div>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            Launch policy <code class="computeroutput"><span class="identifier">deferred</span></code>,
+            which indicates you simply want to defer the function call until a later
+            time (lazy evaluation), is not supported yet.
+          </p></td></tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

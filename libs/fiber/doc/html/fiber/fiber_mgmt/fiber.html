@@ -7,7 +7,7 @@
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Fiber">
 <link rel="up" href="../fiber_mgmt.html" title="Fiber management">
 <link rel="prev" href="../fiber_mgmt.html" title="Fiber management">
-<link rel="next" href="attributes.html" title="Class attributes">
+<link rel="next" href="id.html" title="Class fiber::id">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../fiber_mgmt.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../fiber_mgmt.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="attributes.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../fiber_mgmt.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../fiber_mgmt.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="id.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -32,7 +32,7 @@
 <span class="keyword">class</span> <span class="identifier">fiber</span>
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
-    <span class="keyword">typedef</span> <span class="identifier">uspecified</span><span class="special">-</span><span class="keyword">class</span>        <span class="identifier">id</span><span class="special">;</span>
+    <span class="keyword">class</span>        <span class="identifier">id</span><span class="special">;</span>
 
     <span class="identifier">fiber</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
 
@@ -494,9 +494,9 @@
 <dt><span class="term">Note:</span></dt>
 <dd><p>
               The meaning of particular <code class="computeroutput"><span class="keyword">int</span></code>
-              values is determined by the specific <a class="link" href="../../"> <code class="computeroutput">algorithm</code></a> passed
-              to <a class="link" href="fiber.html#set_scheduling_algorithm"> <code class="computeroutput">set_scheduling_algorithm()</code></a>. <a class="link" href="../scheduling.html#class_round_robin"> <code class="computeroutput">round_robin</code></a> and
-              <a class="link" href="../../"> <code class="computeroutput">round_robin_ws</code></a> ignore <code class="computeroutput"><span class="identifier">fiber</span><span class="special">::</span><span class="identifier">priority</span><span class="special">()</span></code>.
+              values is determined by the specific <a class="link" href="../custom.html#class_sched_algorithm"> <code class="computeroutput">sched_algorithm</code></a> passed
+              to <a class="link" href="fiber.html#set_scheduling_algorithm"> <code class="computeroutput">set_scheduling_algorithm()</code></a>. <a class="link" href="../scheduling.html#class_round_robin"> <code class="computeroutput">round_robin</code></a> ignores
+              <code class="computeroutput"><span class="identifier">fiber</span><span class="special">::</span><span class="identifier">priority</span><span class="special">()</span></code>.
             </p></dd>
 </dl>
 </div>
@@ -731,13 +731,13 @@
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
               Directs <span class="bold"><strong>Boost.Fiber</strong></span> to use <code class="computeroutput"><span class="identifier">scheduler</span></code>, which must be a concrete
-              subclass of <a class="link" href="../../"> <code class="computeroutput">algorithm</code></a>, as the scheduling algorithm for
-              all fibers in the current thread.
+              subclass of <a class="link" href="../custom.html#class_sched_algorithm"> <code class="computeroutput">sched_algorithm</code></a>, as the scheduling
+              algorithm for all fibers in the current thread.
             </p></dd>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
-              Previous <a class="link" href="../../"> <code class="computeroutput">algorithm</code></a> instance set for the current thread,
-              0 if this is the first <span class="bold"><strong>Boost.Fiber</strong></span>
+              Previous <a class="link" href="../custom.html#class_sched_algorithm"> <code class="computeroutput">sched_algorithm</code></a> instance set for the current
+              thread, 0 if this is the first <span class="bold"><strong>Boost.Fiber</strong></span>
               entry point called by the current thread.
             </p></dd>
 <dt><span class="term">Note:</span></dt>
@@ -776,7 +776,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../fiber_mgmt.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../fiber_mgmt.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="attributes.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../fiber_mgmt.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../fiber_mgmt.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="id.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

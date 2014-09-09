@@ -29,6 +29,7 @@
 <div class="toc"><dl>
 <dt><span class="section"><a href="fiber_mgmt/fiber.html">Class
       <code class="computeroutput"><span class="identifier">fiber</span></code></a></span></dt>
+<dt><span class="section"><a href="fiber_mgmt/id.html">Class fiber::id</a></span></dt>
 <dt><span class="section"><a href="fiber_mgmt/attributes.html">Class
       attributes</a></span></dt>
 <dt><span class="section"><a href="fiber_mgmt/this_fiber.html">Namespace this_fiber</a></span></dt>
@@ -58,8 +59,8 @@
 
 <span class="identifier">fibers</span><span class="special">::</span><span class="identifier">id</span> <span class="identifier">get_id</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
 <span class="keyword">void</span> <span class="identifier">yield</span><span class="special">();</span>
-<span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">TimePoint</span> <span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">sleep_until</span><span class="special">(</span> <span class="identifier">TimePoint</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">timeout_point</span><span class="special">);</span>
+<span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Clock</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Duration</span> <span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">sleep_until</span><span class="special">(</span> <span class="identifier">chrono</span><span class="special">::</span><span class="identifier">time_point</span><span class="special">&lt;</span> <span class="identifier">Clock</span><span class="special">,</span> <span class="identifier">Duration</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">sleep_time</span><span class="special">)</span>
 <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Rep</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Period</span> <span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">sleep_for</span><span class="special">(</span> <span class="identifier">chrono</span><span class="special">::</span><span class="identifier">duration</span><span class="special">&lt;</span> <span class="identifier">Rep</span><span class="special">,</span> <span class="identifier">Period</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">timeout_duration</span><span class="special">);</span>
 <span class="keyword">bool</span> <span class="identifier">thread_affinity</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
@@ -127,10 +128,11 @@
       <span><a name="fiber.fiber_mgmt.exceptions"></a></span><a class="link" href="fiber_mgmt.html#fiber.fiber_mgmt.exceptions">Exceptions</a>
     </h4>
 <p>
-      Exceptions thrown by the function or callable object passed to the <a class="link" href="fiber_mgmt/fiber.html#class_fiber"> <code class="computeroutput">fiber</code></a>
+      A exception thrown by the function or callable object passed to the <a class="link" href="fiber_mgmt/fiber.html#class_fiber"> <code class="computeroutput">fiber</code></a>
 constructor
-      are consumed by the framework. If you need to know which exception was thrown,
-      use <a class="link" href="synchronization/futures/future.html#class_future"> <code class="computeroutput">future&lt;&gt;</code></a> and <a class="link" href="synchronization/futures/packaged_task.html#class_packaged_task"> <code class="computeroutput">packaged_task&lt;&gt;</code></a>.
+      calls <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">terminate</span><span class="special">()</span></code>.
+      If you need to know which exception was thrown, use <a class="link" href="synchronization/futures/future.html#class_future"> <code class="computeroutput">future&lt;&gt;</code></a> and
+      <a class="link" href="synchronization/futures/packaged_task.html#class_packaged_task"> <code class="computeroutput">packaged_task&lt;&gt;</code></a>.
     </p>
 <h4>
 <a name="fiber.fiber_mgmt.h4"></a>
