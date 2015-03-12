@@ -29,9 +29,105 @@
 <p>
       Fibers are managed by a scheduler which coordinates the sequence of fibers
       running or waiting. Each thread is required to have its own scheduler. By default,
-      <span class="bold"><strong>Boost.Fiber</strong></span> allocates for each thread a scheduler
-      ( <a class="link" href="scheduling.html#class_round_robin"> <code class="computeroutput">round_robin</code></a>) on the heap.
+      <span class="bold"><strong>Boost.Fiber</strong></span> creates for each thread a scheduler
+      ( <a class="link" href="scheduling.html#class_round_robin"> <code class="computeroutput">round_robin</code></a>).
     </p>
+<p>
+      A fiber-scheduler must implement interface <a class="link" href="scheduling.html#class_sched_algorithm"> <code class="computeroutput">sched_algorithm</code></a>.
+      You are explicitly permitted to code your own <a class="link" href="scheduling.html#class_sched_algorithm"> <code class="computeroutput">sched_algorithm</code></a> subclass,
+      and to pass it to <a class="link" href="fiber_mgmt/fiber.html#set_scheduling_algorithm"> <code class="computeroutput">set_scheduling_algorithm()</code></a>.
+    </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">thread_fn</span><span class="special">()</span> <span class="special">{</span>
+    <span class="identifier">my_fiber_scheduler</span> <span class="identifier">mfs</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">set_scheduling_algorithm</span><span class="special">(</span> <span class="special">&amp;</span> <span class="identifier">mfs</span><span class="special">);</span>
+    <span class="special">...</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<h5>
+<a name="class_sched_algorithm_bridgehead"></a>
+  <span><a name="class_sched_algorithm"></a></span>
+  <a class="link" href="scheduling.html#class_sched_algorithm">Class
+      <code class="computeroutput">sched_algorithm</code></a>
+</h5>
+<p>
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fiber</span><span class="special">/</span><span class="identifier">algorithm</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">struct</span> <span class="identifier">sched_algorithm</span> <span class="special">{</span>
+    <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">sched_algorithm</span><span class="special">()</span> <span class="special">{}</span>
+
+    <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">awakened</span><span class="special">(</span> <span class="identifier">fiber_context</span> <span class="special">*)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+
+    <span class="keyword">virtual</span> <span class="identifier">fiber_context</span> <span class="special">*</span> <span class="identifier">pick_next</span><span class="special">()</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">};</span>
+</pre>
+<p>
+      </p>
+<h5>
+<a name="sched_algorithm_awakened_bridgehead"></a>
+  <span><a name="sched_algorithm_awakened"></a></span>
+  <a class="link" href="scheduling.html#sched_algorithm_awakened">Member
+      function <code class="computeroutput">awakened</code>()</a>
+</h5>
+<p>
+    </p>
+<pre class="programlisting"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">awakened</span><span class="special">(</span> <span class="identifier">fiber_context</span> <span class="special">*</span> <span class="identifier">f</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+</pre>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">Effects:</span></dt>
+<dd><p>
+            Marks fiber <code class="computeroutput"><span class="identifier">f</span></code>, to be
+            ready to run.
+          </p></dd>
+</dl>
+</div>
+<p>
+      </p>
+<h5>
+<a name="sched_algorithm_pick_next_bridgehead"></a>
+  <span><a name="sched_algorithm_pick_next"></a></span>
+  <a class="link" href="scheduling.html#sched_algorithm_pick_next">Member
+      function <code class="computeroutput">pick_next</code>()</a>
+</h5>
+<p>
+    </p>
+<pre class="programlisting"><span class="keyword">virtual</span> <span class="identifier">fiber_context</span> <span class="special">*</span> <span class="identifier">pick_next</span><span class="special">()</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+</pre>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">Effects:</span></dt>
+<dd><p>
+            Depending on the scheduling algorithm, this function returns the fiber
+            which is to be resumed next.
+          </p></dd>
+</dl>
+</div>
+<p>
+      </p>
+<h5>
+<a name="sched_algorithm_priority_bridgehead"></a>
+  <span><a name="sched_algorithm_priority"></a></span>
+  <a class="link" href="scheduling.html#sched_algorithm_priority">Member
+      function <code class="computeroutput">priority</code>()</a>
+</h5>
+<p>
+    </p>
+<pre class="programlisting"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">priority</span><span class="special">(</span> <span class="identifier">fiber_context</span> <span class="special">*,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">noexcept</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+</pre>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">Effects:</span></dt>
+<dd><p>
+            Resets the priority of fiber <code class="computeroutput"><span class="identifier">f</span></code>.
+          </p></dd>
+</dl>
+</div>
 <p>
       </p>
 <h5>
@@ -42,8 +138,12 @@
 <p>
     </p>
 <p>
-      This class implements <a class="link" href="custom.html#class_sched_algorithm"> <code class="computeroutput">sched_algorithm</code></a> and schedules fibers
+      This class implements <a class="link" href="scheduling.html#class_sched_algorithm"> <code class="computeroutput">sched_algorithm</code></a> and schedules fibers
       in round-robin fashion (ignores <code class="computeroutput"><span class="identifier">fiber</span><span class="special">::</span><span class="identifier">priority</span><span class="special">()</span></code>).
+    </p>
+<p>
+      [info The example section provides a scheduler used for migrating fibers (work-stealing)
+      between threads (different schedulers).]
     </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

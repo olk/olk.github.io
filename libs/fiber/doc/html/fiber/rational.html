@@ -47,6 +47,18 @@
     </p>
 <h4>
 <a name="fiber.rational.h1"></a>
+      <span><a name="fiber.rational.what_about_transactional_memory"></a></span><a class="link" href="rational.html#fiber.rational.what_about_transactional_memory">what
+      about transactional memory</a>
+    </h4>
+<p>
+      GCC support transactional memory since version 4.7. Unfortunately testes showed
+      that transactional memory is slower (ca. 4x) than using spinlocks using atomics.
+      If transactional memory will be improved (supporting hybrid tm), spinlocks
+      will be replaced by __transaction_atomic{} statements surrounding the critical
+      sections.
+    </p>
+<h4>
+<a name="fiber.rational.h2"></a>
       <span><a name="fiber.rational._code__phrase_role__identifier__fiber_manager__phrase___code_with_free_functions"></a></span><a class="link" href="rational.html#fiber.rational._code__phrase_role__identifier__fiber_manager__phrase___code_with_free_functions"><code class="computeroutput"><span class="identifier">fiber_manager</span></code>with free-functions</a>
     </h4>
 <p>
@@ -55,7 +67,7 @@
       (thread), access the invalid instance if it will be resumed from <code class="computeroutput"><span class="identifier">fiber_manager</span><span class="special">::</span><span class="identifier">run</span><span class="special">()</span></code>.
     </p>
 <h4>
-<a name="fiber.rational.h2"></a>
+<a name="fiber.rational.h3"></a>
       <span><a name="fiber.rational.synchronization_between_fibers_running_in_different_threads"></a></span><a class="link" href="rational.html#fiber.rational.synchronization_between_fibers_running_in_different_threads">synchronization
       between fibers running in different threads</a>
     </h4>
@@ -70,7 +82,7 @@
       (same thread).
     </p>
 <h4>
-<a name="fiber.rational.h3"></a>
+<a name="fiber.rational.h4"></a>
       <span><a name="fiber.rational.migrating_fibers_between_threads"></a></span><a class="link" href="rational.html#fiber.rational.migrating_fibers_between_threads">migrating
       fibers between threads</a>
     </h4>
@@ -84,7 +96,7 @@
       scheudler <code class="computeroutput"><span class="identifier">Y</span></code>.
     </p>
 <h4>
-<a name="fiber.rational.h4"></a>
+<a name="fiber.rational.h5"></a>
       <span><a name="fiber.rational.variadric_template_args_for_async___packaged_task_lt__gt_"></a></span><a class="link" href="rational.html#fiber.rational.variadric_template_args_for_async___packaged_task_lt__gt_">variadric
       template args for async()/packaged_task&lt;&gt;</a>
     </h4>

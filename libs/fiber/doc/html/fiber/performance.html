@@ -27,9 +27,9 @@
 <a name="fiber.performance"></a><a class="link" href="performance.html" title="Performance">Performance</a>
 </h2></div></div></div>
 <p>
-      Performance measurements were taken using <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">chrono</span><span class="special">::</span><span class="identifier">highresolution_clock</span></code>,
+      Performance measurements were taken using <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">chrono</span><span class="special">::</span><span class="identifier">highresolution_clock</span></code>,
       with overhead corrections. The code was compiled using the build options: variant
-      = release, cxxflags = -DBOOST_DISABLE_ASSERTS,optimization = speed <sup>[<a name="fiber.performance.f0" href="#ftn.fiber.performance.f0" class="footnote">2</a>]</sup>.
+      = release, optimization = speed <sup>[<a name="fiber.performance.f0" href="#ftn.fiber.performance.f0" class="footnote">2</a>]</sup>.
     </p>
 <div class="table">
 <a name="fiber.performance.overhead_of_creating_and_joining"></a><p class="title"><b>Table&#160;1.1.&#160;Overhead of creating and joining</b></p>
@@ -48,17 +48,17 @@
             </th>
 <th>
               <p>
-                qthread
-              </p>
-            </th>
-<th>
-              <p>
                 fiber
               </p>
             </th>
 <th>
               <p>
                 tbb
+              </p>
+            </th>
+<th>
+              <p>
+                qthread
               </p>
             </th>
 </tr></thead>
@@ -70,17 +70,17 @@
             </td>
 <td>
               <p>
-                620 ns
-              </p>
-            </td>
-<td>
-              <p>
-                600 ns
+                3 &#181;s
               </p>
             </td>
 <td>
               <p>
                 570 ns
+              </p>
+            </td>
+<td>
+              <p>
+                620 ns
               </p>
             </td>
 </tr></tbody>
@@ -146,7 +146,7 @@
             </td>
 <td>
               <p>
-                860 ns
+                3 &#181;s
               </p>
             </td>
 </tr></tbody>
@@ -179,7 +179,7 @@
             </td>
 <td>
               <p>
-                2.5 &#181;s
+                4 &#181;s
               </p>
             </td>
 </tr></tbody>
@@ -224,7 +224,7 @@
             </td>
 <td>
               <p>
-                4.65 &#181;s
+                3.769 &#181;s
               </p>
             </td>
 </tr>
@@ -241,7 +241,7 @@
             </td>
 <td>
               <p>
-                2.88 &#181;s
+                2.789 &#181;s
               </p>
             </td>
 </tr>
@@ -258,7 +258,7 @@
             </td>
 <td>
               <p>
-                2.57 &#181;s
+                2.450 &#181;s
               </p>
             </td>
 </tr>
@@ -275,7 +275,7 @@
             </td>
 <td>
               <p>
-                3.08 &#181;s
+                2.919 &#181;s
               </p>
             </td>
 </tr>
@@ -292,7 +292,7 @@
             </td>
 <td>
               <p>
-                3.15 &#181;s
+                3.607 &#181;s
               </p>
             </td>
 </tr>
@@ -309,7 +309,7 @@
             </td>
 <td>
               <p>
-                4.95 &#181;s
+                4.579 &#181;s
               </p>
             </td>
 </tr>
@@ -326,7 +326,7 @@
             </td>
 <td>
               <p>
-                4.47 &#181;s
+                4.219 &#181;s
               </p>
             </td>
 </tr>
@@ -336,7 +336,7 @@
 <br class="table-break"><div class="footnotes">
 <br><hr width="100" align="left">
 <div class="footnote"><p><sup>[<a name="ftn.fiber.performance.f0" href="#fiber.performance.f0" class="para">2</a>] </sup>
-        Intel Core2 Q6700, x86_64
+        Intel Core2 Q6700, x86_64, 3GHz
       </p></div>
 </div>
 </div>
