@@ -29,12 +29,12 @@
 <p>
       <span class="bold"><strong>Boost.Job</strong></span> provides a framework for asynchronous
       execution of job-graphs <sup>[<a name="job.overview.f0" href="#ftn.job.overview.f0" class="footnote">1</a>]</sup> of arbitrary dependency, e.g. solving the many-dependent-jobs problem
-      (M: worker jobs, N: jobs waiting for other jobs; M &lt;&lt; N).
+      (M: worker threads, N: jobs waiting for other jobs; M &lt;&lt; N).
     </p>
 <p>
       Each (logical) processor of a dedicated processor set (configurable) gets a
       worker-thread assigned. Each worker-thread runs a fiber-pool (launch policy
-      is customizable). A submitted job is always executed by a worker-fiber. By
+      is customizable). A submitted job is always executed by a worker-fiber. While
       using <span class="bold"><strong>Boost.Fiber</strong></span> jobs are scheduled cooperatively
       so that a job can yield to other jobs during its execution. Jobs can be synchronized
       via primitives like mutex's, conditions, barriers and channels (message exchange)
