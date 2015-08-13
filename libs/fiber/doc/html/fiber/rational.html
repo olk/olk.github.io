@@ -28,7 +28,7 @@
 </h2></div></div></div>
 <h4>
 <a name="fiber.rational.h0"></a>
-      <span><a name="fiber.rational.distinction_between_coroutines_and_fibers"></a></span><a class="link" href="rational.html#fiber.rational.distinction_between_coroutines_and_fibers">Distinction
+      <span><a name="fiber.rational.distinction_between_coroutines_and_fibers"></a></span><a class="link" href="rational.html#fiber.rational.distinction_between_coroutines_and_fibers">distinction
       between coroutines and fibers</a>
     </h4>
 <p>
@@ -64,7 +64,7 @@
     </h4>
 <p>
       Synchronization classes from <a href="../../../../../libs/thread/index.html" target="_top">Boost.Thread</a>
-      do block the entire thread. In contrast to this the synchronization clases
+      do block the entire thread. In contrast to this the synchronization classes
       from <span class="bold"><strong>Boost.Fiber</strong></span> do block only the fiber,
       so that the thread is able to schedule and run other fibers in the meantime.
       The synchronization classes from <span class="bold"><strong>Boost.Fiber</strong></span>
@@ -75,6 +75,28 @@
     </p>
 <h4>
 <a name="fiber.rational.h3"></a>
+      <span><a name="fiber.rational.migrating_fibers_between_threads"></a></span><a class="link" href="rational.html#fiber.rational.migrating_fibers_between_threads">migrating
+      fibers between threads</a>
+    </h4>
+<p>
+      Support for migrating fibers between threads was removed. Especially in the
+      case of NUMA-architectures, it is not always advisable to migrate data between
+      threads. Suppose fiber <span class="emphasis"><em>f</em></span> is running on logical CPU <span class="emphasis"><em>cpu0</em></span>
+      which belongs to NUMA node <span class="emphasis"><em>node0</em></span>. The data of <span class="emphasis"><em>f</em></span>
+      are allocated on the physical memory located at <span class="emphasis"><em>node0</em></span>.
+      Migrating the fiber from <span class="emphasis"><em>cpu0</em></span> to another logical CPU
+      <span class="emphasis"><em>cpuX</em></span> which is part of a different NUMA node <span class="emphasis"><em>nodeX</em></span>
+      will reduce the performance of the application because of increased latency
+      of memory access.
+    </p>
+<p>
+      A more <span class="bold"><strong>important</strong></span> aspect is the problem with
+      thread-local-storage (<span class="bold"><strong>TLS</strong></span>). Instead of recomputing
+      the address of a TLS variable, a compiler might, as an optimization, reuse
+      its previously-computed address <sup>[<a name="fiber.rational.f1" href="#ftn.fiber.rational.f1" class="footnote">3</a>]</sup>.
+    </p>
+<h4>
+<a name="fiber.rational.h4"></a>
       <span><a name="fiber.rational.support_for_boost_asio"></a></span><a class="link" href="rational.html#fiber.rational.support_for_boost_asio">support
       for Boost.Asio</a>
     </h4>
@@ -88,7 +110,7 @@
       from both authors.
     </p>
 <h4>
-<a name="fiber.rational.h4"></a>
+<a name="fiber.rational.h5"></a>
       <span><a name="fiber.rational.tested_compilers"></a></span><a class="link" href="rational.html#fiber.rational.tested_compilers">tested
       compilers</a>
     </h4>
@@ -96,7 +118,7 @@
       The library was tested with GCC-5.1.1, Clang-3.6.0 and MSVC-14.0 in c++14-mode.
     </p>
 <h4>
-<a name="fiber.rational.h5"></a>
+<a name="fiber.rational.h6"></a>
       <span><a name="fiber.rational.supported_architectures"></a></span><a class="link" href="rational.html#fiber.rational.supported_architectures">supported
       architectures</a>
     </h4>
@@ -109,6 +131,11 @@
 <div class="footnote"><p><sup>[<a name="ftn.fiber.rational.f0" href="#fiber.rational.f0" class="para">2</a>] </sup>
         <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4024.pdf" target="_top">'N4024:
         Distinguishing coroutines and fibers'</a>
+      </p></div>
+<div class="footnote"><p><sup>[<a name="ftn.fiber.rational.f1" href="#fiber.rational.f1" class="para">3</a>] </sup>
+        dicussed in <a href="http://www.crystalclearsoftware.com/soc/coroutine/coroutine/coroutine_thread.html" target="_top">'Interaction
+        between coroutines and threads' by Giovanni P. Deretta, <a href="https://groups.google.com/a/isocpp.org/forum/#!topic/std-proposals/3g6ZIWedGJ8" target="_top">'A
+        proposal to add coroutines to C++'</a></a>
       </p></div>
 </div>
 </div>
