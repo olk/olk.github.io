@@ -52,17 +52,17 @@
 </pre>
 <p>
       A job is a small unit of code that can be executed independently and parallel,
-      e.g. it's a fain-grained work item. Each job is executed by a worker-fiber,
+      e.g. it's a fine-grained work item. Each job is executed by a worker-fiber,
       running in a worker-thread. Fibers are scheduled cooperatively so that a job
       can yield to other jobs during its execution. The result of a job is transported
       via a future.
     </p>
 <p>
-      The worker-thread is pinned to the logical processor, e.g. the OS-ssScheduler
+      The worker-thread is pinned to the logical processor, e.g. the OS-scheduler
       does not schedule the thread to another processor.
     </p>
 <p>
-      Class <a class="link" href="job_mgmt/scheduler.html#class_scheduler"> <code class="computeroutput">scheduler</code></a> manages the worker-fibers (creating and pinning
+      Class <a class="link" href="job_mgmt/scheduler.html#class_scheduler"> <code class="computeroutput">scheduler</code></a> manages the worker-threads (creating and pinning
       on logical processor) and gives access to the different worker-threads via
       <a class="link" href="job_mgmt/scheduler.html#scheduler_submit_preempt"> <code class="computeroutput">scheduler::submit_preempt()</code></a> (blocks thread in <code class="computeroutput"><span class="identifier">get</span><span class="special">()</span></code>) and
       <a class="link" href="job_mgmt/scheduler.html#scheduler_submit_coop"> <code class="computeroutput">scheduler::submit_coop()</code></a> (does not block thread in <code class="computeroutput"><span class="identifier">get</span><span class="special">()</span></code>). The
@@ -97,7 +97,7 @@
       Jobs can be synchronized (without blocking the worker-thread) by using synchronization
       objects (like mutex, condition_variables ...) from <span class="bold"><strong>Boost.Fiber</strong></span>.
       For instance a job can wait for the result of a sub-job using <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;&gt;</span></code> (spawning sub-job by calling <a class="link" href="job_mgmt/scheduler.html#scheduler_submit_coop"> <code class="computeroutput">scheduler::submit_coop()</code></a>)
-      without blocking the worker-thread on which it is executed. It doesn't matter
+      without blocking the worker-thread on which it is running. It doesn't matter
       to which logical processor the sub-job was submitted.
     </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">jobs</span><span class="special">::</span><span class="identifier">scheduler</span> <span class="identifier">s</span><span class="special">(</span> <span class="identifier">topo</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">jobs</span><span class="special">::</span><span class="identifier">static_pool</span><span class="special">&lt;</span> <span class="number">2</span> <span class="special">&gt;()</span> <span class="special">);</span>
@@ -140,7 +140,7 @@
       jobs (== worker-fibers) on that logical processor are able to be resumed/executed.
     </p>
 <p>
-      The library solves the many-dependeint-jobs problem - N jobs are waiting on
+      The library solves the many-dependent-jobs problem - N jobs are waiting on
       other jobs (maybe result of computation or some event) while M worker-threads
       service the job system. Without cooperative scheduling the system would block
       if M &lt;&lt; N.
