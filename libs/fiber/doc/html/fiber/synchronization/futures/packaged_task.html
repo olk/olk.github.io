@@ -31,6 +31,33 @@
           A <a class="link" href="packaged_task.html#class_packaged_task"> <code class="computeroutput">packaged_task&lt;&gt;</code></a> wraps a callable target that
           returns a value so that the return value can be computed asynchronously.
         </p>
+<p>
+          Conventional usage of <code class="computeroutput"><span class="identifier">packaged_task</span><span class="special">&lt;&gt;</span></code> is like this:
+        </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+              Instantiate <code class="computeroutput"><span class="identifier">packaged_task</span><span class="special">&lt;&gt;</span></code> with template arguments matching
+              the signature of the callable. Pass the callable to the <a class="link" href="packaged_task.html#packaged_task_packaged_task">constructor</a>.
+            </li>
+<li class="listitem">
+              Call <a class="link" href="packaged_task.html#packaged_task_get_future"> <code class="computeroutput">packaged_task::get_future()</code></a> and capture
+              the returned <a class="link" href="future.html#class_future"> <code class="computeroutput">future&lt;&gt;</code></a> instance.
+            </li>
+<li class="listitem">
+              Launch a <a class="link" href="../../fiber_mgmt/fiber.html#class_fiber"> <code class="computeroutput">fiber</code></a> to run the new <code class="computeroutput"><span class="identifier">packaged_task</span><span class="special">&lt;&gt;</span></code>, passing any arguments required
+              by the original callable.
+            </li>
+<li class="listitem">
+              Call <a class="link" href="../../fiber_mgmt/fiber.html#fiber_detach"> <code class="computeroutput">fiber::detach()</code></a> on the newly-launched <code class="computeroutput"><span class="identifier">fiber</span></code>.
+            </li>
+<li class="listitem">
+              At some later point, retrieve the result from the <code class="computeroutput"><span class="identifier">future</span><span class="special">&lt;&gt;</span></code>.
+            </li>
+</ol></div>
+<p>
+          This is, in fact, pretty much what <a class="link" href="future.html#fibers_async"> <code class="computeroutput">fibers::async()</code></a>
+encapsulates.
+        </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">class</span> <span class="identifier">R</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">Args</span> <span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">packaged_task</span><span class="special">&lt;</span> <span class="identifier">R</span><span class="special">(</span> <span class="identifier">Args</span> <span class="special">...</span> <span class="special">)</span> <span class="special">&gt;</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
@@ -53,10 +80,6 @@
     <span class="identifier">packaged_task</span> <span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span> <span class="identifier">packaged_task</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
 
     <span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span> <span class="identifier">packaged_task</span> <span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
-
-    <span class="keyword">operator</span> <span class="identifier">safe_bool</span><span class="special">()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span><span class="special">;</span>
-
-    <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">!()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span><span class="special">;</span>
 
     <span class="keyword">bool</span> <span class="identifier">valid</span><span class="special">()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span><span class="special">;</span>
 
@@ -88,7 +111,7 @@
               </p></dd>
 </dl>
 </div>
-<h6>
+<a name="packaged_task_packaged_task"></a><h6>
 <a name="fiber.synchronization.futures.packaged_task.h1"></a>
           <span><a name="fiber.synchronization.futures.packaged_task.templated_constructor__code__phrase_role__keyword__template__phrase__phrase_role__special___lt__gt___phrase___phrase_role__identifier__packaged_task__phrase__phrase_role__special______phrase___code_"></a></span><a class="link" href="packaged_task.html#fiber.synchronization.futures.packaged_task.templated_constructor__code__phrase_role__keyword__template__phrase__phrase_role__special___lt__gt___phrase___phrase_role__identifier__packaged_task__phrase__phrase_role__special______phrase___code_">Templated
           constructor <code class="computeroutput"><span class="keyword">template</span><span class="special">&lt;&gt;</span>
@@ -219,57 +242,6 @@
 <dd><p>
                 Swaps the <a class="link" href="future.html#shared_state">shared state</a> between
                 other and <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
-              </p></dd>
-<dt><span class="term">Throws:</span></dt>
-<dd><p>
-                Nothing.
-              </p></dd>
-</dl>
-</div>
-<p>
-          </p>
-<h5>
-<a name="packaged_task_operator%20safe_bool_bridgehead"></a>
-  <span><a name="packaged_task_operator%20safe_bool"></a></span>
-  <a class="link" href="packaged_task.html#packaged_task_operator%20safe_bool">Member function <code class="computeroutput">operator safe_bool</code>()</a>
-</h5>
-<p>
-        </p>
-<pre class="programlisting"><span class="keyword">operator</span> <span class="identifier">safe_bool</span><span class="special">()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span><span class="special">;</span>
-</pre>
-<div class="variablelist">
-<p class="title"><b></b></p>
-<dl>
-<dt><span class="term">Effects:</span></dt>
-<dd><p>
-                Returns <code class="computeroutput"><span class="keyword">true</span></code> if <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
-                contains a non-empty <a class="link" href="future.html#shared_state">shared state</a>.
-              </p></dd>
-<dt><span class="term">Throws:</span></dt>
-<dd><p>
-                Nothing.
-              </p></dd>
-</dl>
-</div>
-<p>
-          </p>
-<h5>
-<a name="packaged_task_operator_not_bridgehead"></a>
-  <span><a name="packaged_task_operator_not"></a></span>
-  <a class="link" href="packaged_task.html#packaged_task_operator_not">Member
-          function <code class="computeroutput">operator!</code>()</a>
-</h5>
-<p>
-        </p>
-<pre class="programlisting"><span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">!()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span><span class="special">;</span>
-</pre>
-<div class="variablelist">
-<p class="title"><b></b></p>
-<dl>
-<dt><span class="term">Effects:</span></dt>
-<dd><p>
-                Returns <code class="computeroutput"><span class="keyword">true</span></code> if <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
-                contains an empty <a class="link" href="future.html#shared_state">shared state</a>.
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>

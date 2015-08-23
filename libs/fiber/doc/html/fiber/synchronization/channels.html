@@ -460,7 +460,7 @@
 <dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
-              <code class="computeroutput"><span class="identifier">hwm</span> <span class="special">&gt;=</span>
+              <code class="computeroutput"><span class="identifier">hwm</span> <span class="special">&gt;</span>
               <span class="identifier">lwm</span></code>
             </p></dd>
 <dt><span class="term">Effects:</span></dt>
@@ -469,14 +469,12 @@
               The constructor with two arguments constructs an object of class <code class="computeroutput"><span class="identifier">bounded_channel</span></code> with a high-watermark
               of <code class="computeroutput"><span class="identifier">hwm</span></code> and a low-watermark
               of <code class="computeroutput"><span class="identifier">lwm</span></code> items. The constructor
-              with one argument effectively sets both <code class="computeroutput"><span class="identifier">hwm</span></code>
-              and <code class="computeroutput"><span class="identifier">lwm</span></code> to the same
-              value <code class="computeroutput"><span class="identifier">wm</span></code>.
+              with one argument is effectively the same as <code class="computeroutput"><span class="identifier">bounded_channel</span><span class="special">(</span><span class="identifier">wm</span><span class="special">,</span> <span class="special">(</span><span class="identifier">wm</span><span class="special">-</span><span class="number">1</span><span class="special">))</span></code>.
             </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
               <code class="computeroutput"><span class="identifier">invalid_argument</span></code> if
-              <code class="computeroutput"><span class="identifier">lwm</span> <span class="special">&gt;</span>
+              <code class="computeroutput"><span class="identifier">lwm</span> <span class="special">&gt;=</span>
               <span class="identifier">hwm</span></code>.
             </p></dd>
 <dt><span class="term">Notes:</span></dt>
@@ -485,10 +483,10 @@
               any call to <code class="computeroutput"><span class="identifier">push</span><span class="special">()</span></code>,
               <code class="computeroutput"><span class="identifier">push_wait_for</span><span class="special">()</span></code>
               or <code class="computeroutput"><span class="identifier">push_wait_until</span><span class="special">()</span></code> will block until the number of values
-              in the channel has dropped below <code class="computeroutput"><span class="identifier">lwm</span></code>.
+              in the channel is at most <code class="computeroutput"><span class="identifier">lwm</span></code>.
               That is, if <code class="computeroutput"><span class="identifier">lwm</span> <span class="special">&lt;</span>
-              <span class="identifier">hwm</span></code>, the channel can be in
-              a state in which <code class="computeroutput"><span class="identifier">push</span><span class="special">()</span></code>, <code class="computeroutput"><span class="identifier">push_wait_for</span><span class="special">()</span></code> or <code class="computeroutput"><span class="identifier">push_wait_until</span><span class="special">()</span></code> calls will block (channel is full)
+              <span class="special">(</span><span class="identifier">hwm</span><span class="special">-</span><span class="number">1</span><span class="special">)</span></code>,
+              the channel can be in a state in which <code class="computeroutput"><span class="identifier">push</span><span class="special">()</span></code>, <code class="computeroutput"><span class="identifier">push_wait_for</span><span class="special">()</span></code> or <code class="computeroutput"><span class="identifier">push_wait_until</span><span class="special">()</span></code> calls will block (channel is full)
               even though the number of values in the channel is less than <code class="computeroutput"><span class="identifier">hwm</span></code>.
             </p></dd>
 </dl>
@@ -598,7 +596,7 @@
               Otherwise If channel is not full, enqueues the value in the channel,
               wakes up a fiber blocked on <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop</span><span class="special">()</span></code>, <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">value_pop</span><span class="special">()</span></code>, <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_for</span><span class="special">()</span></code> or <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_until</span><span class="special">()</span></code> and returns <code class="computeroutput"><span class="identifier">success</span></code>.
               Otherwise the calling fiber is suspended until the number of values
-              in the channel drops below <code class="computeroutput"><span class="identifier">lwm</span></code>
+              in the channel drops to <code class="computeroutput"><span class="identifier">lwm</span></code>
               (return value <code class="computeroutput"><span class="identifier">success</span></code>)or
               the channel is <code class="computeroutput"><span class="identifier">close</span><span class="special">()</span></code>d (return value <code class="computeroutput"><span class="identifier">closed</span></code>).
             </p></dd>
@@ -636,7 +634,7 @@
               Otherwise If channel is not full, enqueues the value in the channel,
               wakes up a fiber blocked on <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop</span><span class="special">()</span></code>, <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">value_pop</span><span class="special">()</span></code>, <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_for</span><span class="special">()</span></code> or <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_until</span><span class="special">()</span></code> and returns <code class="computeroutput"><span class="identifier">success</span></code>.
               Otherwise the calling fiber is suspended until the number of values
-              in the channel drops below <code class="computeroutput"><span class="identifier">lwm</span></code>
+              in the channel drops to <code class="computeroutput"><span class="identifier">lwm</span></code>
               (return value <code class="computeroutput"><span class="identifier">success</span></code>),
               the channel is <code class="computeroutput"><span class="identifier">close</span><span class="special">()</span></code>d (return value <code class="computeroutput"><span class="identifier">closed</span></code>),
               or the system time reaches the computed time_point (return value <code class="computeroutput"><span class="identifier">timeout</span></code>).
@@ -678,7 +676,7 @@
               or <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_until</span><span class="special">()</span></code>
               and returns <code class="computeroutput"><span class="identifier">success</span></code>.
               Otherwise the calling fiber is suspended until the number of values
-              in the channel drops below <code class="computeroutput"><span class="identifier">lwm</span></code>
+              in the channel drops to <code class="computeroutput"><span class="identifier">lwm</span></code>
               (return value <code class="computeroutput"><span class="identifier">success</span></code>),
               the channel is <code class="computeroutput"><span class="identifier">close</span><span class="special">()</span></code>d (return value <code class="computeroutput"><span class="identifier">closed</span></code>),
               or the system time reaches the passed time_point (return value <code class="computeroutput"><span class="identifier">timeout</span></code>).
@@ -743,7 +741,7 @@
               gets suspended until at least one new item is <code class="computeroutput"><span class="identifier">push</span><span class="special">()</span></code>ed (return value <code class="computeroutput"><span class="identifier">success</span></code>
               and <code class="computeroutput"><span class="identifier">va</span></code> contains dequeued
               value) or the channel gets <code class="computeroutput"><span class="identifier">close</span><span class="special">()</span></code>d (return value <code class="computeroutput"><span class="identifier">closed</span></code>).
-              Once the number of items remaining in the channel drops below <code class="computeroutput"><span class="identifier">lwm</span></code>, any fibers blocked on <code class="computeroutput"><span class="identifier">push</span><span class="special">()</span></code>,
+              Once the number of items remaining in the channel drops to <code class="computeroutput"><span class="identifier">lwm</span></code>, any fibers blocked on <code class="computeroutput"><span class="identifier">push</span><span class="special">()</span></code>,
               <code class="computeroutput"><span class="identifier">push_wait_for</span><span class="special">()</span></code>
               or <code class="computeroutput"><span class="identifier">push_wait_until</span><span class="special">()</span></code> may resume.
             </p></dd>
@@ -773,7 +771,7 @@
               Dequeues a value from the channel. If the channel is empty, the fiber
               gets suspended until at least one new item is <code class="computeroutput"><span class="identifier">push</span><span class="special">()</span></code>ed or the channel gets <code class="computeroutput"><span class="identifier">close</span><span class="special">()</span></code>d
               (which throws an exception). Once the number of items remaining in
-              the channel drops below <code class="computeroutput"><span class="identifier">lwm</span></code>,
+              the channel drops to <code class="computeroutput"><span class="identifier">lwm</span></code>,
               any fibers blocked on <code class="computeroutput"><span class="identifier">push</span><span class="special">()</span></code>, <code class="computeroutput"><span class="identifier">push_wait_for</span><span class="special">()</span></code> or <code class="computeroutput"><span class="identifier">push_wait_until</span><span class="special">()</span></code> may resume.
             </p></dd>
 <dt><span class="term">Throws:</span></dt>
@@ -805,7 +803,7 @@
               Otherwise it returns <code class="computeroutput"><span class="identifier">success</span></code>
               and <code class="computeroutput"><span class="identifier">va</span></code> contains the
               dequeued value. Once the number of items remaining in the channel drops
-              below <code class="computeroutput"><span class="identifier">lwm</span></code>, any fibers
+              to <code class="computeroutput"><span class="identifier">lwm</span></code>, any fibers
               blocked on <code class="computeroutput"><span class="identifier">push</span><span class="special">()</span></code>,
               <code class="computeroutput"><span class="identifier">push_wait_for</span><span class="special">()</span></code>
               or <code class="computeroutput"><span class="identifier">push_wait_until</span><span class="special">()</span></code> may resume.
@@ -845,9 +843,8 @@
               value), or the channel gets <code class="computeroutput"><span class="identifier">close</span><span class="special">()</span></code>d (return value <code class="computeroutput"><span class="identifier">closed</span></code>),
               or the system time reaches the computed timeout time (return value
               <code class="computeroutput"><span class="identifier">timeout</span></code>). Once the
-              number of items remaining in the channel drops below <code class="computeroutput"><span class="identifier">lwm</span></code>, any fibers blocked on <code class="computeroutput"><span class="identifier">push</span><span class="special">()</span></code>,
-              <code class="computeroutput"><span class="identifier">push_wait_for</span><span class="special">()</span></code>
-              or <code class="computeroutput"><span class="identifier">push_wait_until</span><span class="special">()</span></code> may resume.
+              number of items remaining in the channel drops to <code class="computeroutput"><span class="identifier">lwm</span></code>,
+              any fibers blocked on <code class="computeroutput"><span class="identifier">push</span><span class="special">()</span></code>, <code class="computeroutput"><span class="identifier">push_wait_for</span><span class="special">()</span></code> or <code class="computeroutput"><span class="identifier">push_wait_until</span><span class="special">()</span></code> may resume.
             </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -885,7 +882,7 @@
               value), or the channel gets <code class="computeroutput"><span class="identifier">close</span><span class="special">()</span></code>d (return value <code class="computeroutput"><span class="identifier">closed</span></code>),
               or the system time reaches the passed <code class="computeroutput"><span class="identifier">time_point</span></code>
               (return value <code class="computeroutput"><span class="identifier">timeout</span></code>).
-              Once the number of items remaining in the channel drops below <code class="computeroutput"><span class="identifier">lwm</span></code>, any fibers blocked on <code class="computeroutput"><span class="identifier">push</span><span class="special">()</span></code>,
+              Once the number of items remaining in the channel drops to <code class="computeroutput"><span class="identifier">lwm</span></code>, any fibers blocked on <code class="computeroutput"><span class="identifier">push</span><span class="special">()</span></code>,
               <code class="computeroutput"><span class="identifier">push_wait_for</span><span class="special">()</span></code>
               or <code class="computeroutput"><span class="identifier">push_wait_until</span><span class="special">()</span></code> may resume.
             </p></dd>
