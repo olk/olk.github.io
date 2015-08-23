@@ -34,8 +34,8 @@
 <p>
       Each logical processor of a dedicated processor set gets a worker-thread assigned
       (the worker-thread is pinned to the logical processor; the OS-scheudler does
-      not re-scheduled it to another logical processor). Each worker-thread runs
-      a fiber-pool (customizable). A submitted job is always executed by a worker-fiber.
+      not re-schedule it to another logical processor). Each worker-thread runs a
+      fiber-pool (customizable). A submitted job is always executed by a worker-fiber.
       While utilizing <span class="bold"><strong>Boost.Fiber</strong></span>, jobs are scheduled
       cooperatively so that a job can yield to other jobs during its execution. Jobs
       can be synchronized via mutex's, conditions, barriers and channels from <span class="bold"><strong>Boost.Fiber</strong></span> without blocking the worker-thread. Fibers
@@ -77,20 +77,26 @@
       <span class="bold"><strong>Boost.Job</strong></span> depends upon <span class="bold"><strong>Boost.Fiber</strong></span>.
       Boost version 1.59.0 or greater is required.
     </p>
-<p>
-      [info This library is C++14-only!]
-    </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        This library is C++14-only!
+      </p></td></tr>
+</table></div>
 <div class="footnotes">
 <br><hr width="100" align="left">
 <div class="footnote"><p><sup>[<a name="ftn.job.overview.f0" href="#job.overview.f0" class="para">1</a>] </sup>
         A job is a small unit of code that can be executed independently and parallel,
-        e.g. it's a fain-grained work item
+        e.g. it's a fine-grained work item
       </p></div>
 <div class="footnote"><p><sup>[<a name="ftn.job.overview.f1" href="#job.overview.f1" class="para">2</a>] </sup>
         NUMA == non-uniform memory access
       </p></div>
 <div class="footnote"><p><sup>[<a name="ftn.job.overview.f2" href="#job.overview.f2" class="para">3</a>] </sup>
-        processors of a NUMA node share cache and have a faster access to its associated
+        Processors of a NUMA node share cache and have a faster access to its associated
         memory bank than processors of other nodes.
       </p></div>
 </div>

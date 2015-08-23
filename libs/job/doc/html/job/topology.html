@@ -59,17 +59,17 @@
 <p>
       <span class="bold"><strong>Boost.Job</strong></span> provides function <a class="link" href="topology/topo_t.html#cpu_topology"> <code class="computeroutput">cpu_topology()</code></a> to
       inspect which logical processors are online. The returned structure contains
-      the ID of logical processor <sup>[<a name="job.topology.f0" href="#ftn.job.topology.f0" class="footnote">4</a>]</sup> are online, the ID of the NUMA node to which the logical processor
-      belongs and with which other logical processors L1/L2/L3 cache is shared <sup>[<a name="job.topology.f1" href="#ftn.job.topology.f1" class="footnote">5</a>]</sup>. This information is used internally to pin worker threads to logical
+      the ID of logical processor <sup>[<a name="job.topology.f0" href="#ftn.job.topology.f0" class="footnote">6</a>]</sup> are online, the ID of the NUMA node to which the logical processor
+      belongs and with which other logical processors L1/L2/L3 cache is shared <sup>[<a name="job.topology.f1" href="#ftn.job.topology.f1" class="footnote">7</a>]</sup>. This information is used internally to pin worker threads to logical
       processors and which logical processor is appropriate for a job (memory latency).
     </p>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.job.topology.f0" href="#job.topology.f0" class="para">4</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.job.topology.f0" href="#job.topology.f0" class="para">6</a>] </sup>
         On Windows a logical processor is identified by the processor group ID and
         the position in a 64bit bitmask
       </p></div>
-<div class="footnote"><p><sup>[<a name="ftn.job.topology.f1" href="#job.topology.f1" class="para">5</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.job.topology.f1" href="#job.topology.f1" class="para">7</a>] </sup>
         not all platforms supported
       </p></div>
 </div>

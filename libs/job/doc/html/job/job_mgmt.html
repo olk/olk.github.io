@@ -64,10 +64,8 @@
 <p>
       Class <a class="link" href="job_mgmt/scheduler.html#class_scheduler"> <code class="computeroutput">scheduler</code></a> manages the worker-threads (creating and pinning
       on logical processor) and gives access to the different worker-threads via
-      <a class="link" href="job_mgmt/scheduler.html#scheduler_submit_preempt"> <code class="computeroutput">scheduler::submit_preempt()</code></a> (blocks thread in <code class="computeroutput"><span class="identifier">get</span><span class="special">()</span></code>) and
-      <a class="link" href="job_mgmt/scheduler.html#scheduler_submit_coop"> <code class="computeroutput">scheduler::submit_coop()</code></a> (does not block thread in <code class="computeroutput"><span class="identifier">get</span><span class="special">()</span></code>). The
-      worker-threads and their worker-fibers are interrupted and joined by calling
-      <a class="link" href="job_mgmt/scheduler.html#scheduler_shutdown"> <code class="computeroutput">scheduler::shutdown()</code></a>.
+      <a class="link" href="job_mgmt/scheduler.html#scheduler_submit_preempt"> <code class="computeroutput">scheduler::submit_preempt()</code></a> (returns <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;&gt;</span></code><sup>[<a name="job.job_mgmt.f0" href="#ftn.job.job_mgmt.f0" class="footnote">4</a>]</sup>) and <a class="link" href="job_mgmt/scheduler.html#scheduler_submit_coop"> <code class="computeroutput">scheduler::submit_coop()</code></a> (returns <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;&gt;</span></code> <sup>[<a name="job.job_mgmt.f1" href="#ftn.job.job_mgmt.f1" class="footnote">5</a>]</sup>). The worker-threads and their worker-fibers are interrupted and
+      joined by calling <a class="link" href="job_mgmt/scheduler.html#scheduler_shutdown"> <code class="computeroutput">scheduler::shutdown()</code></a>.
     </p>
 <pre class="programlisting"><span class="comment">// create scheduler, each worker-thread runs 3 worker-fibers</span>
 <span class="identifier">boost</span><span class="special">::</span><span class="identifier">jobs</span><span class="special">::</span><span class="identifier">scheduler</span> <span class="identifier">s</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">jobs</span><span class="special">::</span><span class="identifier">cpu_topology</span><span class="special">(),</span>
@@ -94,9 +92,9 @@
       returned future.
     </p>
 <p>
-      Jobs can be synchronized (without blocking the worker-thread) by using synchronization
-      objects (like mutex, condition_variables ...) from <span class="bold"><strong>Boost.Fiber</strong></span>.
-      For instance a job can wait for the result of a sub-job using <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;&gt;</span></code> (spawning sub-job by calling <a class="link" href="job_mgmt/scheduler.html#scheduler_submit_coop"> <code class="computeroutput">scheduler::submit_coop()</code></a>)
+      Jobs can be synchronized using synchronization objects (like mutex, condition_variables
+      ...) from <span class="bold"><strong>Boost.Fiber</strong></span>. For instance a job
+      can wait for the result of a sub-job using <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;&gt;</span></code> (spawning sub-job by calling <a class="link" href="job_mgmt/scheduler.html#scheduler_submit_coop"> <code class="computeroutput">scheduler::submit_coop()</code></a>)
       without blocking the worker-thread on which it is running. It doesn't matter
       to which logical processor the sub-job was submitted.
     </p>
@@ -106,11 +104,11 @@
 <span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span> <span class="keyword">void</span> <span class="special">&gt;</span> <span class="identifier">f1</span> <span class="special">=</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">submit_preempt</span><span class="special">(</span> <span class="identifier">topo</span><span class="special">[</span><span class="number">0</span><span class="special">].</span><span class="identifier">processor_id</span><span class="special">,</span>
           <span class="special">[&amp;</span><span class="identifier">mtx</span><span class="special">,&amp;</span><span class="identifier">cond</span><span class="special">,</span> <span class="special">&amp;</span><span class="identifier">i</span><span class="special">](){</span>
-              <span class="comment">// aquire lock on mutex, might be happen before the other jobs tries to acquire lock</span>
+              <span class="comment">// aquire lock on mutex, might happen before the other jobs tries to acquire lock</span>
               <span class="identifier">std</span><span class="special">::</span><span class="identifier">unique_lock</span><span class="special">&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">mutex</span> <span class="special">&gt;</span> <span class="identifier">lk</span><span class="special">(</span> <span class="identifier">mtx</span><span class="special">);</span>
               <span class="comment">// wait for synchronizing shared variable `i`</span>
               <span class="comment">// will suspended current job</span>
-              <span class="comment">// other jobs running on this worker-thread are able be resumed/executed</span>
+              <span class="comment">// other jobs running on this worker-thread are resumed/executed</span>
               <span class="identifier">cond</span><span class="special">.</span><span class="identifier">wait</span><span class="special">(</span> <span class="identifier">lk</span><span class="special">,</span> <span class="special">[&amp;</span><span class="identifier">i</span><span class="special">](){</span> <span class="keyword">return</span> <span class="number">0</span> <span class="special">!=</span> <span class="identifier">i</span><span class="special">;</span> <span class="special">});</span>
               <span class="comment">// resumed because notified by other job</span>
               <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fiber "</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_fiber</span><span class="special">::</span><span class="identifier">get_id</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="string">": received: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -121,7 +119,7 @@
               <span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_fiber</span><span class="special">::</span><span class="identifier">sleep_for</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">chrono</span><span class="special">::</span><span class="identifier">seconds</span><span class="special">(</span> <span class="number">1</span><span class="special">)</span> <span class="special">);</span>
               <span class="comment">// aquire lock on mutex</span>
               <span class="identifier">std</span><span class="special">::</span><span class="identifier">unique_lock</span><span class="special">&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">mutex</span> <span class="special">&gt;</span> <span class="identifier">lk</span><span class="special">(</span> <span class="identifier">mtx</span><span class="special">);</span>
-              <span class="comment">// modify shard variable</span>
+              <span class="comment">// modify shared variable `i`</span>
               <span class="identifier">i</span> <span class="special">=</span> <span class="number">7</span><span class="special">;</span>
               <span class="comment">// notify other job</span>
               <span class="identifier">cond</span><span class="special">.</span><span class="identifier">notify_all</span><span class="special">();</span>
@@ -136,14 +134,13 @@
       In the example above a mutex and a condition-variable are used to synchronize
       two jobs running on different logical processors. The worker-threads are not
       blocked, e.g. if one of the two jobs is waiting for a notification (inside
-      <code class="computeroutput"><span class="identifier">condition_variable</span><span class="special">::</span><span class="identifier">wait</span><span class="special">()</span></code>) other
-      jobs (== worker-fibers) on that logical processor are able to be resumed/executed.
+      <code class="computeroutput"><span class="identifier">condition_variable</span><span class="special">::</span><span class="identifier">wait</span><span class="special">()</span></code>),
+      other jobs (== worker-fibers) on that logical processor are resumed/executed.
     </p>
 <p>
       The library solves the many-dependent-jobs problem - N jobs are waiting on
-      other jobs (maybe result of computation or some event) while M worker-threads
-      service the job system. Without cooperative scheduling the system would block
-      if M &lt;&lt; N.
+      other jobs while M worker-threads service the job system. Without cooperative
+      scheduling the system would block if M &lt;&lt; N.
     </p>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">fibonacci</span><span class="special">(</span> <span class="keyword">int</span> <span class="identifier">n</span><span class="special">)</span> <span class="special">{</span>
     <span class="keyword">if</span> <span class="special">(</span> <span class="number">1</span> <span class="special">==</span> <span class="identifier">n</span> <span class="special">||</span> <span class="number">2</span> <span class="special">==</span> <span class="identifier">n</span><span class="special">)</span> <span class="special">{</span>
@@ -171,6 +168,17 @@
       itself creates a graph of sub-jobs - in summary 9 jobs are processed for fibonacci(
       5).
     </p>
+<div class="footnotes">
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a name="ftn.job.job_mgmt.f0" href="#job.job_mgmt.f0" class="para">4</a>] </sup>
+        <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;&gt;::</span><span class="identifier">get</span><span class="special">()</span></code> blocks
+        thread
+      </p></div>
+<div class="footnote"><p><sup>[<a name="ftn.job.job_mgmt.f1" href="#job.job_mgmt.f1" class="para">5</a>] </sup>
+        <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;&gt;::</span><span class="identifier">get</span><span class="special">()</span></code> does
+        not block threadi
+      </p></div>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
