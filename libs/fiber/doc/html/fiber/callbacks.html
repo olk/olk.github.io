@@ -383,12 +383,11 @@
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Allocator</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator</span><span class="special">&lt;</span> <span class="keyword">void</span> <span class="special">&gt;</span> <span class="special">&gt;</span>
-<span class="keyword">class</span> <span class="identifier">yield_t</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">promise_completion_token</span><span class="special">&lt;</span><span class="identifier">Allocator</span><span class="special">&gt;</span>
-<span class="special">{</span>
+<span class="keyword">class</span> <span class="identifier">yield_t</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">promise_completion_token</span><span class="special">&lt;</span> <span class="identifier">Allocator</span> <span class="special">&gt;</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
     <span class="comment">/// Construct with default-constructed allocator.</span>
-    <span class="identifier">BOOST_CONSTEXPR</span> <span class="identifier">yield_t</span><span class="special">()</span>
-    <span class="special">{}</span>
+    <span class="identifier">BOOST_CONSTEXPR</span> <span class="identifier">yield_t</span><span class="special">()</span> <span class="special">{</span>
+    <span class="special">}</span>
     <span class="comment">// ... ways to use an alternate allocator or bind an error_code ...</span>
 <span class="special">};</span>
 </pre>
@@ -409,32 +408,32 @@
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Allocator</span> <span class="special">&gt;</span>
-<span class="keyword">class</span> <span class="identifier">promise_completion_token</span>
-<span class="special">{</span>
+<span class="keyword">class</span> <span class="identifier">promise_completion_token</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
     <span class="keyword">typedef</span> <span class="identifier">Allocator</span> <span class="identifier">allocator_type</span><span class="special">;</span>
 
     <span class="comment">/// Construct using default-constructed allocator.</span>
     <span class="identifier">BOOST_CONSTEXPR</span> <span class="identifier">promise_completion_token</span><span class="special">()</span> <span class="special">:</span>
-        <span class="identifier">ec_</span><span class="special">(</span> <span class="keyword">nullptr</span><span class="special">)</span>
-    <span class="special">{}</span>
+        <span class="identifier">ec_</span><span class="special">(</span> <span class="keyword">nullptr</span><span class="special">)</span> <span class="special">{</span>
+    <span class="special">}</span>
 
     <span class="comment">/// Construct using specified allocator.</span>
     <span class="keyword">explicit</span> <span class="identifier">promise_completion_token</span><span class="special">(</span> <span class="identifier">Allocator</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">allocator</span><span class="special">)</span> <span class="special">:</span>
         <span class="identifier">ec_</span><span class="special">(</span> <span class="keyword">nullptr</span><span class="special">),</span>
-        <span class="identifier">allocator_</span><span class="special">(</span> <span class="identifier">allocator</span><span class="special">)</span>
-    <span class="special">{}</span>
+        <span class="identifier">allocator_</span><span class="special">(</span> <span class="identifier">allocator</span><span class="special">)</span> <span class="special">{</span>
+    <span class="special">}</span>
 
     <span class="comment">/// Obtain allocator.</span>
-    <span class="identifier">allocator_type</span> <span class="identifier">get_allocator</span><span class="special">()</span> <span class="keyword">const</span>
-    <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">allocator_</span><span class="special">;</span> <span class="special">}</span>
+    <span class="identifier">allocator_type</span> <span class="identifier">get_allocator</span><span class="special">()</span> <span class="keyword">const</span> <span class="special">{</span>
+        <span class="keyword">return</span> <span class="identifier">allocator_</span><span class="special">;</span>
+    <span class="special">}</span>
 
 <span class="comment">//private:</span>
     <span class="comment">// used by some subclasses to bind an error_code to suppress exceptions</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span>   <span class="special">*</span>   <span class="identifier">ec_</span><span class="special">;</span>
 
 <span class="keyword">private</span><span class="special">:</span>
-    <span class="identifier">Allocator</span> <span class="identifier">allocator_</span><span class="special">;</span>
+    <span class="identifier">Allocator</span>   <span class="identifier">allocator_</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
 <p>
@@ -445,11 +444,9 @@
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Allocator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">ReturnType</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Arg2</span> <span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">handler_type</span><span class="special">&lt;</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">yield_t</span><span class="special">&lt;</span> <span class="identifier">Allocator</span><span class="special">&gt;,</span>
-    <span class="identifier">ReturnType</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span><span class="special">,</span> <span class="identifier">Arg2</span><span class="special">)</span>
-<span class="special">&gt;</span>
-<span class="special">{</span> <span class="keyword">typedef</span> <span class="identifier">fibers</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">yield_handler</span><span class="special">&lt;</span> <span class="identifier">Arg2</span> <span class="special">&gt;</span>    <span class="identifier">type</span><span class="special">;</span> <span class="special">};</span>
+<span class="keyword">struct</span> <span class="identifier">handler_type</span><span class="special">&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">yield_t</span><span class="special">&lt;</span> <span class="identifier">Allocator</span><span class="special">&gt;,</span> <span class="identifier">ReturnType</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span><span class="special">,</span> <span class="identifier">Arg2</span><span class="special">)</span> <span class="special">&gt;</span> <span class="special">{</span>
+    <span class="keyword">typedef</span> <span class="identifier">fibers</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">yield_handler</span><span class="special">&lt;</span> <span class="identifier">Arg2</span> <span class="special">&gt;</span>    <span class="identifier">type</span><span class="special">;</span>
+<span class="special">};</span>
 </pre>
 <p>
     </p>
@@ -473,7 +470,7 @@
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">T</span> <span class="special">&gt;</span>
-<span class="keyword">using</span> <span class="identifier">yield_handler</span> <span class="special">=</span> <span class="identifier">promise_handler</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;;</span>
+<span class="keyword">using</span> <span class="identifier">yield_handler</span> <span class="special">=</span> <span class="identifier">promise_handler</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;;</span>
 </pre>
 <p>
     </p>
@@ -483,8 +480,7 @@
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">T</span> <span class="special">&gt;</span>
-<span class="keyword">class</span> <span class="identifier">promise_handler_base</span>
-<span class="special">{</span>
+<span class="keyword">class</span> <span class="identifier">promise_handler_base</span> <span class="special">{</span>
     <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">promise</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">promise_ptr</span><span class="special">;</span>
 
 <span class="keyword">public</span><span class="special">:</span>
@@ -494,10 +490,8 @@
         <span class="identifier">promise_</span><span class="special">(</span> <span class="keyword">new</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">promise</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator_arg</span><span class="special">,</span> <span class="identifier">pct</span><span class="special">.</span><span class="identifier">get_allocator</span><span class="special">()</span> <span class="special">)</span> <span class="special">)</span>
     <span class="special">{}</span>
 
-    <span class="keyword">bool</span> <span class="identifier">should_set_value</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">ec</span><span class="special">)</span>
-    <span class="special">{</span>
-        <span class="keyword">if</span> <span class="special">(!</span> <span class="identifier">ec</span><span class="special">)</span>
-        <span class="special">{</span>
+    <span class="keyword">bool</span> <span class="identifier">should_set_value</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">{</span>
+        <span class="keyword">if</span> <span class="special">(</span> <span class="special">!</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">{</span>
             <span class="comment">// whew, success</span>
             <span class="keyword">return</span> <span class="keyword">true</span><span class="special">;</span>
         <span class="special">}</span>
@@ -510,8 +504,9 @@
         <span class="keyword">return</span> <span class="keyword">false</span><span class="special">;</span>
     <span class="special">}</span>
 
-    <span class="identifier">promise_ptr</span> <span class="identifier">get_promise</span><span class="special">()</span> <span class="keyword">const</span>
-    <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">promise_</span><span class="special">;</span> <span class="special">}</span>
+    <span class="identifier">promise_ptr</span> <span class="identifier">get_promise</span><span class="special">()</span> <span class="keyword">const</span> <span class="special">{</span>
+        <span class="keyword">return</span> <span class="identifier">promise_</span><span class="special">;</span>
+    <span class="special">}</span>
 
 <span class="keyword">private</span><span class="special">:</span>
     <span class="identifier">promise_ptr</span>                 <span class="identifier">promise_</span><span class="special">;</span>
@@ -534,19 +529,18 @@
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">T</span> <span class="special">&gt;</span>
-<span class="keyword">class</span> <span class="identifier">promise_handler</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">promise_handler_base</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
-<span class="special">{</span>
+<span class="keyword">class</span> <span class="identifier">promise_handler</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">promise_handler_base</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
     <span class="comment">// Construct from any promise_completion_token subclass special value.</span>
     <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Allocator</span> <span class="special">&gt;</span>
-    <span class="identifier">promise_handler</span><span class="special">(</span> <span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">promise_completion_token</span><span class="special">&lt;</span> <span class="identifier">Allocator</span> <span class="special">&gt;&amp;</span> <span class="identifier">pct</span><span class="special">)</span> <span class="special">:</span>
-        <span class="identifier">promise_handler_base</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span> <span class="identifier">pct</span><span class="special">)</span>
-    <span class="special">{}</span>
+    <span class="identifier">promise_handler</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">promise_completion_token</span><span class="special">&lt;</span> <span class="identifier">Allocator</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">pct</span><span class="special">)</span> <span class="special">:</span>
+        <span class="identifier">promise_handler_base</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;(</span> <span class="identifier">pct</span><span class="special">)</span> <span class="special">{</span>
+    <span class="special">}</span>
 
-    <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">ec</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">t</span><span class="special">)</span>
-    <span class="special">{</span>
-        <span class="keyword">if</span> <span class="special">(</span><span class="identifier">should_set_value</span><span class="special">(</span><span class="identifier">ec</span><span class="special">))</span>
+    <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">ec</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">t</span><span class="special">)</span> <span class="special">{</span>
+        <span class="keyword">if</span> <span class="special">(</span> <span class="identifier">should_set_value</span><span class="special">(</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">)</span> <span class="special">{</span>
             <span class="identifier">get_promise</span><span class="special">()-&gt;</span><span class="identifier">set_value</span><span class="special">(</span> <span class="identifier">t</span><span class="special">);</span>
+        <span class="special">}</span>
     <span class="special">}</span>
 <span class="special">};</span>
 </pre>
