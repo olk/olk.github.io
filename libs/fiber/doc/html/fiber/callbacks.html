@@ -45,8 +45,7 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">AsyncAPI</span>
-<span class="special">{</span>
+<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">AsyncAPI</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
     <span class="comment">// constructor acquires some resource that can be read and written</span>
     <span class="identifier">AsyncAPI</span><span class="special">();</span>
@@ -55,11 +54,11 @@
     <span class="keyword">typedef</span> <span class="keyword">int</span> <span class="identifier">errorcode</span><span class="special">;</span>
 
     <span class="comment">// write callback only needs to indicate success or failure</span>
-    <span class="keyword">void</span> <span class="identifier">init_write</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">,</span>
-                    <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">(</span><span class="identifier">errorcode</span><span class="special">)&gt;&amp;</span> <span class="identifier">callback</span><span class="special">);</span>
+    <span class="keyword">void</span> <span class="identifier">init_write</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">,</span>
+                     <span class="identifier">std</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span> <span class="keyword">void</span><span class="special">(</span> <span class="identifier">errorcode</span><span class="special">)</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">callback</span><span class="special">);</span>
 
     <span class="comment">// read callback needs to accept both errorcode and data</span>
-    <span class="keyword">void</span> <span class="identifier">init_read</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">(</span><span class="identifier">errorcode</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;)&gt;&amp;);</span>
+    <span class="keyword">void</span> <span class="identifier">init_read</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span> <span class="keyword">void</span><span class="special">(</span> <span class="identifier">errorcode</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;)</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;);</span>
 
     <span class="comment">// ... other operations ...</span>
 <span class="special">};</span>
@@ -109,17 +108,16 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">write_ec</span><span class="special">(</span><span class="identifier">AsyncAPI</span><span class="special">&amp;</span> <span class="identifier">api</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">promise</span><span class="special">&lt;</span><span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span><span class="special">&gt;</span> <span class="identifier">promise</span><span class="special">;</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span><span class="special">&gt;</span> <span class="identifier">future</span><span class="special">(</span><span class="identifier">promise</span><span class="special">.</span><span class="identifier">get_future</span><span class="special">());</span>
+<pre class="programlisting"><span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">write_ec</span><span class="special">(</span> <span class="identifier">AsyncAPI</span> <span class="special">&amp;</span> <span class="identifier">api</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">)</span> <span class="special">{</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">promise</span><span class="special">&lt;</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="special">&gt;</span> <span class="identifier">promise</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="special">&gt;</span> <span class="identifier">future</span><span class="special">(</span><span class="identifier">promise</span><span class="special">.</span><span class="identifier">get_future</span><span class="special">());</span>
     <span class="comment">// We can confidently bind a reference to local variable 'promise' into</span>
     <span class="comment">// the lambda callback because we know for a fact we're going to suspend</span>
     <span class="comment">// (preserving the lifespan of both 'promise' and 'future') until the</span>
     <span class="comment">// callback has fired.</span>
-    <span class="identifier">api</span><span class="special">.</span><span class="identifier">init_write</span><span class="special">(</span><span class="identifier">data</span><span class="special">,</span>
-        <span class="special">[&amp;</span><span class="identifier">promise</span><span class="special">](</span><span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">){</span>
-            <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_value</span><span class="special">(</span><span class="identifier">ec</span><span class="special">);</span>
+    <span class="identifier">api</span><span class="special">.</span><span class="identifier">init_write</span><span class="special">(</span> <span class="identifier">data</span><span class="special">,</span>
+        <span class="special">[&amp;</span><span class="identifier">promise</span><span class="special">](</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">){</span>
+            <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_value</span><span class="special">(</span> <span class="identifier">ec</span><span class="special">);</span>
         <span class="special">});</span>
     <span class="keyword">return</span> <span class="identifier">future</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
 <span class="special">}</span>
@@ -169,11 +167,11 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">write</span><span class="special">(</span><span class="identifier">AsyncAPI</span><span class="special">&amp;</span> <span class="identifier">api</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span> <span class="special">=</span> <span class="identifier">write_ec</span><span class="special">(</span><span class="identifier">api</span><span class="special">,</span> <span class="identifier">data</span><span class="special">);</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">ec</span><span class="special">)</span>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">write</span><span class="special">(</span> <span class="identifier">AsyncAPI</span><span class="special">&amp;</span> <span class="identifier">api</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">)</span> <span class="special">{</span>
+    <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span> <span class="special">=</span> <span class="identifier">write_ec</span><span class="special">(</span> <span class="identifier">api</span><span class="special">,</span> <span class="identifier">data</span><span class="special">);</span>
+    <span class="keyword">if</span> <span class="special">(</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">{</span>
         <span class="keyword">throw</span> <span class="identifier">make_exception</span><span class="special">(</span><span class="string">"write"</span><span class="special">,</span> <span class="identifier">ec</span><span class="special">);</span>
+    <span class="special">}</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -193,17 +191,16 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span>
-<span class="identifier">read_ec</span><span class="special">(</span><span class="identifier">AsyncAPI</span><span class="special">&amp;</span> <span class="identifier">api</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">result_pair</span><span class="special">;</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">promise</span><span class="special">&lt;</span><span class="identifier">result_pair</span><span class="special">&gt;</span> <span class="identifier">promise</span><span class="special">;</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">result_pair</span><span class="special">&gt;</span> <span class="identifier">future</span><span class="special">(</span><span class="identifier">promise</span><span class="special">.</span><span class="identifier">get_future</span><span class="special">());</span>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span>
+<span class="identifier">read_ec</span><span class="special">(</span> <span class="identifier">AsyncAPI</span> <span class="special">&amp;</span> <span class="identifier">api</span><span class="special">)</span> <span class="special">{</span>
+    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="identifier">result_pair</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">promise</span><span class="special">&lt;</span> <span class="identifier">result_pair</span> <span class="special">&gt;</span> <span class="identifier">promise</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span> <span class="identifier">result_pair</span> <span class="special">&gt;</span> <span class="identifier">future</span><span class="special">(</span> <span class="identifier">promise</span><span class="special">.</span><span class="identifier">get_future</span><span class="special">()</span> <span class="special">);</span>
     <span class="comment">// We promise that both 'promise' and 'future' will survive until our</span>
     <span class="comment">// lambda has been called.</span>
     <span class="identifier">api</span><span class="special">.</span><span class="identifier">init_read</span><span class="special">(</span>
-        <span class="special">[&amp;</span><span class="identifier">promise</span><span class="special">](</span><span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">){</span>
-            <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_value</span><span class="special">(</span><span class="identifier">result_pair</span><span class="special">(</span><span class="identifier">ec</span><span class="special">,</span> <span class="identifier">data</span><span class="special">));</span>
+        <span class="special">[&amp;</span><span class="identifier">promise</span><span class="special">](</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">){</span>
+            <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_value</span><span class="special">(</span> <span class="identifier">result_pair</span><span class="special">(</span> <span class="identifier">ec</span><span class="special">,</span> <span class="identifier">data</span><span class="special">)</span> <span class="special">);</span>
         <span class="special">});</span>
     <span class="keyword">return</span> <span class="identifier">future</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
 <span class="special">}</span>
@@ -216,7 +213,7 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">tie</span><span class="special">(</span><span class="identifier">ec</span><span class="special">,</span> <span class="identifier">data</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">read_ec</span><span class="special">(</span><span class="identifier">api</span><span class="special">);</span>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">tie</span><span class="special">(</span> <span class="identifier">ec</span><span class="special">,</span> <span class="identifier">data</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">read_ec</span><span class="special">(</span> <span class="identifier">api</span><span class="special">);</span>
 </pre>
 <p>
     </p>
@@ -236,18 +233,19 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">read</span><span class="special">(</span><span class="identifier">AsyncAPI</span><span class="special">&amp;</span> <span class="identifier">api</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">promise</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">promise</span><span class="special">;</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">future</span><span class="special">(</span><span class="identifier">promise</span><span class="special">.</span><span class="identifier">get_future</span><span class="special">());</span>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">read</span><span class="special">(</span> <span class="identifier">AsyncAPI</span> <span class="special">&amp;</span> <span class="identifier">api</span><span class="special">)</span> <span class="special">{</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">promise</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="identifier">promise</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="identifier">future</span><span class="special">(</span> <span class="identifier">promise</span><span class="special">.</span><span class="identifier">get_future</span><span class="special">()</span> <span class="special">);</span>
     <span class="comment">// Both 'promise' and 'future' will survive until our lambda has been</span>
     <span class="comment">// called.</span>
     <span class="identifier">api</span><span class="special">.</span><span class="identifier">init_read</span><span class="special">(</span>
-        <span class="special">[&amp;</span><span class="identifier">promise</span><span class="special">](</span><span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">){</span>
-            <span class="keyword">if</span> <span class="special">(!</span> <span class="identifier">ec</span><span class="special">)</span>
-                <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_value</span><span class="special">(</span><span class="identifier">data</span><span class="special">);</span>
-            <span class="keyword">else</span>
-                <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_exception</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">make_exception_ptr</span><span class="special">(</span><span class="identifier">make_exception</span><span class="special">(</span><span class="string">"read"</span><span class="special">,</span> <span class="identifier">ec</span><span class="special">)));</span>
+        <span class="special">[&amp;</span><span class="identifier">promise</span><span class="special">](</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">){</span>
+            <span class="keyword">if</span> <span class="special">(</span> <span class="special">!</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">{</span>
+                <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_value</span><span class="special">(</span> <span class="identifier">data</span><span class="special">);</span>
+            <span class="special">}</span> <span class="keyword">else</span> <span class="special">{</span>
+                <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_exception</span><span class="special">(</span>
+                        <span class="identifier">std</span><span class="special">::</span><span class="identifier">make_exception_ptr</span><span class="special">(</span> <span class="identifier">make_exception</span><span class="special">(</span><span class="string">"read"</span><span class="special">,</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">)</span> <span class="special">);</span>
+            <span class="special">}</span>
         <span class="special">});</span>
     <span class="keyword">return</span> <span class="identifier">future</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
 <span class="special">}</span>
@@ -275,15 +273,14 @@
 </p>
 <pre class="programlisting"><span class="comment">// every async operation receives a subclass instance of this abstract base</span>
 <span class="comment">// class through which to communicate its result</span>
-<span class="keyword">struct</span> <span class="identifier">Response</span>
-<span class="special">{</span>
-    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">Response</span><span class="special">&gt;</span> <span class="identifier">ptr</span><span class="special">;</span>
+<span class="keyword">struct</span> <span class="identifier">Response</span> <span class="special">{</span>
+    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">Response</span> <span class="special">&gt;</span> <span class="identifier">ptr</span><span class="special">;</span>
 
     <span class="comment">// called if the operation succeeds</span>
-    <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">success</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">success</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 
     <span class="comment">// called if the operation fails</span>
-    <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">error</span><span class="special">(</span><span class="identifier">AsyncAPIBase</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">error</span><span class="special">(</span> <span class="identifier">AsyncAPIBase</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
 <p>
@@ -295,7 +292,7 @@
 <p>
 </p>
 <pre class="programlisting"><span class="comment">// derive Response subclass, instantiate, pass Response::ptr</span>
-<span class="keyword">void</span> <span class="identifier">init_read</span><span class="special">(</span><span class="identifier">Response</span><span class="special">::</span><span class="identifier">ptr</span><span class="special">);</span>
+<span class="keyword">void</span> <span class="identifier">init_read</span><span class="special">(</span> <span class="identifier">Response</span><span class="special">::</span><span class="identifier">ptr</span><span class="special">);</span>
 </pre>
 <p>
     </p>
@@ -304,28 +301,24 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">PromiseResponse</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">Response</span>
-<span class="special">{</span>
+<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">PromiseResponse</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">Response</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
     <span class="comment">// called if the operation succeeds</span>
-    <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">success</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">)</span>
-    <span class="special">{</span>
-        <span class="identifier">promise_</span><span class="special">.</span><span class="identifier">set_value</span><span class="special">(</span><span class="identifier">data</span><span class="special">);</span>
+    <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">success</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">)</span> <span class="special">{</span>
+        <span class="identifier">promise_</span><span class="special">.</span><span class="identifier">set_value</span><span class="special">(</span> <span class="identifier">data</span><span class="special">);</span>
     <span class="special">}</span>
 
     <span class="comment">// called if the operation fails</span>
-    <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">error</span><span class="special">(</span><span class="identifier">AsyncAPIBase</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">)</span>
-    <span class="special">{</span>
-        <span class="identifier">promise_</span><span class="special">.</span><span class="identifier">set_exception</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">make_exception_ptr</span><span class="special">(</span><span class="identifier">make_exception</span><span class="special">(</span><span class="string">"read"</span><span class="special">,</span> <span class="identifier">ec</span><span class="special">)));</span>
+    <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">error</span><span class="special">(</span> <span class="identifier">AsyncAPIBase</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">{</span>
+        <span class="identifier">promise_</span><span class="special">.</span><span class="identifier">set_exception</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">make_exception_ptr</span><span class="special">(</span> <span class="identifier">make_exception</span><span class="special">(</span><span class="string">"read"</span><span class="special">,</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">)</span> <span class="special">);</span>
     <span class="special">}</span>
 
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">get_future</span><span class="special">()</span>
-    <span class="special">{</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="identifier">get_future</span><span class="special">()</span> <span class="special">{</span>
         <span class="keyword">return</span> <span class="identifier">promise_</span><span class="special">.</span><span class="identifier">get_future</span><span class="special">();</span>
     <span class="special">}</span>
 
 <span class="keyword">private</span><span class="special">:</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">promise</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">promise_</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">promise</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span>   <span class="identifier">promise_</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
 <p>
@@ -336,15 +329,14 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">read</span><span class="special">(</span><span class="identifier">AsyncAPI</span><span class="special">&amp;</span> <span class="identifier">api</span><span class="special">)</span>
-<span class="special">{</span>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">read</span><span class="special">(</span> <span class="identifier">AsyncAPI</span> <span class="special">&amp;</span> <span class="identifier">api</span><span class="special">)</span> <span class="special">{</span>
     <span class="comment">// Because init_read() requires a shared_ptr, we must allocate our</span>
     <span class="comment">// ResponsePromise on the heap, even though we know its lifespan.</span>
-    <span class="keyword">auto</span> <span class="identifier">promisep</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span><span class="identifier">PromiseResponse</span><span class="special">&gt;());</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">future</span><span class="special">(</span><span class="identifier">promisep</span><span class="special">-&gt;</span><span class="identifier">get_future</span><span class="special">());</span>
+    <span class="keyword">auto</span> <span class="identifier">promisep</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span> <span class="identifier">PromiseResponse</span> <span class="special">&gt;()</span> <span class="special">);</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="identifier">future</span><span class="special">(</span> <span class="identifier">promisep</span><span class="special">-&gt;</span><span class="identifier">get_future</span><span class="special">()</span> <span class="special">);</span>
     <span class="comment">// Both 'promisep' and 'future' will survive until our lambda has been</span>
     <span class="comment">// called.</span>
-    <span class="identifier">api</span><span class="special">.</span><span class="identifier">init_read</span><span class="special">(</span><span class="identifier">promisep</span><span class="special">);</span>
+    <span class="identifier">api</span><span class="special">.</span><span class="identifier">init_read</span><span class="special">(</span> <span class="identifier">promisep</span><span class="special">);</span>
     <span class="keyword">return</span> <span class="identifier">future</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
 <span class="special">}</span>
 </pre>
