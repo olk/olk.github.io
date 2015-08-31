@@ -35,6 +35,20 @@
         fiber has reached the barrier, all the waiting fibers can proceed, and the
         barrier is reset.
       </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          It is unwise to tie the lifespan of a barrier to any one of its participating
+          fibers. Although conceptually all waiting fibers awaken "simultaneously,"
+          because of the nature of fibers, in practice they will awaken one by one
+          in indeterminate order. The rest of the waiting fibers will still be blocked
+          in <code class="computeroutput"><span class="identifier">wait</span><span class="special">()</span></code>,
+          which must, before returning, access data members in the barrier object.
+        </p></td></tr>
+</table></div>
 <p>
         </p>
 <h5>

@@ -222,8 +222,8 @@
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
               If channel is closed, returns <code class="computeroutput"><span class="identifier">closed</span></code>.
-              Otherwise Otherwise enqueues the value in the channel, wakes up a fiber
-              blocked on <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop</span><span class="special">()</span></code>,
+              Otherwise enqueues the value in the channel, wakes up a fiber blocked
+              on <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop</span><span class="special">()</span></code>,
               <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">value_pop</span><span class="special">()</span></code>,
               <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_for</span><span class="special">()</span></code>
               or <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_until</span><span class="special">()</span></code>
@@ -593,8 +593,8 @@
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
               If channel is closed, returns <code class="computeroutput"><span class="identifier">closed</span></code>.
-              Otherwise If channel is not full, enqueues the value in the channel,
-              wakes up a fiber blocked on <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop</span><span class="special">()</span></code>, <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">value_pop</span><span class="special">()</span></code>, <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_for</span><span class="special">()</span></code> or <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_until</span><span class="special">()</span></code> and returns <code class="computeroutput"><span class="identifier">success</span></code>.
+              If channel is not full, enqueues the value in the channel, wakes up
+              a fiber blocked on <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop</span><span class="special">()</span></code>, <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">value_pop</span><span class="special">()</span></code>, <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_for</span><span class="special">()</span></code> or <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_until</span><span class="special">()</span></code> and returns <code class="computeroutput"><span class="identifier">success</span></code>.
               Otherwise the calling fiber is suspended until the number of values
               in the channel drops to <code class="computeroutput"><span class="identifier">lwm</span></code>
               (return value <code class="computeroutput"><span class="identifier">success</span></code>)or
@@ -631,8 +631,8 @@
               Accepts <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">chrono</span><span class="special">::</span><span class="identifier">duration</span></code> and internally computes
               a time_point as (system time + <code class="computeroutput"><span class="identifier">timeout_duration</span></code>).
               If channel is closed, returns <code class="computeroutput"><span class="identifier">closed</span></code>.
-              Otherwise If channel is not full, enqueues the value in the channel,
-              wakes up a fiber blocked on <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop</span><span class="special">()</span></code>, <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">value_pop</span><span class="special">()</span></code>, <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_for</span><span class="special">()</span></code> or <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_until</span><span class="special">()</span></code> and returns <code class="computeroutput"><span class="identifier">success</span></code>.
+              If channel is not full, enqueues the value in the channel, wakes up
+              a fiber blocked on <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop</span><span class="special">()</span></code>, <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">value_pop</span><span class="special">()</span></code>, <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_for</span><span class="special">()</span></code> or <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_until</span><span class="special">()</span></code> and returns <code class="computeroutput"><span class="identifier">success</span></code>.
               Otherwise the calling fiber is suspended until the number of values
               in the channel drops to <code class="computeroutput"><span class="identifier">lwm</span></code>
               (return value <code class="computeroutput"><span class="identifier">success</span></code>),
@@ -668,9 +668,8 @@
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
               Accepts an absolute <code class="computeroutput"><span class="identifier">timeout_time</span></code>
-              in any supported time_point type. If channel is closed, returns <code class="computeroutput"><span class="identifier">closed</span></code>. Otherwise If channel is not
-              full, enqueues the value in the channel, wakes up a fiber blocked on
-              <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop</span><span class="special">()</span></code>,
+              in any supported time_point type. If channel is closed, returns <code class="computeroutput"><span class="identifier">closed</span></code>. If channel is not full, enqueues
+              the value in the channel, wakes up a fiber blocked on <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop</span><span class="special">()</span></code>,
               <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">value_pop</span><span class="special">()</span></code>,
               <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_for</span><span class="special">()</span></code>
               or <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_until</span><span class="special">()</span></code>
@@ -707,8 +706,8 @@
 <dd><p>
               If channel is full, returns <code class="computeroutput"><span class="identifier">full</span></code>.
               If channel is closed, returns <code class="computeroutput"><span class="identifier">closed</span></code>.
-              Otherwise Otherwise enqueues the value in the channel, wakes up a fiber
-              blocked on <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop</span><span class="special">()</span></code>,
+              Otherwise enqueues the value in the channel, wakes up a fiber blocked
+              on <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop</span><span class="special">()</span></code>,
               <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">value_pop</span><span class="special">()</span></code>,
               <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_for</span><span class="special">()</span></code>
               or <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">pop_wait_until</span><span class="special">()</span></code>
