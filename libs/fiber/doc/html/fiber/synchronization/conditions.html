@@ -58,7 +58,7 @@
         <span class="keyword">while</span> <span class="special">(</span> <span class="special">!</span> <span class="identifier">data_ready</span><span class="special">)</span> <span class="special">{</span>
             <span class="identifier">cond</span><span class="special">.</span><span class="identifier">wait</span><span class="special">(</span> <span class="identifier">lk</span><span class="special">);</span>
         <span class="special">}</span>
-    <span class="special">}</span>                       <span class="comment">// release lk</span>
+    <span class="special">}</span>   <span class="comment">// release lk</span>
     <span class="identifier">process_data</span><span class="special">();</span>
 <span class="special">}</span>
 </pre>
@@ -320,8 +320,7 @@
               The member function accepting <code class="computeroutput"><span class="identifier">pred</span></code>
               is shorthand for:
 </p>
-<pre class="programlisting"><span class="keyword">while</span> <span class="special">(</span> <span class="special">!</span> <span class="identifier">pred</span><span class="special">())</span>
-<span class="special">{</span>
+<pre class="programlisting"><span class="keyword">while</span> <span class="special">(</span> <span class="special">!</span> <span class="identifier">pred</span><span class="special">()</span> <span class="special">)</span> <span class="special">{</span>
     <span class="identifier">wait</span><span class="special">(</span> <span class="identifier">lk</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
@@ -405,8 +404,7 @@
               The member function accepting <code class="computeroutput"><span class="identifier">pred</span></code>
               is shorthand for:
 </p>
-<pre class="programlisting"><span class="keyword">while</span> <span class="special">(</span> <span class="special">!</span> <span class="identifier">pred</span><span class="special">()</span> <span class="special">)</span>
-<span class="special">{</span>
+<pre class="programlisting"><span class="keyword">while</span> <span class="special">(</span> <span class="special">!</span> <span class="identifier">pred</span><span class="special">()</span> <span class="special">)</span> <span class="special">{</span>
     <span class="keyword">if</span> <span class="special">(</span> <span class="identifier">cv_status</span><span class="special">::</span><span class="identifier">timeout</span> <span class="special">==</span> <span class="identifier">wait_until</span><span class="special">(</span> <span class="identifier">lk</span><span class="special">,</span> <span class="identifier">timeout_time</span><span class="special">)</span> <span class="special">)</span>
         <span class="keyword">return</span> <span class="identifier">pred</span><span class="special">();</span>
 <span class="special">}</span>
