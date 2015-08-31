@@ -228,8 +228,38 @@
 <dd><p>
                 Nothing.
               </p></dd>
+<dt><span class="term">Note:</span></dt>
+<dd><p>
+                <code class="computeroutput">~future()</code> does <span class="emphasis"><em>not</em></span> block the calling fiber.
+              </p></dd>
 </dl>
 </div>
+<p>
+          Consider a sequence such as:
+        </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+              instantiate <a class="link" href="promise.html#class_promise"> <code class="computeroutput">promise&lt;&gt;</code></a>
+            </li>
+<li class="listitem">
+              obtain its <code class="computeroutput"><span class="identifier">future</span><span class="special">&lt;&gt;</span></code>
+              via <a class="link" href="promise.html#promise_get_future"> <code class="computeroutput">promise::get_future()</code></a>
+            </li>
+<li class="listitem">
+              launch <a class="link" href="../../fiber_mgmt/fiber.html#class_fiber"> <code class="computeroutput">fiber</code></a>, capturing <code class="computeroutput"><span class="identifier">promise</span><span class="special">&lt;&gt;</span></code>
+            </li>
+<li class="listitem">
+              destroy <code class="computeroutput"><span class="identifier">future</span><span class="special">&lt;&gt;</span></code>
+            </li>
+<li class="listitem">
+              call <a class="link" href="promise.html#promise_set_value"> <code class="computeroutput">promise::set_value()</code></a>
+            </li>
+</ol></div>
+<p>
+          The final <code class="computeroutput"><span class="identifier">set_value</span><span class="special">()</span></code>
+          call succeeds, but the value is silently discarded: no additional <code class="computeroutput"><span class="identifier">future</span><span class="special">&lt;&gt;</span></code>
+          can be obtained from that <code class="computeroutput"><span class="identifier">promise</span><span class="special">&lt;&gt;</span></code>.
+        </p>
 <p>
           </p>
 <h5>
@@ -609,6 +639,10 @@
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
                 Nothing.
+              </p></dd>
+<dt><span class="term">Note:</span></dt>
+<dd><p>
+                <code class="computeroutput">~shared_future()</code> does <span class="emphasis"><em>not</em></span> block the calling fiber.
               </p></dd>
 </dl>
 </div>

@@ -44,11 +44,10 @@
     </p>
 <p>
       You are explicitly permitted to code your own <a class="link" href="scheduling.html#class_sched_algorithm"> <code class="computeroutput">sched_algorithm</code></a> subclass,
-      and to pass it to <a class="link" href="fiber_mgmt/fiber.html#set_scheduling_algorithm"> <code class="computeroutput">set_scheduling_algorithm()</code></a>.
+      and to specify it to <a class="link" href="fiber_mgmt/fiber.html#use_scheduling_algorithm"> <code class="computeroutput">use_scheduling_algorithm()</code></a>.
     </p>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">thread_fn</span><span class="special">()</span> <span class="special">{</span>
-    <span class="identifier">my_fiber_scheduler</span> <span class="identifier">mfs</span><span class="special">;</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">set_scheduling_algorithm</span><span class="special">(</span> <span class="special">&amp;</span> <span class="identifier">mfs</span><span class="special">);</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">use_scheduling_algorithm</span><span class="special">&lt;</span><span class="identifier">my_fiber_scheduler</span><span class="special">&gt;();</span>
     <span class="special">...</span>
 <span class="special">}</span>
 </pre>

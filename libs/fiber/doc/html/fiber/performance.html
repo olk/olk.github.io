@@ -38,8 +38,8 @@
       were compiled with <a class="link" href="overview.html#cross_thread_sync"><code class="computeroutput"><span class="identifier">BOOST_FIBERS_NO_ATOMICS</span></code></a>.
     </p>
 <div class="table">
-<a name="fiber.performance.________performance_overhead_join_cpp_overhead_of_creating_and_joining_"></a><p class="title"><b>Table&#160;1.1.&#160;[@../../performance/overhead_join.cpp Overhead of creating and joining]</b></p>
-<div class="table-contents"><table class="table" summary="[@../../performance/overhead_join.cpp Overhead of creating and joining]">
+<a name="fiber.performance.overhead_of_creating_and_joining"></a><p class="title"><b>Table&#160;1.1.&#160;Overhead of creating and joining</b></p>
+<div class="table-contents"><table class="table" summary="Overhead of creating and joining">
 <colgroup>
 <col>
 <col>
@@ -103,9 +103,12 @@
 </tr></tbody>
 </table></div>
 </div>
-<br class="table-break"><div class="table">
-<a name="fiber.performance.________performance_overhead_detach_cpp_overhead_of_detach_"></a><p class="title"><b>Table&#160;1.2.&#160;[@../../performance/overhead_detach.cpp Overhead of detach]</b></p>
-<div class="table-contents"><table class="table" summary="[@../../performance/overhead_detach.cpp Overhead of detach]">
+<br class="table-break"><p>
+      (from <a href="../../../performance/overhead_join.cpp" target="_top">overhead_join.cpp</a>)
+    </p>
+<div class="table">
+<a name="fiber.performance.overhead_of_detach"></a><p class="title"><b>Table&#160;1.2.&#160;Overhead of detach</b></p>
+<div class="table-contents"><table class="table" summary="Overhead of detach">
 <colgroup>
 <col>
 <col>
@@ -147,9 +150,12 @@
 </tr></tbody>
 </table></div>
 </div>
-<br class="table-break"><div class="table">
-<a name="fiber.performance.________performance_overhead_yield_cpp_overhead_of_yield_"></a><p class="title"><b>Table&#160;1.3.&#160;[@../../performance/overhead_yield.cpp Overhead of yield]</b></p>
-<div class="table-contents"><table class="table" summary="[@../../performance/overhead_yield.cpp Overhead of yield]">
+<br class="table-break"><p>
+      (from <a href="../../../performance/overhead_detach.cpp" target="_top">overhead_detach.cpp</a>)
+    </p>
+<div class="table">
+<a name="fiber.performance.overhead_of_yield"></a><p class="title"><b>Table&#160;1.3.&#160;Overhead of yield</b></p>
+<div class="table-contents"><table class="table" summary="Overhead of yield">
 <colgroup>
 <col>
 <col>
@@ -191,9 +197,12 @@
 </tr></tbody>
 </table></div>
 </div>
-<br class="table-break"><div class="table">
-<a name="fiber.performance.________performance_overhead_future_cpp_overhead_of_waiting_on_a_future_"></a><p class="title"><b>Table&#160;1.4.&#160;[@../../performance/overhead_future.cpp Overhead of waiting on a future]</b></p>
-<div class="table-contents"><table class="table" summary="[@../../performance/overhead_future.cpp Overhead of waiting on a future]">
+<br class="table-break"><p>
+      (from <a href="../../../performance/overhead_yield.cpp" target="_top">overhead_yield.cpp</a>)
+    </p>
+<div class="table">
+<a name="fiber.performance.overhead_of_waiting_on_a_future"></a><p class="title"><b>Table&#160;1.4.&#160;Overhead of waiting on a future</b></p>
+<div class="table-contents"><table class="table" summary="Overhead of waiting on a future">
 <colgroup>
 <col>
 <col>
@@ -235,9 +244,12 @@
 </tr></tbody>
 </table></div>
 </div>
-<br class="table-break"><div class="table">
-<a name="fiber.performance.________performance_scale_join_cpp_scaling_of_creating_and_joining_"></a><p class="title"><b>Table&#160;1.5.&#160;[@../../performance/scale_join.cpp Scaling of creating and joining]</b></p>
-<div class="table-contents"><table class="table" summary="[@../../performance/scale_join.cpp Scaling of creating and joining]">
+<br class="table-break"><p>
+      (from <a href="../../../performance/overhead_future.cpp" target="_top">overhead_future.cpp</a>)
+    </p>
+<div class="table">
+<a name="fiber.performance.scaling_of_creating_and_joining"></a><p class="title"><b>Table&#160;1.5.&#160;Scaling of creating and joining</b></p>
+<div class="table-contents"><table class="table" summary="Scaling of creating and joining">
 <colgroup>
 <col>
 <col>
@@ -424,7 +436,10 @@
 </tbody>
 </table></div>
 </div>
-<br class="table-break"><div class="footnotes">
+<br class="table-break"><p>
+      (from <a href="../../../performance/scale_join.cpp" target="_top">scale_join.cpp</a>)
+    </p>
+<div class="footnotes">
 <br><hr width="100" align="left">
 <div class="footnote"><p><sup>[<a name="ftn.fiber.performance.f0" href="#fiber.performance.f0" class="para">4</a>] </sup>
         Intel Core2 Q6700, x86_64, 3GHz

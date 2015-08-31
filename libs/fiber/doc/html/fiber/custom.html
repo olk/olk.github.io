@@ -379,18 +379,11 @@
       Default Scheduler</a>
     </h4>
 <p>
-      You must call <a class="link" href="fiber_mgmt/fiber.html#set_scheduling_algorithm"> <code class="computeroutput">set_scheduling_algorithm()</code></a> at the start
+      You must call <a class="link" href="fiber_mgmt/fiber.html#use_scheduling_algorithm"> <code class="computeroutput">use_scheduling_algorithm()</code></a> at the start
       of each thread on which you want <span class="bold"><strong>Boost.Fiber</strong></span>
       to use your custom scheduler rather than its own default <a class="link" href="scheduling.html#class_round_robin"> <code class="computeroutput">round_robin</code></a>.
-      Specifically, you must call <code class="computeroutput"><span class="identifier">set_scheduling_algorithm</span><span class="special">()</span></code> before performing any other <span class="bold"><strong>Boost.Fiber</strong></span>
+      Specifically, you must call <code class="computeroutput"><span class="identifier">use_scheduling_algorithm</span><span class="special">()</span></code> before performing any other <span class="bold"><strong>Boost.Fiber</strong></span>
       operations on that thread.
-    </p>
-<p>
-      It works to instantiate your custom <a class="link" href="scheduling.html#class_sched_algorithm_with_properties"> <code class="computeroutput">sched_algorithm_with_properties&lt;&gt;</code></a> subclass
-      on the stack at the start of your thread function, passing the instance pointer
-      to <code class="computeroutput"><span class="identifier">set_scheduling_algorithm</span><span class="special">()</span></code>. This ensures that your scheduler instance
-      will live as long as the thread itself. (Of course <code class="computeroutput"><span class="identifier">main</span><span class="special">()</span></code> is, in effect, the thread function for the
-      application's main thread.)
     </p>
 <p>
 </p>

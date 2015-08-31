@@ -50,7 +50,8 @@
 <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">PROPS</span> <span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">sched_algorithm_with_properties</span><span class="special">;</span>
 <span class="keyword">class</span> <span class="identifier">round_robin</span><span class="special">;</span>
-<span class="keyword">void</span> <span class="identifier">set_scheduling_algorithm</span><span class="special">(</span> <span class="identifier">sched_algorithm</span> <span class="special">*</span> <span class="identifier">al</span><span class="special">)</span>
+<span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">SchedAlgo</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">Args</span> <span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">use_scheduling_algorithm</span><span class="special">(</span> <span class="identifier">Args</span> <span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">args</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">ready_fibers</span><span class="special">();</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Rep</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Period</span> <span class="special">&gt;</span>
@@ -148,6 +149,18 @@ constructor
     </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">fiber</span><span class="special">(</span> <span class="identifier">some_fn</span><span class="special">).</span><span class="identifier">detach</span><span class="special">();</span>
 </pre>
+<p>
+      <span class="bold"><strong>Boost.Fiber</strong></span> provides a number of ways to wait
+      for a running fiber to complete. You can coordinate even with a detached fiber
+      using a <a class="link" href="synchronization/mutex_types.html#class_mutex"> <code class="computeroutput">mutex</code></a>, or <a class="link" href="synchronization/conditions.html#class_condition_variable"> <code class="computeroutput">condition_variable</code></a>, or
+      any of the other <a class="link" href="synchronization.html#synchronization">synchronization objects</a>
+      provided by the library.
+    </p>
+<p>
+      If a detached fiber is still running when the thread's main fiber terminates,
+      that fiber will be <a class="link" href="fiber_mgmt.html#interruption">interrupted</a> and shut
+      down.
+    </p>
 <h4>
 <a name="fiber.fiber_mgmt.h5"></a>
       <span><a name="fiber.fiber_mgmt.joining"></a></span><a class="link" href="fiber_mgmt.html#fiber.fiber_mgmt.joining">Joining</a>
