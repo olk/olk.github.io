@@ -123,8 +123,9 @@
   <span class="comment">// this leads to undefined behaviour</span>
 </pre>
 <p>
-      The spawned <a class="link" href="fiber_mgmt/fiber.html#class_fiber"> <code class="computeroutput">fiber</code></a> is enqueued in the list of ready-to-run fibers
-      at construction.
+      The spawned <a class="link" href="fiber_mgmt/fiber.html#class_fiber"> <code class="computeroutput">fiber</code></a> does not immediately start running. It is enqueued
+      in the list of ready-to-run fibers, and will run when the scheduler gets around
+      to it.
     </p>
 <a name="exceptions"></a><h4>
 <a name="fiber.fiber_mgmt.h3"></a>
