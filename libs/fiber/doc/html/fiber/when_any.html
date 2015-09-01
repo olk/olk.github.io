@@ -126,18 +126,18 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
-<span class="identifier">T</span> <span class="identifier">sleeper_impl</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">item</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">ms</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">thrw</span><span class="special">=</span><span class="keyword">false</span><span class="special">)</span>
-<span class="special">{</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">T</span> <span class="special">&gt;</span>
+<span class="identifier">T</span> <span class="identifier">sleeper_impl</span><span class="special">(</span> <span class="identifier">T</span> <span class="identifier">item</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">ms</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">thrw</span> <span class="special">=</span> <span class="keyword">false</span><span class="special">)</span> <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">ostringstream</span> <span class="identifier">descb</span><span class="special">,</span> <span class="identifier">funcb</span><span class="special">;</span>
     <span class="identifier">descb</span> <span class="special">&lt;&lt;</span> <span class="identifier">item</span><span class="special">;</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">desc</span><span class="special">(</span><span class="identifier">descb</span><span class="special">.</span><span class="identifier">str</span><span class="special">());</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">desc</span><span class="special">(</span> <span class="identifier">descb</span><span class="special">.</span><span class="identifier">str</span><span class="special">()</span> <span class="special">);</span>
     <span class="identifier">funcb</span> <span class="special">&lt;&lt;</span> <span class="string">"  sleeper("</span> <span class="special">&lt;&lt;</span> <span class="identifier">item</span> <span class="special">&lt;&lt;</span> <span class="string">")"</span><span class="special">;</span>
-    <span class="identifier">Verbose</span> <span class="identifier">v</span><span class="special">(</span><span class="identifier">funcb</span><span class="special">.</span><span class="identifier">str</span><span class="special">());</span>
+    <span class="identifier">Verbose</span> <span class="identifier">v</span><span class="special">(</span> <span class="identifier">funcb</span><span class="special">.</span><span class="identifier">str</span><span class="special">()</span> <span class="special">);</span>
 
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_fiber</span><span class="special">::</span><span class="identifier">sleep_for</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">chrono</span><span class="special">::</span><span class="identifier">milliseconds</span><span class="special">(</span><span class="identifier">ms</span><span class="special">));</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">thrw</span><span class="special">)</span>
-        <span class="keyword">throw</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">runtime_error</span><span class="special">(</span><span class="identifier">desc</span><span class="special">);</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_fiber</span><span class="special">::</span><span class="identifier">sleep_for</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">chrono</span><span class="special">::</span><span class="identifier">milliseconds</span><span class="special">(</span> <span class="identifier">ms</span><span class="special">)</span> <span class="special">);</span>
+    <span class="keyword">if</span> <span class="special">(</span> <span class="identifier">thrw</span><span class="special">)</span> <span class="special">{</span>
+        <span class="keyword">throw</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">runtime_error</span><span class="special">(</span> <span class="identifier">desc</span><span class="special">);</span>
+    <span class="special">}</span>
     <span class="keyword">return</span> <span class="identifier">item</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>

@@ -40,27 +40,25 @@
 <p>
 </p>
 <pre class="programlisting"><span class="comment">// Wrap canonical pattern for condition_variable + bool flag</span>
-<span class="keyword">struct</span> <span class="identifier">Done</span>
-<span class="special">{</span>
+<span class="keyword">struct</span> <span class="identifier">Done</span> <span class="special">{</span>
 <span class="keyword">private</span><span class="special">:</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">condition_variable</span> <span class="identifier">cond</span><span class="special">;</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">mutex</span> <span class="identifier">mutex</span><span class="special">;</span>
-    <span class="keyword">bool</span> <span class="identifier">ready</span> <span class="special">=</span> <span class="keyword">false</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">condition_variable</span>   <span class="identifier">cond</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">mutex</span>                <span class="identifier">mutex</span><span class="special">;</span>
+    <span class="keyword">bool</span>                                <span class="identifier">ready</span> <span class="special">=</span> <span class="keyword">false</span><span class="special">;</span>
 
 <span class="keyword">public</span><span class="special">:</span>
-    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">Done</span><span class="special">&gt;</span> <span class="identifier">ptr</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">Done</span> <span class="special">&gt;</span>     <span class="identifier">ptr</span><span class="special">;</span>
 
-    <span class="keyword">void</span> <span class="identifier">wait</span><span class="special">()</span>
-    <span class="special">{</span>
-        <span class="identifier">std</span><span class="special">::</span><span class="identifier">unique_lock</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">mutex</span><span class="special">&gt;</span> <span class="identifier">lock</span><span class="special">(</span><span class="identifier">mutex</span><span class="special">);</span>
-        <span class="keyword">while</span> <span class="special">(!</span> <span class="identifier">ready</span><span class="special">)</span>
-            <span class="identifier">cond</span><span class="special">.</span><span class="identifier">wait</span><span class="special">(</span><span class="identifier">lock</span><span class="special">);</span>
+    <span class="keyword">void</span> <span class="identifier">wait</span><span class="special">()</span> <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">unique_lock</span><span class="special">&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">mutex</span> <span class="special">&gt;</span> <span class="identifier">lock</span><span class="special">(</span> <span class="identifier">mutex</span><span class="special">);</span>
+        <span class="keyword">while</span> <span class="special">(</span> <span class="special">!</span> <span class="identifier">ready</span><span class="special">)</span> <span class="special">{</span>
+            <span class="identifier">cond</span><span class="special">.</span><span class="identifier">wait</span><span class="special">(</span> <span class="identifier">lock</span><span class="special">);</span>
+        <span class="special">}</span>
     <span class="special">}</span>
 
-    <span class="keyword">void</span> <span class="identifier">notify</span><span class="special">()</span>
-    <span class="special">{</span>
+    <span class="keyword">void</span> <span class="identifier">notify</span><span class="special">()</span> <span class="special">{</span>
         <span class="special">{</span>
-            <span class="identifier">std</span><span class="special">::</span><span class="identifier">unique_lock</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">mutex</span><span class="special">&gt;</span> <span class="identifier">lock</span><span class="special">(</span><span class="identifier">mutex</span><span class="special">);</span>
+            <span class="identifier">std</span><span class="special">::</span><span class="identifier">unique_lock</span><span class="special">&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">mutex</span> <span class="special">&gt;</span> <span class="identifier">lock</span><span class="special">(</span> <span class="identifier">mutex</span><span class="special">);</span>
             <span class="identifier">ready</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">;</span>
         <span class="special">}</span> <span class="comment">// release mutex</span>
         <span class="identifier">cond</span><span class="special">.</span><span class="identifier">notify_one</span><span class="special">();</span>
@@ -80,13 +78,12 @@
         </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span> <span class="keyword">typename</span><span class="special">...</span> <span class="identifier">Fns</span> <span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">wait_first_simple</span><span class="special">(</span><span class="identifier">Fns</span><span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">functions</span><span class="special">)</span>
-<span class="special">{</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span><span class="special">...</span> <span class="identifier">Fns</span> <span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">wait_first_simple</span><span class="special">(</span> <span class="identifier">Fns</span> <span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">functions</span><span class="special">)</span> <span class="special">{</span>
     <span class="comment">// Use shared_ptr because each function's fiber will bind it separately,</span>
     <span class="comment">// and we're going to return before the last of them completes.</span>
-    <span class="keyword">auto</span> <span class="identifier">done</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span><span class="identifier">Done</span><span class="special">&gt;());</span>
-    <span class="identifier">wait_first_simple_impl</span><span class="special">(</span><span class="identifier">done</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span><span class="identifier">Fns</span><span class="special">&gt;(</span><span class="identifier">functions</span><span class="special">)...);</span>
+    <span class="keyword">auto</span> <span class="identifier">done</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span> <span class="identifier">Done</span> <span class="special">&gt;()</span> <span class="special">);</span>
+    <span class="identifier">wait_first_simple_impl</span><span class="special">(</span> <span class="identifier">done</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span> <span class="identifier">Fns</span> <span class="special">&gt;(</span> <span class="identifier">functions</span><span class="special">)</span> <span class="special">...</span> <span class="special">);</span>
     <span class="identifier">done</span><span class="special">-&gt;</span><span class="identifier">wait</span><span class="special">();</span>
 <span class="special">}</span>
 </pre>
@@ -100,19 +97,18 @@
 </p>
 <pre class="programlisting"><span class="comment">// Degenerate case: when there are no functions to wait for, return</span>
 <span class="comment">// immediately.</span>
-<span class="keyword">void</span> <span class="identifier">wait_first_simple_impl</span><span class="special">(</span><span class="identifier">Done</span><span class="special">::</span><span class="identifier">ptr</span><span class="special">)</span>
-<span class="special">{}</span>
+<span class="keyword">void</span> <span class="identifier">wait_first_simple_impl</span><span class="special">(</span> <span class="identifier">Done</span><span class="special">::</span><span class="identifier">ptr</span><span class="special">)</span> <span class="special">{</span>
+<span class="special">}</span>
 
 <span class="comment">// When there's at least one function to wait for, launch it and recur to</span>
 <span class="comment">// process the rest.</span>
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Fn</span><span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> <span class="identifier">Fns</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">wait_first_simple_impl</span><span class="special">(</span><span class="identifier">Done</span><span class="special">::</span><span class="identifier">ptr</span> <span class="identifier">done</span><span class="special">,</span> <span class="identifier">Fn</span> <span class="special">&amp;&amp;</span> <span class="identifier">function</span><span class="special">,</span> <span class="identifier">Fns</span><span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">functions</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">fiber</span><span class="special">([</span><span class="identifier">done</span><span class="special">,</span> <span class="identifier">function</span><span class="special">](){</span>
+<span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Fn</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">Fns</span> <span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">wait_first_simple_impl</span><span class="special">(</span> <span class="identifier">Done</span><span class="special">::</span><span class="identifier">ptr</span> <span class="identifier">done</span><span class="special">,</span> <span class="identifier">Fn</span> <span class="special">&amp;&amp;</span> <span class="identifier">function</span><span class="special">,</span> <span class="identifier">Fns</span> <span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">functions</span><span class="special">)</span> <span class="special">{</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">fiber</span><span class="special">(</span> <span class="special">[</span><span class="identifier">done</span><span class="special">,</span> <span class="identifier">function</span><span class="special">](){</span>
         <span class="identifier">function</span><span class="special">();</span>
         <span class="identifier">done</span><span class="special">-&gt;</span><span class="identifier">notify</span><span class="special">();</span>
     <span class="special">}).</span><span class="identifier">detach</span><span class="special">();</span>
-    <span class="identifier">wait_first_simple_impl</span><span class="special">(</span><span class="identifier">done</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span><span class="identifier">Fns</span><span class="special">&gt;(</span><span class="identifier">functions</span><span class="special">)...);</span>
+    <span class="identifier">wait_first_simple_impl</span><span class="special">(</span> <span class="identifier">done</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span> <span class="identifier">Fns</span> <span class="special">&gt;(</span> <span class="identifier">functions</span><span class="special">)</span> <span class="special">...</span> <span class="special">);</span>
 <span class="special">}</span>
 </pre>
 <p>
