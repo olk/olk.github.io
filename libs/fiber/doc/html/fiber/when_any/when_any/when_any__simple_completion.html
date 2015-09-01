@@ -78,7 +78,7 @@
         </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span><span class="special">...</span> <span class="identifier">Fns</span> <span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">Fns</span> <span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">wait_first_simple</span><span class="special">(</span> <span class="identifier">Fns</span> <span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">functions</span><span class="special">)</span> <span class="special">{</span>
     <span class="comment">// Use shared_ptr because each function's fiber will bind it separately,</span>
     <span class="comment">// and we're going to return before the last of them completes.</span>
@@ -105,9 +105,9 @@
 <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Fn</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">Fns</span> <span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">wait_first_simple_impl</span><span class="special">(</span> <span class="identifier">Done</span><span class="special">::</span><span class="identifier">ptr</span> <span class="identifier">done</span><span class="special">,</span> <span class="identifier">Fn</span> <span class="special">&amp;&amp;</span> <span class="identifier">function</span><span class="special">,</span> <span class="identifier">Fns</span> <span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">functions</span><span class="special">)</span> <span class="special">{</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">fiber</span><span class="special">(</span> <span class="special">[</span><span class="identifier">done</span><span class="special">,</span> <span class="identifier">function</span><span class="special">](){</span>
-        <span class="identifier">function</span><span class="special">();</span>
-        <span class="identifier">done</span><span class="special">-&gt;</span><span class="identifier">notify</span><span class="special">();</span>
-    <span class="special">}).</span><span class="identifier">detach</span><span class="special">();</span>
+                              <span class="identifier">function</span><span class="special">();</span>
+                              <span class="identifier">done</span><span class="special">-&gt;</span><span class="identifier">notify</span><span class="special">();</span>
+                          <span class="special">}).</span><span class="identifier">detach</span><span class="special">();</span>
     <span class="identifier">wait_first_simple_impl</span><span class="special">(</span> <span class="identifier">done</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span> <span class="identifier">Fns</span> <span class="special">&gt;(</span> <span class="identifier">functions</span><span class="special">)</span> <span class="special">...</span> <span class="special">);</span>
 <span class="special">}</span>
 </pre>
@@ -126,9 +126,10 @@
         </p>
 <p>
 </p>
-<pre class="programlisting"><span class="identifier">wait_first_simple</span><span class="special">([](){</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"wfs_long"</span><span class="special">,</span>   <span class="number">150</span><span class="special">);</span> <span class="special">},</span>
-                  <span class="special">[](){</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"wfs_medium"</span><span class="special">,</span> <span class="number">100</span><span class="special">);</span> <span class="special">},</span>
-                  <span class="special">[](){</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"wfs_short"</span><span class="special">,</span>   <span class="number">50</span><span class="special">);</span> <span class="special">});</span>
+<pre class="programlisting"><span class="identifier">wait_first_simple</span><span class="special">(</span>
+        <span class="special">[](){</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"wfs_long"</span><span class="special">,</span>   <span class="number">150</span><span class="special">);</span> <span class="special">},</span>
+        <span class="special">[](){</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"wfs_medium"</span><span class="special">,</span> <span class="number">100</span><span class="special">);</span> <span class="special">},</span>
+        <span class="special">[](){</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"wfs_short"</span><span class="special">,</span>   <span class="number">50</span><span class="special">);</span> <span class="special">});</span>
 </pre>
 <p>
         </p>

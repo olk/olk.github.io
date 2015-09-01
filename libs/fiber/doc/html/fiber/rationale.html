@@ -94,8 +94,11 @@
 <p>
       A more <span class="bold"><strong>important</strong></span> aspect is the problem with
       thread-local-storage (<span class="bold"><strong>TLS</strong></span>). Instead of recomputing
-      the address of a TLS variable, a compiler might, as an optimization, reuse
-      its previously-computed address <sup>[<a name="fiber.rationale.f1" href="#ftn.fiber.rationale.f1" class="footnote">2</a>]</sup>.
+      the address of a TLS variable, a compiler might, as an optimization, cache
+      its previously-computed address in various function stack frames.<sup>[<a name="fiber.rationale.f1" href="#ftn.fiber.rationale.f1" class="footnote">2</a>]</sup> If a fiber was running on thread <span class="emphasis"><em>t0</em></span> and then
+      migrated to thread <span class="emphasis"><em>t1</em></span>, the cached TLS variable address(es)
+      would continue pointing to the TLS for thread <span class="emphasis"><em>t0</em></span>. Bad
+      things would ensue.
     </p>
 <h4>
 <a name="fiber.rationale.h4"></a>
@@ -103,13 +106,11 @@
       for Boost.Asio</a>
     </h4>
 <p>
-      The support for Boost.Asio's <span class="emphasis"><em>async-result</em></span> is not part
-      of the official API (implementation provided in example section). <span class="emphasis"><em>async-result</em></span>
-      does not reflect that <span class="bold"><strong>Boost.Fiber</strong></span> itself uses
-      an internal scheduler (especially fibers not in touch with code using <a href="http://www.boost.org/doc/libs/release/libs/asio/index.html" target="_top">Boost.Asio</a>,
-      for instance a sleeping fiber will not be launched explicitly by <a href="http://www.boost.org/doc/libs/release/libs/asio/index.html" target="_top">Boost.Asio</a>).
-      The integration of <span class="bold"><strong>Boost.Fiber</strong></span> into <a href="http://www.boost.org/doc/libs/release/libs/asio/index.html" target="_top">Boost.Asio</a>
-      requires some investigation from both authors.
+      Support for <a href="http://www.boost.org/doc/libs/release/libs/asio/index.html" target="_top">Boost.Asio</a>'s
+      <span class="emphasis"><em>async-result</em></span> is not part of the official API. However,
+      to integrate with a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span></code>,
+      see <a class="link" href="integration.html#integration">Sharing a Thread with Another Main Loop</a>.
+      To interface smoothly with an arbitrary Asio async I/O operation, see <a class="link" href="callbacks.html#callbacks_asio">Then There's <a href="http://www.boost.org/doc/libs/release/libs/asio/index.html" target="_top">Boost.Asio</a></a>.
     </p>
 <h4>
 <a name="fiber.rationale.h5"></a>
@@ -117,7 +118,8 @@
       compilers</a>
     </h4>
 <p>
-      The library was tested with GCC-5.1.1, Clang-3.6.0 and MSVC-14.0 in c++14-mode.
+      The library was tested with GCC-4.9.2, GCC-5.1.1, Clang-3.6.0 and MSVC-14.0
+      in c++14-mode.
     </p>
 <h4>
 <a name="fiber.rationale.h6"></a>

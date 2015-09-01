@@ -43,16 +43,15 @@
         </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span> <span class="keyword">typename</span><span class="special">...</span> <span class="identifier">Fns</span> <span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">wait_all_simple</span><span class="special">(</span><span class="identifier">Fns</span><span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">functions</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">count</span><span class="special">(</span><span class="keyword">sizeof</span><span class="special">...(</span><span class="identifier">functions</span><span class="special">));</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">Fns</span> <span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">wait_all_simple</span><span class="special">(</span> <span class="identifier">Fns</span> <span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">functions</span><span class="special">)</span> <span class="special">{</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">count</span><span class="special">(</span> <span class="keyword">sizeof</span> <span class="special">...</span> <span class="special">(</span> <span class="identifier">functions</span><span class="special">)</span> <span class="special">);</span>
     <span class="comment">// Initialize a barrier(count+1) because we'll immediately wait on it. We</span>
     <span class="comment">// don't want to wake up until 'count' more fibers wait on it. Even though</span>
     <span class="comment">// we'll stick around until the last of them completes, use shared_ptr</span>
     <span class="comment">// anyway because it's easier to be confident about lifespan issues.</span>
-    <span class="keyword">auto</span> <span class="identifier">barrier</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">barrier</span><span class="special">&gt;(</span><span class="identifier">count</span><span class="special">+</span><span class="number">1</span><span class="special">));</span>
-    <span class="identifier">wait_all_simple_impl</span><span class="special">(</span><span class="identifier">barrier</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span><span class="identifier">Fns</span><span class="special">&gt;(</span><span class="identifier">functions</span><span class="special">)...);</span>
+    <span class="keyword">auto</span> <span class="identifier">barrier</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">barrier</span> <span class="special">&gt;(</span> <span class="identifier">count</span> <span class="special">+</span> <span class="number">1</span><span class="special">)</span> <span class="special">);</span>
+    <span class="identifier">wait_all_simple_impl</span><span class="special">(</span> <span class="identifier">barrier</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span> <span class="identifier">Fns</span> <span class="special">&gt;(</span> <span class="identifier">functions</span><span class="special">)</span> <span class="special">...</span> <span class="special">);</span>
     <span class="identifier">barrier</span><span class="special">-&gt;</span><span class="identifier">wait</span><span class="special">();</span>
 <span class="special">}</span>
 </pre>
@@ -64,15 +63,14 @@
         </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Fn</span><span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> <span class="identifier">Fns</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">wait_all_simple_impl</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">barrier</span><span class="special">&gt;</span> <span class="identifier">barrier</span><span class="special">,</span>
-                          <span class="identifier">Fn</span> <span class="special">&amp;&amp;</span> <span class="identifier">function</span><span class="special">,</span> <span class="identifier">Fns</span><span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">functions</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">fiber</span><span class="special">([</span><span class="identifier">barrier</span><span class="special">,</span> <span class="identifier">function</span><span class="special">](){</span>
-        <span class="identifier">function</span><span class="special">();</span>
-        <span class="identifier">barrier</span><span class="special">-&gt;</span><span class="identifier">wait</span><span class="special">();</span>
-    <span class="special">}).</span><span class="identifier">detach</span><span class="special">();</span>
-    <span class="identifier">wait_all_simple_impl</span><span class="special">(</span><span class="identifier">barrier</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span><span class="identifier">Fns</span><span class="special">&gt;(</span><span class="identifier">functions</span><span class="special">)...);</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Fn</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">Fns</span> <span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">wait_all_simple_impl</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">barrier</span> <span class="special">&gt;</span> <span class="identifier">barrier</span><span class="special">,</span>
+                           <span class="identifier">Fn</span> <span class="special">&amp;&amp;</span> <span class="identifier">function</span><span class="special">,</span> <span class="identifier">Fns</span> <span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">functions</span><span class="special">)</span> <span class="special">{</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">fiber</span><span class="special">(</span> <span class="special">[</span><span class="identifier">barrier</span><span class="special">,</span> <span class="identifier">function</span><span class="special">](){</span>
+                              <span class="identifier">function</span><span class="special">();</span>
+                              <span class="identifier">barrier</span><span class="special">-&gt;</span><span class="identifier">wait</span><span class="special">();</span>
+                          <span class="special">}).</span><span class="identifier">detach</span><span class="special">();</span>
+    <span class="identifier">wait_all_simple_impl</span><span class="special">(</span> <span class="identifier">barrier</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span> <span class="identifier">Fns</span> <span class="special">&gt;(</span> <span class="identifier">functions</span><span class="special">)</span> <span class="special">...</span> <span class="special">);</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -82,9 +80,10 @@
         </p>
 <p>
 </p>
-<pre class="programlisting"><span class="identifier">wait_all_simple</span><span class="special">([](){</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"was_long"</span><span class="special">,</span>   <span class="number">150</span><span class="special">);</span> <span class="special">},</span>
-                <span class="special">[](){</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"was_medium"</span><span class="special">,</span> <span class="number">100</span><span class="special">);</span> <span class="special">},</span>
-                <span class="special">[](){</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"was_short"</span><span class="special">,</span>   <span class="number">50</span><span class="special">);</span> <span class="special">});</span>
+<pre class="programlisting"><span class="identifier">wait_all_simple</span><span class="special">(</span>
+        <span class="special">[](){</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"was_long"</span><span class="special">,</span>   <span class="number">150</span><span class="special">);</span> <span class="special">},</span>
+        <span class="special">[](){</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"was_medium"</span><span class="special">,</span> <span class="number">100</span><span class="special">);</span> <span class="special">},</span>
+        <span class="special">[](){</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"was_short"</span><span class="special">,</span>   <span class="number">50</span><span class="special">);</span> <span class="special">});</span>
 </pre>
 <p>
         </p>

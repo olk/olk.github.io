@@ -36,13 +36,12 @@
         </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">Data</span>
-<span class="special">{</span>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">Data</span> <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span><span class="special">;</span>
-    <span class="keyword">double</span> <span class="identifier">inexact</span><span class="special">;</span>
-    <span class="keyword">int</span> <span class="identifier">exact</span><span class="special">;</span>
+    <span class="keyword">double</span>      <span class="identifier">inexact</span><span class="special">;</span>
+    <span class="keyword">int</span>         <span class="identifier">exact</span><span class="special">;</span>
 
-    <span class="keyword">friend</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">&lt;&lt;(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="identifier">out</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Data</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">)</span>
+    <span class="keyword">friend</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">&lt;&lt;(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="identifier">out</span><span class="special">,</span> <span class="identifier">Data</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">)</span>
     <span class="special">...</span>
 <span class="special">};</span>
 </pre>
@@ -53,10 +52,10 @@
         </p>
 <p>
 </p>
-<pre class="programlisting"><span class="identifier">Data</span> <span class="identifier">data</span><span class="special">(</span>
-    <span class="identifier">wait_all_members</span><span class="special">&lt;</span><span class="identifier">Data</span><span class="special">&gt;([](){</span> <span class="keyword">return</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"wams_left"</span><span class="special">,</span> <span class="number">100</span><span class="special">);</span> <span class="special">},</span>
-                           <span class="special">[](){</span> <span class="keyword">return</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="number">3.14</span><span class="special">,</span> <span class="number">150</span><span class="special">);</span> <span class="special">},</span>
-                           <span class="special">[](){</span> <span class="keyword">return</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="number">17</span><span class="special">,</span> <span class="number">50</span><span class="special">);</span> <span class="special">}));</span>
+<pre class="programlisting"><span class="identifier">Data</span> <span class="identifier">data</span> <span class="special">=</span> <span class="identifier">wait_all_members</span><span class="special">&lt;</span> <span class="identifier">Data</span> <span class="special">&gt;(</span>
+        <span class="special">[](){</span> <span class="keyword">return</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"wams_left"</span><span class="special">,</span> <span class="number">100</span><span class="special">);</span> <span class="special">},</span>
+        <span class="special">[](){</span> <span class="keyword">return</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="number">3.14</span><span class="special">,</span>        <span class="number">150</span><span class="special">);</span> <span class="special">},</span>
+        <span class="special">[](){</span> <span class="keyword">return</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="number">17</span><span class="special">,</span>          <span class="number">50</span><span class="special">);</span> <span class="special">});</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"wait_all_members&lt;Data&gt;(success) =&gt; "</span> <span class="special">&lt;&lt;</span> <span class="identifier">data</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 </pre>
 <p>
@@ -73,23 +72,20 @@
 </p>
 <pre class="programlisting"><span class="comment">// Explicitly pass Result. This can be any type capable of being initialized</span>
 <span class="comment">// from the results of the passed functions, such as a struct.</span>
-<span class="keyword">template</span> <span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Result</span><span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> <span class="identifier">Fns</span> <span class="special">&gt;</span>
-<span class="identifier">Result</span>
-<span class="identifier">wait_all_members</span><span class="special">(</span><span class="identifier">Fns</span><span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">functions</span><span class="special">)</span>
-<span class="special">{</span>
+<span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Result</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">Fns</span> <span class="special">&gt;</span>
+<span class="identifier">Result</span> <span class="identifier">wait_all_members</span><span class="special">(</span> <span class="identifier">Fns</span> <span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">functions</span><span class="special">)</span> <span class="special">{</span>
     <span class="comment">// Run each of the passed functions on a separate fiber, passing all their</span>
     <span class="comment">// futures to helper function for processing.</span>
-    <span class="keyword">return</span> <span class="identifier">wait_all_members_get</span><span class="special">&lt;</span><span class="identifier">Result</span><span class="special">&gt;(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">async</span><span class="special">(</span><span class="identifier">functions</span><span class="special">)...);</span>
+    <span class="keyword">return</span> <span class="identifier">wait_all_members_get</span><span class="special">&lt;</span> <span class="identifier">Result</span> <span class="special">&gt;(</span>
+            <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">async</span><span class="special">(</span> <span class="identifier">functions</span><span class="special">)</span> <span class="special">...</span> <span class="special">);</span>
 <span class="special">}</span>
 </pre>
 <p>
         </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Result</span><span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> <span class="identifier">Futures</span> <span class="special">&gt;</span>
-<span class="identifier">Result</span>
-<span class="identifier">wait_all_members_get</span><span class="special">(</span><span class="identifier">Futures</span><span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">futures</span><span class="special">)</span>
-<span class="special">{</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Result</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">Futures</span> <span class="special">&gt;</span>
+<span class="identifier">Result</span> <span class="identifier">wait_all_members_get</span><span class="special">(</span> <span class="identifier">Futures</span> <span class="special">&amp;&amp;</span> <span class="special">...</span> <span class="identifier">futures</span><span class="special">)</span> <span class="special">{</span>
     <span class="comment">// Fetch the results from the passed futures into Result's initializer</span>
     <span class="comment">// list. It's true that the get() calls here will block the implicit</span>
     <span class="comment">// iteration over futures -- but that doesn't matter because we won't be</span>
@@ -97,7 +93,7 @@
     <span class="comment">// processed in argument-list order rather than order of completion, the</span>
     <span class="comment">// leftmost get() to throw an exception will cause that exception to</span>
     <span class="comment">// propagate to the caller.</span>
-    <span class="keyword">return</span> <span class="identifier">Result</span><span class="special">{</span> <span class="identifier">futures</span><span class="special">.</span><span class="identifier">get</span><span class="special">()...</span> <span class="special">};</span>
+    <span class="keyword">return</span> <span class="identifier">Result</span><span class="special">{</span> <span class="identifier">futures</span><span class="special">.</span><span class="identifier">get</span><span class="special">()</span> <span class="special">...</span> <span class="special">};</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -141,13 +137,12 @@
 <span class="comment">// prefer a result vector in passed argument order rather than completion</span>
 <span class="comment">// order, wait_all_members() is another possible implementation of</span>
 <span class="comment">// wait_all_until_error().</span>
-<span class="keyword">auto</span> <span class="identifier">strings</span><span class="special">(</span><span class="identifier">wait_all_members</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;&gt;(</span>
-                 <span class="special">[](){</span> <span class="keyword">return</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"wamv_left"</span><span class="special">,</span>   <span class="number">150</span><span class="special">);</span> <span class="special">},</span>
-                 <span class="special">[](){</span> <span class="keyword">return</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"wamv_middle"</span><span class="special">,</span> <span class="number">100</span><span class="special">);</span> <span class="special">},</span>
-                 <span class="special">[](){</span> <span class="keyword">return</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"wamv_right"</span><span class="special">,</span>   <span class="number">50</span><span class="special">);</span> <span class="special">}));</span>
+<span class="keyword">auto</span> <span class="identifier">strings</span> <span class="special">=</span> <span class="identifier">wait_all_members</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="special">&gt;(</span>
+        <span class="special">[](){</span> <span class="keyword">return</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"wamv_left"</span><span class="special">,</span>   <span class="number">150</span><span class="special">);</span> <span class="special">},</span>
+        <span class="special">[](){</span> <span class="keyword">return</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"wamv_middle"</span><span class="special">,</span> <span class="number">100</span><span class="special">);</span> <span class="special">},</span>
+        <span class="special">[](){</span> <span class="keyword">return</span> <span class="identifier">sleeper</span><span class="special">(</span><span class="string">"wamv_right"</span><span class="special">,</span>   <span class="number">50</span><span class="special">);</span> <span class="special">});</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"wait_all_members&lt;vector&gt;() =&gt;"</span><span class="special">;</span>
-<span class="keyword">for</span> <span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">str</span> <span class="special">:</span> <span class="identifier">strings</span><span class="special">)</span>
-<span class="special">{</span>
+<span class="keyword">for</span> <span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">str</span> <span class="special">:</span> <span class="identifier">strings</span><span class="special">)</span> <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">" '"</span> <span class="special">&lt;&lt;</span> <span class="identifier">str</span> <span class="special">&lt;&lt;</span> <span class="string">"'"</span><span class="special">;</span>
 <span class="special">}</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>

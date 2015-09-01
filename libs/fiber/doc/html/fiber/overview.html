@@ -135,8 +135,9 @@
       Similarly, a fiber that invokes a normal blocking I/O operation will block
       its entire thread. Fiber authors are encouraged to consistently use asynchronous
       I/O. <a href="http://www.boost.org/doc/libs/release/libs/asio/index.html" target="_top">Boost.Asio</a>
-      explicitly supports fibers; other asynchronous I/O operations can straightforwardly
-      be adapted for <span class="bold"><strong>Boost.Fiber</strong></span>.
+      and other asynchronous I/O operations can straightforwardly be adapted for
+      <span class="bold"><strong>Boost.Fiber</strong></span>: see <a class="link" href="callbacks.html#callbacks">Integrating
+      Fibers with Asynchronous Callbacks</a>.
     </p>
 <div class="warning"><table border="0" summary="Warning">
 <tr>

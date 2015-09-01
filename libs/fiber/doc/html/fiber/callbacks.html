@@ -110,15 +110,15 @@
 </p>
 <pre class="programlisting"><span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">write_ec</span><span class="special">(</span> <span class="identifier">AsyncAPI</span> <span class="special">&amp;</span> <span class="identifier">api</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">)</span> <span class="special">{</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">promise</span><span class="special">&lt;</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="special">&gt;</span> <span class="identifier">promise</span><span class="special">;</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="special">&gt;</span> <span class="identifier">future</span><span class="special">(</span><span class="identifier">promise</span><span class="special">.</span><span class="identifier">get_future</span><span class="special">());</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="special">&gt;</span> <span class="identifier">future</span><span class="special">(</span> <span class="identifier">promise</span><span class="special">.</span><span class="identifier">get_future</span><span class="special">()</span> <span class="special">);</span>
     <span class="comment">// We can confidently bind a reference to local variable 'promise' into</span>
     <span class="comment">// the lambda callback because we know for a fact we're going to suspend</span>
     <span class="comment">// (preserving the lifespan of both 'promise' and 'future') until the</span>
     <span class="comment">// callback has fired.</span>
     <span class="identifier">api</span><span class="special">.</span><span class="identifier">init_write</span><span class="special">(</span> <span class="identifier">data</span><span class="special">,</span>
-        <span class="special">[&amp;</span><span class="identifier">promise</span><span class="special">](</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">){</span>
-            <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_value</span><span class="special">(</span> <span class="identifier">ec</span><span class="special">);</span>
-        <span class="special">});</span>
+                    <span class="special">[&amp;</span><span class="identifier">promise</span><span class="special">](</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">){</span>
+                        <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_value</span><span class="special">(</span> <span class="identifier">ec</span><span class="special">);</span>
+                    <span class="special">});</span>
     <span class="keyword">return</span> <span class="identifier">future</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
 <span class="special">}</span>
 </pre>
@@ -167,7 +167,7 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">write</span><span class="special">(</span> <span class="identifier">AsyncAPI</span><span class="special">&amp;</span> <span class="identifier">api</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">)</span> <span class="special">{</span>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">write</span><span class="special">(</span> <span class="identifier">AsyncAPI</span> <span class="special">&amp;</span> <span class="identifier">api</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">)</span> <span class="special">{</span>
     <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span> <span class="special">=</span> <span class="identifier">write_ec</span><span class="special">(</span> <span class="identifier">api</span><span class="special">,</span> <span class="identifier">data</span><span class="special">);</span>
     <span class="keyword">if</span> <span class="special">(</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">{</span>
         <span class="keyword">throw</span> <span class="identifier">make_exception</span><span class="special">(</span><span class="string">"write"</span><span class="special">,</span> <span class="identifier">ec</span><span class="special">);</span>
@@ -191,17 +191,15 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span>
-<span class="identifier">read_ec</span><span class="special">(</span> <span class="identifier">AsyncAPI</span> <span class="special">&amp;</span> <span class="identifier">api</span><span class="special">)</span> <span class="special">{</span>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="identifier">read_ec</span><span class="special">(</span> <span class="identifier">AsyncAPI</span> <span class="special">&amp;</span> <span class="identifier">api</span><span class="special">)</span> <span class="special">{</span>
     <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="identifier">result_pair</span><span class="special">;</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">promise</span><span class="special">&lt;</span> <span class="identifier">result_pair</span> <span class="special">&gt;</span> <span class="identifier">promise</span><span class="special">;</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span> <span class="identifier">result_pair</span> <span class="special">&gt;</span> <span class="identifier">future</span><span class="special">(</span> <span class="identifier">promise</span><span class="special">.</span><span class="identifier">get_future</span><span class="special">()</span> <span class="special">);</span>
     <span class="comment">// We promise that both 'promise' and 'future' will survive until our</span>
     <span class="comment">// lambda has been called.</span>
-    <span class="identifier">api</span><span class="special">.</span><span class="identifier">init_read</span><span class="special">(</span>
-        <span class="special">[&amp;</span><span class="identifier">promise</span><span class="special">](</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">){</span>
-            <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_value</span><span class="special">(</span> <span class="identifier">result_pair</span><span class="special">(</span> <span class="identifier">ec</span><span class="special">,</span> <span class="identifier">data</span><span class="special">)</span> <span class="special">);</span>
-        <span class="special">});</span>
+    <span class="identifier">api</span><span class="special">.</span><span class="identifier">init_read</span><span class="special">(</span> <span class="special">[&amp;</span><span class="identifier">promise</span><span class="special">](</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">){</span>
+                       <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_value</span><span class="special">(</span> <span class="identifier">result_pair</span><span class="special">(</span> <span class="identifier">ec</span><span class="special">,</span> <span class="identifier">data</span><span class="special">)</span> <span class="special">);</span>
+                   <span class="special">});</span>
     <span class="keyword">return</span> <span class="identifier">future</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
 <span class="special">}</span>
 </pre>
@@ -238,15 +236,15 @@
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="identifier">future</span><span class="special">(</span> <span class="identifier">promise</span><span class="special">.</span><span class="identifier">get_future</span><span class="special">()</span> <span class="special">);</span>
     <span class="comment">// Both 'promise' and 'future' will survive until our lambda has been</span>
     <span class="comment">// called.</span>
-    <span class="identifier">api</span><span class="special">.</span><span class="identifier">init_read</span><span class="special">(</span>
-        <span class="special">[&amp;</span><span class="identifier">promise</span><span class="special">](</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">){</span>
-            <span class="keyword">if</span> <span class="special">(</span> <span class="special">!</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">{</span>
-                <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_value</span><span class="special">(</span> <span class="identifier">data</span><span class="special">);</span>
-            <span class="special">}</span> <span class="keyword">else</span> <span class="special">{</span>
-                <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_exception</span><span class="special">(</span>
-                        <span class="identifier">std</span><span class="special">::</span><span class="identifier">make_exception_ptr</span><span class="special">(</span> <span class="identifier">make_exception</span><span class="special">(</span><span class="string">"read"</span><span class="special">,</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">)</span> <span class="special">);</span>
-            <span class="special">}</span>
-        <span class="special">});</span>
+    <span class="identifier">api</span><span class="special">.</span><span class="identifier">init_read</span><span class="special">(</span> <span class="special">[&amp;</span><span class="identifier">promise</span><span class="special">](</span> <span class="identifier">AsyncAPI</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">data</span><span class="special">){</span>
+                       <span class="keyword">if</span> <span class="special">(</span> <span class="special">!</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">{</span>
+                           <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_value</span><span class="special">(</span> <span class="identifier">data</span><span class="special">);</span>
+                       <span class="special">}</span> <span class="keyword">else</span> <span class="special">{</span>
+                           <span class="identifier">promise</span><span class="special">.</span><span class="identifier">set_exception</span><span class="special">(</span>
+                                   <span class="identifier">std</span><span class="special">::</span><span class="identifier">make_exception_ptr</span><span class="special">(</span>
+                                       <span class="identifier">make_exception</span><span class="special">(</span><span class="string">"read"</span><span class="special">,</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">)</span> <span class="special">);</span>
+                       <span class="special">}</span>
+                   <span class="special">});</span>
     <span class="keyword">return</span> <span class="identifier">future</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
 <span class="special">}</span>
 </pre>
@@ -310,7 +308,9 @@
 
     <span class="comment">// called if the operation fails</span>
     <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">error</span><span class="special">(</span> <span class="identifier">AsyncAPIBase</span><span class="special">::</span><span class="identifier">errorcode</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">{</span>
-        <span class="identifier">promise_</span><span class="special">.</span><span class="identifier">set_exception</span><span class="special">(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">make_exception_ptr</span><span class="special">(</span> <span class="identifier">make_exception</span><span class="special">(</span><span class="string">"read"</span><span class="special">,</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">)</span> <span class="special">);</span>
+        <span class="identifier">promise_</span><span class="special">.</span><span class="identifier">set_exception</span><span class="special">(</span>
+                <span class="identifier">std</span><span class="special">::</span><span class="identifier">make_exception_ptr</span><span class="special">(</span>
+                    <span class="identifier">make_exception</span><span class="special">(</span><span class="string">"read"</span><span class="special">,</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">)</span> <span class="special">);</span>
     <span class="special">}</span>
 
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="identifier">get_future</span><span class="special">()</span> <span class="special">{</span>
@@ -346,7 +346,7 @@
       The source code above is found in <a href="../../../examples/adapt_callbacks.cpp" target="_top">adapt_callbacks.cpp</a>
       and <a href="../../../examples/adapt_method_calls.cpp" target="_top">adapt_method_calls.cpp</a>.
     </p>
-<h4>
+<a name="callbacks_asio"></a><h4>
 <a name="fiber.callbacks.h6"></a>
       <span><a name="fiber.callbacks.then_there_s__ulink_url__http___www_boost_org_doc_libs_release_libs_asio_index_html__boost_asio__ulink_"></a></span><a class="link" href="callbacks.html#fiber.callbacks.then_there_s__ulink_url__http___www_boost_org_doc_libs_release_libs_asio_index_html__boost_asio__ulink_">Then
       There's <a href="http://www.boost.org/doc/libs/release/libs/asio/index.html" target="_top">Boost.Asio</a></a>
@@ -378,12 +378,12 @@
 <p>
     </p>
 <p>
-      which isa <code class="computeroutput"><span class="identifier">promise_completion_token</span></code>:
+      which is a <code class="computeroutput"><span class="identifier">promise_completion_token</span></code>:
     </p>
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Allocator</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator</span><span class="special">&lt;</span> <span class="keyword">void</span> <span class="special">&gt;</span> <span class="special">&gt;</span>
-<span class="keyword">class</span> <span class="identifier">yield_t</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">promise_completion_token</span><span class="special">&lt;</span> <span class="identifier">Allocator</span> <span class="special">&gt;</span> <span class="special">{</span>
+<span class="keyword">class</span> <span class="identifier">yield_t</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">promise_completion_token</span><span class="special">&lt;</span> <span class="identifier">Allocator</span> <span class="special">&gt;</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
     <span class="comment">/// Construct with default-constructed allocator.</span>
     <span class="identifier">BOOST_CONSTEXPR</span> <span class="identifier">yield_t</span><span class="special">()</span> <span class="special">{</span>
@@ -444,7 +444,7 @@
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Allocator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">ReturnType</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Arg2</span> <span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">handler_type</span><span class="special">&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">yield_t</span><span class="special">&lt;</span> <span class="identifier">Allocator</span><span class="special">&gt;,</span> <span class="identifier">ReturnType</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span><span class="special">,</span> <span class="identifier">Arg2</span><span class="special">)</span> <span class="special">&gt;</span> <span class="special">{</span>
+<span class="keyword">struct</span> <span class="identifier">handler_type</span><span class="special">&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">yield_t</span><span class="special">&lt;</span> <span class="identifier">Allocator</span> <span class="special">&gt;,</span> <span class="identifier">ReturnType</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span><span class="special">,</span> <span class="identifier">Arg2</span><span class="special">)</span> <span class="special">&gt;</span> <span class="special">{</span>
     <span class="keyword">typedef</span> <span class="identifier">fibers</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">yield_handler</span><span class="special">&lt;</span> <span class="identifier">Arg2</span> <span class="special">&gt;</span>    <span class="identifier">type</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
@@ -469,7 +469,7 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">T</span> <span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">T</span> <span class="special">&gt;</span>
 <span class="keyword">using</span> <span class="identifier">yield_handler</span> <span class="special">=</span> <span class="identifier">promise_handler</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;;</span>
 </pre>
 <p>
@@ -481,12 +481,13 @@
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">T</span> <span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">promise_handler_base</span> <span class="special">{</span>
+<span class="keyword">private</span><span class="special">:</span>
     <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">promise</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">promise_ptr</span><span class="special">;</span>
 
 <span class="keyword">public</span><span class="special">:</span>
     <span class="comment">// Construct from any promise_completion_token subclass special value.</span>
     <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Allocator</span> <span class="special">&gt;</span>
-    <span class="identifier">promise_handler_base</span><span class="special">(</span> <span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">promise_completion_token</span><span class="special">&lt;</span> <span class="identifier">Allocator</span> <span class="special">&gt;&amp;</span> <span class="identifier">pct</span><span class="special">)</span> <span class="special">:</span>
+    <span class="identifier">promise_handler_base</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">promise_completion_token</span><span class="special">&lt;</span> <span class="identifier">Allocator</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">pct</span><span class="special">)</span> <span class="special">:</span>
         <span class="identifier">promise_</span><span class="special">(</span> <span class="keyword">new</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">promise</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;(</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator_arg</span><span class="special">,</span> <span class="identifier">pct</span><span class="special">.</span><span class="identifier">get_allocator</span><span class="special">()</span> <span class="special">)</span> <span class="special">)</span>
     <span class="special">{}</span>
 
@@ -498,8 +499,8 @@
 
         <span class="comment">// no bound error_code: cause promise_ to throw an exception</span>
         <span class="identifier">promise_</span><span class="special">-&gt;</span><span class="identifier">set_exception</span><span class="special">(</span>
-            <span class="identifier">std</span><span class="special">::</span><span class="identifier">make_exception_ptr</span><span class="special">(</span>
-                <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">system_error</span><span class="special">(</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">)</span> <span class="special">);</span>
+                <span class="identifier">std</span><span class="special">::</span><span class="identifier">make_exception_ptr</span><span class="special">(</span>
+                    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">system_error</span><span class="special">(</span> <span class="identifier">ec</span><span class="special">)</span> <span class="special">)</span> <span class="special">);</span>
         <span class="comment">// caller should NOT call set_value()</span>
         <span class="keyword">return</span> <span class="keyword">false</span><span class="special">;</span>
     <span class="special">}</span>
@@ -516,8 +517,10 @@
     </p>
 <p>
       As promised, <code class="computeroutput"><span class="identifier">promise_handler_base</span></code>
-      binds a <a class="link" href="synchronization/futures/promise.html#class_promise"> <code class="computeroutput">promise&lt;&gt;</code></a> of appropriate type. (We store a <code class="computeroutput"><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">promise</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;&gt;</span></code>
-      because the <code class="computeroutput"><span class="identifier">promise_handler</span></code>
+      binds a <a class="link" href="synchronization/futures/promise.html#class_promise"> <code class="computeroutput">promise&lt;&gt;</code></a> of appropriate type. (We store a <code class="computeroutput"><span class="identifier">shared_ptr</span><span class="special">&lt;</span>
+      <span class="identifier">promise</span><span class="special">&lt;</span>
+      <span class="identifier">T</span> <span class="special">&gt;</span>
+      <span class="special">&gt;</span></code> because the <code class="computeroutput"><span class="identifier">promise_handler</span></code>
       instance is copied on its way into underlying Asio machinery.)
     </p>
 <p>
@@ -530,6 +533,7 @@
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">T</span> <span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">promise_handler</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">promise_handler_base</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">{</span>
+<span class="keyword">private</span><span class="special">:</span>
 <span class="keyword">public</span><span class="special">:</span>
     <span class="comment">// Construct from any promise_completion_token subclass special value.</span>
     <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Allocator</span> <span class="special">&gt;</span>
