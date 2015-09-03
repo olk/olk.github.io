@@ -196,9 +196,9 @@
         <span class="comment">// With this scheduler, fibers with higher priority values are</span>
         <span class="comment">// preferred over fibers with lower priority values. But fibers with</span>
         <span class="comment">// equal priority values are processed in round-robin fashion. So when</span>
-        <span class="comment">// we're handed a new fiber_base, put it at the end of the fibers with</span>
-        <span class="comment">// that same priority. In other words: search for the first fiber in</span>
-        <span class="comment">// the queue with LOWER priority, and insert before that one.</span>
+        <span class="comment">// we're handed a new fiber_context*, put it at the end of the fibers</span>
+        <span class="comment">// with that same priority. In other words: search for the first fiber</span>
+        <span class="comment">// in the queue with LOWER priority, and insert before that one.</span>
         <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fibers</span><span class="special">::</span><span class="identifier">fiber_context</span> <span class="special">**</span> <span class="identifier">fp</span> <span class="special">=</span> <span class="special">&amp;</span> <span class="identifier">head_</span><span class="special">;</span>
         <span class="keyword">for</span> <span class="special">(</span> <span class="special">;</span> <span class="special">*</span> <span class="identifier">fp</span><span class="special">;</span> <span class="identifier">fp</span> <span class="special">=</span> <span class="special">&amp;</span> <span class="special">(</span> <span class="special">*</span> <span class="identifier">fp</span><span class="special">)-&gt;</span><span class="identifier">nxt</span><span class="special">)</span> <span class="special">{</span>
             <span class="keyword">if</span> <span class="special">(</span> <span class="identifier">properties</span><span class="special">(</span> <span class="special">*</span> <span class="identifier">fp</span><span class="special">).</span><span class="identifier">get_priority</span><span class="special">()</span> <span class="special">&lt;</span> <span class="identifier">f_priority</span><span class="special">)</span> <span class="special">{</span>
