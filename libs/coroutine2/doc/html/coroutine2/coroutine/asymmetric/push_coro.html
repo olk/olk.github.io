@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Class asymmetric_coroutine&lt;&gt;::push_type</title>
+<title>Class coroutine&lt;&gt;::push_type</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Coroutine2">
 <link rel="up" href="../asymmetric.html" title="Asymmetric coroutine">
-<link rel="prev" href="pull_coro.html" title="Class asymmetric_coroutine&lt;&gt;::pull_type">
+<link rel="prev" href="pull_coro.html" title="Class coroutine&lt;&gt;::pull_type">
 <link rel="next" href="../../stack.html" title="Stack allocation">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -24,12 +24,12 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="coroutine2.coroutine.asymmetric.push_coro"></a><a class="link" href="push_coro.html" title="Class asymmetric_coroutine&lt;&gt;::push_type">Class <code class="computeroutput"><span class="identifier">asymmetric_coroutine</span><span class="special">&lt;&gt;::</span><span class="identifier">push_type</span></code></a>
+<a name="coroutine2.coroutine.asymmetric.push_coro"></a><a class="link" href="push_coro.html" title="Class coroutine&lt;&gt;::push_type">Class <code class="computeroutput"><span class="identifier">coroutine</span><span class="special">&lt;&gt;::</span><span class="identifier">push_type</span></code></a>
 </h4></div></div></div>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">coroutine2</span><span class="special">/</span><span class="identifier">asymmetric_coroutine</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">coroutine2</span><span class="special">/</span><span class="identifier">coroutine</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Arg</span> <span class="special">&gt;</span>
-<span class="keyword">class</span> <span class="identifier">asymmetric_coroutine</span><span class="special">&lt;&gt;::</span><span class="identifier">push_type</span>
+<span class="keyword">class</span> <span class="identifier">coroutine</span><span class="special">&lt;&gt;::</span><span class="identifier">push_type</span>
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
     <span class="identifier">push_type</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
@@ -239,9 +239,9 @@
           <span><a name="coroutine2.coroutine.asymmetric.push_coro._code__phrase_role__identifier__push_type__phrase___phrase_role__special___amp___phrase___phrase_role__keyword__operator__phrase__phrase_role__special_______phrase__phrase_role__identifier__arg__phrase___phrase_role__identifier__arg__phrase__phrase_role__special_____phrase___code_"></a></span><a class="link" href="push_coro.html#coroutine2.coroutine.asymmetric.push_coro._code__phrase_role__identifier__push_type__phrase___phrase_role__special___amp___phrase___phrase_role__keyword__operator__phrase__phrase_role__special_______phrase__phrase_role__identifier__arg__phrase___phrase_role__identifier__arg__phrase__phrase_role__special_____phrase___code_"><code class="computeroutput"><span class="identifier">push_type</span> <span class="special">&amp;</span>
           <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span> <span class="identifier">arg</span><span class="special">)</span></code></a>
         </h6>
-<pre class="programlisting"><span class="identifier">push_type</span><span class="special">&amp;</span> <span class="identifier">asymmetric_coroutine</span><span class="special">&lt;</span><span class="identifier">Arg</span><span class="special">&gt;::</span><span class="identifier">push_type</span><span class="special">::</span><span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span><span class="special">);</span>
-<span class="identifier">push_type</span><span class="special">&amp;</span> <span class="identifier">asymmetric_coroutine</span><span class="special">&lt;</span><span class="identifier">Arg</span><span class="special">&amp;&gt;::</span><span class="identifier">push_type</span><span class="special">::</span><span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span><span class="special">&amp;);</span>
-<span class="identifier">push_type</span><span class="special">&amp;</span> <span class="identifier">asymmetric_coroutine</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;::</span><span class="identifier">push_type</span><span class="special">::</span><span class="keyword">operator</span><span class="special">()();</span>
+<pre class="programlisting"><span class="identifier">push_type</span><span class="special">&amp;</span> <span class="identifier">coroutine</span><span class="special">&lt;</span><span class="identifier">Arg</span><span class="special">&gt;::</span><span class="identifier">push_type</span><span class="special">::</span><span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span><span class="special">);</span>
+<span class="identifier">push_type</span><span class="special">&amp;</span> <span class="identifier">coroutine</span><span class="special">&lt;</span><span class="identifier">Arg</span><span class="special">&amp;&gt;::</span><span class="identifier">push_type</span><span class="special">::</span><span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span><span class="special">&amp;);</span>
+<span class="identifier">push_type</span><span class="special">&amp;</span> <span class="identifier">coroutine</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;::</span><span class="identifier">push_type</span><span class="special">::</span><span class="keyword">operator</span><span class="special">()();</span>
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
@@ -343,7 +343,7 @@
                 or after some number of increment operations, an iterator will compare
                 equal to the iterator returned by <code class="computeroutput"><span class="identifier">end</span><span class="special">(</span> <span class="identifier">push_type</span><span class="special">&lt;</span> <span class="identifier">R</span>
                 <span class="special">&gt;</span> <span class="special">&amp;)</span></code>
-                when the corresponding <span class="emphasis"><em>asymmetric_coroutine&lt;&gt;::push_type::operator
+                when the corresponding <span class="emphasis"><em>coroutine&lt;&gt;::push_type::operator
                 bool</em></span> would return <code class="computeroutput"><span class="keyword">false</span></code>.
               </p></dd>
 </dl>
